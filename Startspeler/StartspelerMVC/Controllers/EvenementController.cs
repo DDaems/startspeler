@@ -26,16 +26,20 @@ namespace StartspelerMVC.Controllers
             viewmodel.LiveEvenementen = await _context.Evenementen
                 .Where(x => x.Startdatum < DateTime.Now)
                 .Where(x => x.Einddatum > DateTime.Now)
+                .Include(x => x.Inschrijvingen)
                 .ToListAsync();
 
             viewmodel.AankomendeEvenementen = await _context.Evenementen
                 .Where(x => x.Startdatum > DateTime.Now)
+                .Include(x => x.Inschrijvingen)
+
                 .ToListAsync();
 
             //Afgelopen 6 maanden
             viewmodel.AfgelopenEvenementen = await _context.Evenementen
                 .Where(x => x.Einddatum.AddMonths(6) > DateTime.Now)
                 .Where(x => x.Einddatum < DateTime.Now)
+                .Include(x => x.Inschrijvingen)
                 .ToListAsync();
 
             return View(viewmodel);
