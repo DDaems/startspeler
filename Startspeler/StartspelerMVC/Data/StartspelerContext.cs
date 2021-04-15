@@ -22,12 +22,27 @@ namespace StartspelerMVC.Data
 
         public DbSet<EvenementType> EvenementTypes { get; set; }
 
+        public DbSet<Drankkaart> Drankkaarten { get; set; }
+
+        public DbSet<DrankkaartType> DrankkaartTypes { get; set; }
+
+        public DbSet<Bestelling> Bestellingen { get; set; }
+
+        public DbSet<Product> Producten { get; set; }
+
+        public DbSet<Categorie> Categories { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>().ToTable("User", schema: "SS");
             modelBuilder.Entity<Inschrijving>().ToTable("Inschrijving", schema: "SS");
             modelBuilder.Entity<Evenement>().ToTable("Evenement", schema: "SS");
             modelBuilder.Entity<EvenementType>().ToTable("EvenementType", schema: "SS");
+            modelBuilder.Entity<Drankkaart>().ToTable("Drankkaart", schema: "SS");
+            modelBuilder.Entity<DrankkaartType>().ToTable("DrankkaartType", schema: "SS");
+            modelBuilder.Entity<Bestelling>().ToTable("Bestelling", schema: "SS");
+            modelBuilder.Entity<Product>().ToTable("Product", schema: "SS");
+            modelBuilder.Entity<Categorie>().ToTable("Categorie", schema: "SS");
         }
     }
 }

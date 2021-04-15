@@ -23,5 +23,9 @@ namespace StartspelerMVC.Models
         public string Email { get; set; }
 
         public ICollection<Inschrijving> Inschrijvingen { get; set; }
+
+        public ICollection<Drankkaart> Drankkaarten { get; set; }
+
+        public ICollection<Bestelling> Bestellingen { get; set; }
     }
 }
