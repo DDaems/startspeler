@@ -41,9 +41,12 @@
     {
         <div class="row">
             <div class="col-8">
-                <h3>
-                    @Html.DisplayFor(modelItem => item.Titel)
-                </h3>
+                <a asp-controller="Evenement" asp-action="Details" asp-route-id="@item.EvenementID">
+
+                    <h3>
+                        @Html.DisplayFor(modelItem => item.Titel)
+                    </h3>
+                </a>
             </div>
             <div class="col-4 text-right">
                 <h3>
@@ -63,6 +66,7 @@
                 </p>
             </div>
         </div>
+
     }
 </div>
 <br />

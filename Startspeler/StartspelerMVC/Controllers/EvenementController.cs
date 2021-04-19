@@ -59,14 +59,25 @@ namespace StartspelerMVC.Controllers
                 return NotFound();
             }
 
-            var evenement = await _context.Evenementen
+            DetailsEvenementViewModel viewmodel = new DetailsEvenementViewModel();
+
+            viewmodel.GeselecteerdEvenement = await _context.Evenementen
                 .FirstOrDefaultAsync(m => m.EvenementID == id);
-            if (evenement == null)
+            if (viewmodel.GeselecteerdEvenement == null)
             {
                 return NotFound();
             }
 
-            return View(evenement);
+            var inschrijvingen = await _context.Inschrijvingen
+                .Where(x => x.EvenementID == id)
+
+                .ToListAsync();
+
+            viewmodel.GereserveerdeUsers = await _context.Users
+                .Include(x => x.Inschrijvingen)
+                .Where(x => x.Inschrijvingen.Any(i => i.EvenementID == id)).ToListAsync();
+
+            return View(viewmodel);
         }
 
         // GET: Evenement/Create

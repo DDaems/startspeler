@@ -1,4 +1,4 @@
-﻿@model StartspelerMVC.Models.Evenement
+﻿@model StartspelerMVC.Viewmodels.DetailsEvenementViewModel
 
 @{
     ViewData["Title"] = "Details";
@@ -9,46 +9,73 @@
 <div>
     <h4>Evenement</h4>
     <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Titel)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Titel)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Startdatum)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Startdatum)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Beschrijving)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Beschrijving)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Kostprijs)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Kostprijs)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Max_Deelnemers)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Max_Deelnemers)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Einddatum)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Einddatum)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.EvenementID">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <div class="row">
+        <div class="col-6">
+
+            <div class="row">
+
+                <div class="col-sm-10 form-text border-info">
+                    <h5>
+                        @Html.DisplayFor(model => model.GeselecteerdEvenement.Titel)
+                    </h5>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-10">
+                    <h6>
+                        @Convert.ToString(string.Format("{0:dd/MM/yyyy hh:mm}", Model.GeselecteerdEvenement.Startdatum)) tot @Convert.ToString(string.Format("{0:hh:mm}", Model.GeselecteerdEvenement.Einddatum))
+                    </h6>
+                </div>
+            </div>
+
+            <div class="row" style="height: 200px">
+                <div class="col-sm-10 form-text h-100">
+                    @Html.DisplayFor(model => Model.GeselecteerdEvenement.Beschrijving)
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-10 form-text h-100">
+                    Deelnameprijs: € @Html.DisplayFor(model => Model.GeselecteerdEvenement.Kostprijs)
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-10 form-text h-100">
+                    Maximum aantal deelnemers: @Html.DisplayFor(model => Model.GeselecteerdEvenement.Max_Deelnemers)
+                </div>
+            </div>
+
+            <div class="row" style="height: 100px; vertical-align:middle">
+                <div class="col-sm-auto">
+                    <button type="button" class="btn btn-primary">Registreer mij!</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6">
+            <div class="row">
+                <p>De volgende personen zijn alreeds geregistreerd:</p>
+            </div>
+            <div class="row">
+                @Model.GereserveerdeUsers.Count() / @Model.GeselecteerdEvenement.Max_Deelnemers
+                <br />
+            </div>
+            <div class="row">
+                @{ foreach (var persoon in Model.GereserveerdeUsers)
+                    {
+                        <p>
+                            @persoon.Achternaam  @persoon.Voornaam
+                            <br />
+                        </p>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+    <div>
+        <a asp-action="Edit" asp-route-id="@Model.GeselecteerdEvenement.EvenementID">Edit</a> |
+        <a asp-action="Index">Back to List</a>
+    </div>
 </div>
