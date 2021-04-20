@@ -1,0 +1,53 @@
+﻿@model IEnumerable<StartspelerMVC.Models.Product>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Naam)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Prijs)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Ijskast)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OverigeStock)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Naam)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Prijs)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ijskast)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OverigeStock)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ProductID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.ProductID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.ProductID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
