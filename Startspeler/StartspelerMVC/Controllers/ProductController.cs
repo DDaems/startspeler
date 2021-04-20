@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using StartspelerMVC.Data;
 using StartspelerMVC.Models;
+using StartspelerMVC.Viewmodels;
 
 namespace StartspelerMVC.Controllers
 {
@@ -21,6 +22,11 @@ namespace StartspelerMVC.Controllers
 
         // GET: Product
         public async Task<IActionResult> Index()
+        {
+            return View(await _context.Producten.ToListAsync());
+        }
+
+        public async Task<IActionResult> Drankoverzicht()
         {
             return View(await _context.Producten.ToListAsync());
         }
@@ -46,23 +52,27 @@ namespace StartspelerMVC.Controllers
         // GET: Product/Create
         public IActionResult Create()
         {
-            return View();
+            CreateProductViewModel viewmodel = new CreateProductViewModel();
+            viewmodel.NieuwProduct = new Product();
+            viewmodel.Categories = new SelectList(_context.Categories, "CategorieID", "Naam");
+            return View(viewmodel);
         }
 
         // POST: Product/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ProductID,Naam,Prijs,Ijskast,OverigeStock,CategorieID")] Product product)
+        public async Task<IActionResult> Create(CreateProductViewModel viewmodel)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(product);
+                _context.Add(viewmodel.NieuwProduct);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(product);
+
+            return View(viewmodel);
         }
 
         // GET: Product/Edit/5
@@ -82,7 +92,7 @@ namespace StartspelerMVC.Controllers
         }
 
         // POST: Product/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
