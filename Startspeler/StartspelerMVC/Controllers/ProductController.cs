@@ -28,7 +28,10 @@ namespace StartspelerMVC.Controllers
 
         public async Task<IActionResult> Drankoverzicht()
         {
-            return View(await _context.Producten.ToListAsync());
+            OverzichtProductViewModel viewmodel = new OverzichtProductViewModel();
+            viewmodel.Producten = await _context.Producten.ToListAsync();
+
+            return View(viewmodel);
         }
 
         // GET: Product/Details/5
