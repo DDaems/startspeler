@@ -3,9 +3,10 @@
 
 // Write your JavaScript code.
 
+//Evenement uitklapbaar heading
+
 var Event = document.getElementsByClassName("Eventheader");
 var i;
-
 for (i = 0; i < Event.length; i++) {
     Event[i].addEventListener("click", function () {
         this.classList.toggle("active");
@@ -16,4 +17,12 @@ for (i = 0; i < Event.length; i++) {
             content.style.display = "block";
         }
     });
+}
+
+//Om ervoor te zorgen dat je enkel een getal ingeeft (waarde 0-9). Kommagetallen niet toegestaan!
+function isNumberKey(evt) {
+    var charCode = (evt.which) ? evt.which : evt.keyCode;
+    if (charCode < 48 || charCode > 57)
+        return false;
+    return true;
 }

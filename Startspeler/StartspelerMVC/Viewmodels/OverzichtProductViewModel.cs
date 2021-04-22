@@ -1,4 +1,5 @@
-﻿using StartspelerMVC.Models;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using StartspelerMVC.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,8 +11,8 @@ namespace StartspelerMVC.Viewmodels
     {
         public ICollection<Product> Producten { get; set; }
 
-        public string Zoekstring { get; set; }
+        public int Zoekfilter { get; set; }
 
-        public Categorie Categorie { get; set; }
+        public ICollection<Categorie> Categories { get; set; }
     }
 }

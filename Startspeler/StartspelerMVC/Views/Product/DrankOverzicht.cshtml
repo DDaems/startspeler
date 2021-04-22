@@ -5,8 +5,13 @@
 }
 
 <h1>Drankoverzicht</h1>
+<div class="row top-buffer">
+    <div class="col-10">
+        <button type="button" class="btn btn-primary float-right">Plaats bestelling</button>
+    </div>
+</div>
 
-<div class="row">
+<div class="row top-buffer">
 
     <div class="col-10">
         <table class="table-bordered">
@@ -18,6 +23,9 @@
                     <th class="text-center">
                         Aantal Consumpties
                     </th>
+                    <th>
+                        <p class="text-center">Aantal</p>
+                    </th>
                 </tr>
             </thead>
             <tbody>
@@ -25,24 +33,25 @@
                 {
                     <tr>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Naam)
+                            <text class="px-2">@Html.DisplayFor(modelItem => item.Naam)</text>
                         </td>
                         <td class="text-center">
-                            @Html.DisplayFor(modelItem => item.Prijs)
+                            <text class="px-2">@Html.DisplayFor(modelItem => item.Prijs)</text>
+                        </td>
+                        <td>
+                            <input class="text-center px-2" type="text" id="aantal" value="0" onkeypress="return isNumberKey(event)" />
                         </td>
                     </tr>
                 }
             </tbody>
         </table>
     </div>
-
     <div class="col-2">
         <h5>Categorie</h5>
-        <p>Categorie 1</p>
-        <br />
-        <p>Categorie 2</p>
-        <br />
-        <p>Categorie 3</p>
+        @foreach (var item in Model.Categories)
+        {
+            <button type="button" class="btn btn-secondary form-control mb-2" asp-controller="Product" asp-action="Filter" asp-route-id="@item.CategorieID">@item.Naam</button>
+        }
     </div>
 </div>
 

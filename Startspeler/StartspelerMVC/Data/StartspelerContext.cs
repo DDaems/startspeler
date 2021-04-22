@@ -32,6 +32,8 @@ namespace StartspelerMVC.Data
 
         public DbSet<Categorie> Categories { get; set; }
 
+        public DbSet<Bestellijn> Bestellijnen { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>().ToTable("User", schema: "SS");
@@ -43,6 +45,7 @@ namespace StartspelerMVC.Data
             modelBuilder.Entity<Bestelling>().ToTable("Bestelling", schema: "SS");
             modelBuilder.Entity<Product>().ToTable("Product", schema: "SS");
             modelBuilder.Entity<Categorie>().ToTable("Categorie", schema: "SS");
+            modelBuilder.Entity<Bestellijn>().ToTable("Bestellijn", schema: "SS");
         }
     }
 }

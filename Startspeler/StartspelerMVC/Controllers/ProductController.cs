@@ -30,9 +30,31 @@ namespace StartspelerMVC.Controllers
         {
             OverzichtProductViewModel viewmodel = new OverzichtProductViewModel();
             viewmodel.Producten = await _context.Producten.ToListAsync();
-
+            viewmodel.Categories = await _context.Categories.ToListAsync();
             return View(viewmodel);
         }
+
+        /*
+        //GET
+        public IActionResult Filter(int id)
+        {
+            OverzichtProductViewModel viewmodel = new OverzichtProductViewModel();
+            viewmodel.Producten = null;
+            viewmodel.Categories = null;
+            viewmodel.Zoekfilter = id;
+            return View(viewmodel);
+        }
+
+        //POST
+        public async Task<IActionResult> Filter(OverzichtProductViewModel viewmodel)
+        {
+            viewmodel.Producten = await _context.Producten
+                .Where(x => x.CategorieID == viewmodel.Zoekfilter)
+                .ToListAsync();
+            viewmodel.Categories = await _context.Categories.ToListAsync();
+            return View(viewmodel);
+        }
+        */
 
         // GET: Product/Details/5
         public async Task<IActionResult> Details(int? id)
