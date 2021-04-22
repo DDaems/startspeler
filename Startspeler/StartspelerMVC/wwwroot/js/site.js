@@ -26,3 +26,16 @@ function isNumberKey(evt) {
         return false;
     return true;
 }
+
+//om de hidden tekstbox een categorienaam mee te geven.
+
+function categorieselectie() {
+    var categorie = document.getElementsByName('categorie');
+    var categorieChecked;
+
+    for (var i = 0; i < categorie.length; i++) {
+        if (categorie[i].checked) {
+            document.getElementById("toon").value = categorie[i].value;
+        }
+    }
+}

@@ -51,8 +51,16 @@
         <h5>Categorie</h5>
         <form asp-controller="Product" asp-action="Search" method="get">
             <!--Geprobeerd om met drukknoppen te werken, maar dan werkt het niet.-->
+
+            @foreach (var item in Model.Categories)
+            {
+                <input type="radio" value="@Html.DisplayFor(modelItem => item.Naam)" name="categorie" onclick="categorieselectie()" />
+                <label>@Html.DisplayFor(modelItem => item.Naam)</label>
+                <br />
+            }
+
             <p>
-                <input asp-for="CategorieSearch" />
+                <input asp-for="CategorieSearch" id="toon" type="text" hidden />
                 <input type="submit" value="Zoeken" class"btn btn-default" />
             </p>
         </form>
