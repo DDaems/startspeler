@@ -5,11 +5,6 @@
 }
 
 <h1>Drankoverzicht</h1>
-<div class="row top-buffer">
-    <div class="col-10">
-        <button type="button" class="btn btn-primary float-right">Plaats bestelling</button>
-    </div>
-</div>
 
 <div class="row top-buffer">
 
@@ -17,6 +12,9 @@
         <table class="table-bordered">
             <thead>
                 <tr>
+                    <th>
+                        Categorie
+                    </th>
                     <th class="col-md-6">
                         Product
                     </th>
@@ -33,6 +31,9 @@
                 {
                     <tr>
                         <td>
+                            <text class="px-2">@Html.DisplayFor(modelItem => item.Categorie.Naam)</text>
+                        </td>
+                        <td>
                             <text class="px-2">@Html.DisplayFor(modelItem => item.Naam)</text>
                         </td>
                         <td class="text-center">
@@ -48,13 +49,18 @@
     </div>
     <div class="col-2">
         <h5>Categorie</h5>
-        @foreach (var item in Model.Categories)
-        {
-            <button type="button" class="btn btn-secondary form-control mb-2" asp-controller="Product" asp-action="Filter" asp-route-id="@item.CategorieID">@item.Naam</button>
-        }
+        <form asp-controller="Product" asp-action="Search" method="get">
+            <!--Geprobeerd om met drukknoppen te werken, maar dan werkt het niet.-->
+            <p>
+                <input asp-for="CategorieSearch" />
+                <input type="submit" value="Zoeken" class"btn btn-default" />
+            </p>
+        </form>
     </div>
 </div>
 
-<br />
-<br />
-<br />
+<div class="row top-buffer">
+    <div class="col-10">
+        <button type="button" class="btn btn-primary float-right">Plaats bestelling</button>
+    </div>
+</div>

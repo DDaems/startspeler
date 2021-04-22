@@ -18,5 +18,7 @@ namespace StartspelerMVC.Models
         public int OverigeStock { get; set; }
 
         public int CategorieID { get; set; }
+
+        public Categorie Categorie { get; set; }
     }
 }

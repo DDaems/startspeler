@@ -1,0 +1,52 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@if (Model.Bestellijnen != null)
+{
+    <div class="row top-buffer">
+        <div class="col-12">
+            <table class="table-bordered">
+                <thead>
+                    <tr>
+                        <th class="col-md-6">
+                            Product
+                        </th>
+                        <th class="text-center">
+                            Aantal Consumpties
+                        </th>
+                        <th>
+                            Totale prijs
+                        </th>
+                    </tr>
+                </thead>
+                @foreach (var item in Model.Bestellijnen)
+                {
+                    <tr>
+                        <td>
+                            <text class="px-2">@item.ProductID</text>
+                        </td>
+                        <td class="text-center">
+                            <text class="px-2">@item.Aantal</text>
+                        </td>
+                        <td>
+                            <text class="px-2">Totale prijs per item</text>
+                        </td>
+                    </tr>
+                }
+                <tr>
+                    <td>
+                        <text class="px-2">Totaal</text>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        <text class="px-2">Totale prijs</text>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+}

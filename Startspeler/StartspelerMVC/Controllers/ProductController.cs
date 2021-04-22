@@ -29,32 +29,31 @@ namespace StartspelerMVC.Controllers
         public async Task<IActionResult> Drankoverzicht()
         {
             OverzichtProductViewModel viewmodel = new OverzichtProductViewModel();
-            viewmodel.Producten = await _context.Producten.ToListAsync();
+            viewmodel.Producten = await _context.Producten.Include(x => x.Categorie).ToListAsync();
             viewmodel.Categories = await _context.Categories.ToListAsync();
             return View(viewmodel);
         }
 
-        /*
-        //GET
-        public IActionResult Filter(int id)
-        {
-            OverzichtProductViewModel viewmodel = new OverzichtProductViewModel();
-            viewmodel.Producten = null;
-            viewmodel.Categories = null;
-            viewmodel.Zoekfilter = id;
-            return View(viewmodel);
-        }
+        // GET: product gefilterd op categorie
 
-        //POST
-        public async Task<IActionResult> Filter(OverzichtProductViewModel viewmodel)
+        public async Task<IActionResult> Search(OverzichtProductViewModel viewmodel)
         {
-            viewmodel.Producten = await _context.Producten
-                .Where(x => x.CategorieID == viewmodel.Zoekfilter)
-                .ToListAsync();
             viewmodel.Categories = await _context.Categories.ToListAsync();
-            return View(viewmodel);
+
+            if (!string.IsNullOrEmpty(viewmodel.CategorieSearch))
+            {
+                viewmodel.Producten = await _context.Producten
+                             .Include(x => x.Categorie)
+                             .Where(x => x.Categorie.Naam.Contains(viewmodel.CategorieSearch))
+                             .ToListAsync();
+            }
+            else
+            {
+                viewmodel.Producten = await _context.Producten.Include(b => b.Categorie).ToListAsync();
+            }
+
+            return View("DrankOverzicht", viewmodel);
         }
-        */
 
         // GET: Product/Details/5
         public async Task<IActionResult> Details(int? id)

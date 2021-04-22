@@ -9,9 +9,9 @@ namespace StartspelerMVC.Viewmodels
 {
     public class OverzichtProductViewModel
     {
-        public ICollection<Product> Producten { get; set; }
+        public string CategorieSearch { get; set; }
 
-        public int Zoekfilter { get; set; }
+        public List<Product> Producten { get; set; }
 
         public ICollection<Categorie> Categories { get; set; }
     }

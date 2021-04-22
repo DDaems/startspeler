@@ -8,11 +8,8 @@ namespace StartspelerMVC.Models
     public class Bestellijn
     {
         public int BestellijnID { get; set; }
-
-        public int ProductID { get; set; }
+        public Product Product { get; set; }
 
         public int Aantal { get; set; }
-
-        public int BestellingID { get; set; }
     }
 }
