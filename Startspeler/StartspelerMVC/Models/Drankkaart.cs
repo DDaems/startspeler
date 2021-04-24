@@ -9,7 +9,7 @@ namespace StartspelerMVC.Models
     {
         public int DrankkaartID { get; set; }
 
-        public int userID { get; set; }
+        //public int userID { get; set; }
 
         public int Aantal_Verbruikt { get; set; }
 

@@ -10,6 +10,6 @@ namespace StartspelerMVC.Models
         public int InschrijvingID { get; set; }
         public int EvenementID { get; set; }
 
-        public int UserID { get; set; }
+       // public int UserID { get; set; }
     }
 }
