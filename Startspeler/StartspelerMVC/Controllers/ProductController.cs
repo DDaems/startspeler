@@ -42,10 +42,18 @@ namespace StartspelerMVC.Controllers
 
             if (!string.IsNullOrEmpty(viewmodel.CategorieSearch))
             {
-                viewmodel.Producten = await _context.Producten
-                             .Include(x => x.Categorie)
-                             .Where(x => x.Categorie.Naam.Contains(viewmodel.CategorieSearch))
-                             .ToListAsync();
+                if (viewmodel.CategorieSearch == "Alles")
+                {
+                    viewmodel.Producten = await _context.Producten.Include(b => b.Categorie).ToListAsync();
+                    return View("DrankOverzicht", viewmodel);
+                }
+                else
+                {
+                    viewmodel.Producten = await _context.Producten
+             .Include(x => x.Categorie)
+             .Where(x => x.Categorie.Naam.Contains(viewmodel.CategorieSearch))
+             .ToListAsync();
+                }
             }
             else
             {

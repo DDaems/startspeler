@@ -8,7 +8,7 @@
 
 <div class="row top-buffer">
 
-    <div class="col-10">
+    <div class="col-8">
         <table class="table-bordered">
             <thead>
                 <tr>
@@ -27,8 +27,10 @@
                 </tr>
             </thead>
             <tbody>
+                @{int count = 0;}
                 @foreach (var item in Model.Producten)
                 {
+                    count++;
                     <tr>
                         <td>
                             <text class="px-2">@Html.DisplayFor(modelItem => item.Categorie.Naam)</text>
@@ -40,7 +42,20 @@
                             <text class="px-2">@Html.DisplayFor(modelItem => item.Prijs)</text>
                         </td>
                         <td>
-                            <input class="text-center px-2" type="text" id="aantal" value="0" onkeypress="return isNumberKey(event)" />
+
+                            <table>
+                                <tr>
+                                    <td>
+                                        <button type="button" class="btn btn-primary" onclick="amountDown(@count)"> - </button>
+                                    </td>
+                                    <td>
+                                        <input type="text" name="txtAantal" id="@count" style="min-width:50px" class="text-center form-control" value="0" onkeypress="return isNumberKey(event)">
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-primary" onclick="amountUp(@count)"> + </button>
+                                    </td>
+                                </tr>
+                            </table>
                         </td>
                     </tr>
                 }
@@ -51,6 +66,10 @@
         <h5>Categorie</h5>
         <form asp-controller="Product" asp-action="Search" method="get">
             <!--Geprobeerd om met drukknoppen te werken, maar dan werkt het niet.-->
+
+            <input type="radio" value="Alles" name="categorie" onclick="categorieselectie()" />
+            <label>Toon alles</label>
+            <br />
 
             @foreach (var item in Model.Categories)
             {
