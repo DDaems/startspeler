@@ -9,19 +9,25 @@ namespace StartspelerMVC.Models
 {
     public class User : IdentityUser
     {
-       
+        //[Key]
         //public int UserID { get; set; }
+
+        [Required]
+        [PersonalData]
         public string Voornaam { get; set; }
-
+        [Required]
+        [PersonalData]
         public string Achternaam { get; set; }
-
+        [Required]
+        [PersonalData]
+        [DataType(DataType.Date)]
         public DateTime Geboortedatum { get; set; }
+        //We gebruiken password veld van Identity
+        //public int Pincode { get; set; }
 
-        public int Pincode { get; set; }
+        //public string token { get; set; }
 
-        public string token { get; set; }
-
-        public Boolean Admin { get; set; }
+        //public Boolean Admin { get; set; }
 
        // public string Email { get; set; }
 
