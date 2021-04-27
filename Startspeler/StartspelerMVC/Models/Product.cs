@@ -20,5 +20,14 @@ namespace StartspelerMVC.Models
         public int CategorieID { get; set; }
 
         public Categorie Categorie { get; set; }
+
+        public Product(int id)
+        {
+            this.ProductID = id;
+        }
+
+        public Product()
+        {
+        }
     }
 }

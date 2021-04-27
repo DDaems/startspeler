@@ -1,7 +1,6 @@
 ﻿@model IEnumerable<Product>
 @{
     ViewData["Title"] = "Stockbeheer";
-    int teller = 0;
 }
 
 <div class="container">
@@ -17,6 +16,7 @@
                 @Html.DisplayNameFor(model => model.OverigeStock)
             </th>
         </tr>
+
         @foreach (var item in Model)
         {
             <tr>
@@ -36,7 +36,6 @@
                     </div>
                 </td>
             </tr>
-            teller++;
         }
     </table>
 </div>

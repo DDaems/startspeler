@@ -28,18 +28,20 @@
             </thead>
             <tbody>
                 @{int count = 0;}
-                @foreach (var item in Model.Producten)
+                @foreach (var item in Model.Bestelling.Items)
                 {
                     count++;
                     <tr>
+
                         <td>
-                            <text class="px-2">@Html.DisplayFor(modelItem => item.Categorie.Naam)</text>
+                            <text class="px-2">@Html.DisplayFor(modelItem => item.Prod.Categorie.Naam)</text>
                         </td>
+
                         <td>
-                            <text class="px-2">@Html.DisplayFor(modelItem => item.Naam)</text>
+                            <text class="px-2">@Html.DisplayFor(modelItem => item.Prod.Naam)</text>
                         </td>
                         <td class="text-center">
-                            <text class="px-2">@Html.DisplayFor(modelItem => item.Prijs)</text>
+                            <text class="px-2">@Html.DisplayFor(modelItem => item.Prod.Prijs)</text>
                         </td>
                         <td>
 
@@ -49,7 +51,7 @@
                                         <button type="button" class="btn btn-primary" onclick="amountDown(@count)"> - </button>
                                     </td>
                                     <td>
-                                        <input type="text" name="txtAantal" id="@count" style="min-width:50px" class="text-center form-control" value="0" onkeypress="return isNumberKey(event)">
+                                        <input type="text" name="txtAantal" a id="@count" style="min-width:50px" class="text-center form-control" value="0" onkeypress="return isNumberKey(event)">
                                     </td>
                                     <td>
                                         <button type="button" class="btn btn-primary" onclick="amountUp(@count)"> + </button>
@@ -71,10 +73,10 @@
             <label>Toon alles</label>
             <br />
 
-            @foreach (var item in Model.Categories)
+            @foreach (var item in Model.Bestelling.Items)
             {
-                <input type="radio" value="@Html.DisplayFor(modelItem => item.Naam)" name="categorie" onclick="categorieselectie()" />
-                <label>@Html.DisplayFor(modelItem => item.Naam)</label>
+                <input type="radio" value="@Html.DisplayFor(modelItem => item.Prod.Categorie.Naam)" name="categorie" onclick="categorieselectie()" />
+                <label>@Html.DisplayFor(modelItem => item.Prod.Categorie.Naam)</label>
                 <br />
             }
 

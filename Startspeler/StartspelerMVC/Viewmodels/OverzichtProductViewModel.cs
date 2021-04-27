@@ -14,5 +14,7 @@ namespace StartspelerMVC.Viewmodels
         public List<Product> Producten { get; set; }
 
         public ICollection<Categorie> Categories { get; set; }
+
+        public Bestelling Bestelling { get; set; }
     }
 }

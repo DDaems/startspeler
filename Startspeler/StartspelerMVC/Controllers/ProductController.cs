@@ -26,12 +26,43 @@ namespace StartspelerMVC.Controllers
             return View(await _context.Producten.ToListAsync());
         }
 
-        public async Task<IActionResult> Drankoverzicht()
+        public async Task<IActionResult> BevestigBestelling(OverzichtProductViewModel viewmodel)
         {
-            OverzichtProductViewModel viewmodel = new OverzichtProductViewModel();
-            viewmodel.Producten = await _context.Producten.Include(x => x.Categorie).ToListAsync();
-            viewmodel.Categories = await _context.Categories.ToListAsync();
             return View(viewmodel);
+        }
+
+        public async Task<IActionResult> Drankoverzicht(OverzichtProductViewModel initieelmodel)
+        {
+            if (initieelmodel.Bestelling == null)
+            {
+                OverzichtProductViewModel viewmodel = new OverzichtProductViewModel();
+                viewmodel.Producten = await _context.Producten.Include(x => x.Categorie).ToListAsync();
+                viewmodel.Categories = await _context.Categories.ToListAsync();
+                viewmodel.Bestelling = new Bestelling();
+
+                List<Bestellijn> nieuwelijst = new List<Bestellijn>();
+
+                //Logica om een lege shopping cart aan te maken.
+                foreach (var product in viewmodel.Producten)
+                {
+                    Bestellijn bestellijn = new Bestellijn(product.ProductID)
+                    {
+                        Aantal = 0,
+                        Prod = product
+                    };
+                    nieuwelijst.Add(bestellijn);
+                }
+
+                viewmodel.Bestelling.Items = nieuwelijst;
+                return View(viewmodel);
+
+                //Naar de view wordt een lege Bestelling gestuurd.
+            }
+            else
+            {
+                //Anders stuur je de vorige view terug. (Bijvoorbeeld wanneer je toch iets wil aanpassen aan je shoppingcart)
+                return View(initieelmodel);
+            }
         }
 
         // GET: Stockbeheer
@@ -91,7 +122,7 @@ namespace StartspelerMVC.Controllers
         public IActionResult Create()
         {
             CreateProductViewModel viewmodel = new CreateProductViewModel();
-            viewmodel.NieuwProduct = new Product();
+            //viewmodel.NieuwProduct = new Product();
             viewmodel.Categories = new SelectList(_context.Categories, "CategorieID", "Naam");
             return View(viewmodel);
         }
