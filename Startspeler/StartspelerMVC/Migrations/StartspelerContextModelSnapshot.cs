@@ -19,9 +19,9 @@ namespace StartspelerMVC.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("StartspelerMVC.Models.Bestellijn", b =>
+            modelBuilder.Entity("StartspelerMVC.Models.Bestelling", b =>
                 {
-                    b.Property<int>("BestellijnID")
+                    b.Property<int>("BestellingID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -32,24 +32,12 @@ namespace StartspelerMVC.Migrations
                     b.Property<int?>("ProductID")
                         .HasColumnType("int");
 
-                    b.HasKey("BestellijnID");
-
-                    b.HasIndex("ProductID");
-
-                    b.ToTable("Bestellijn","SS");
-                });
-
-            modelBuilder.Entity("StartspelerMVC.Models.Bestelling", b =>
-                {
-                    b.Property<int>("BestellingID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
                     b.Property<int>("UserID")
                         .HasColumnType("int");
 
                     b.HasKey("BestellingID");
+
+                    b.HasIndex("ProductID");
 
                     b.HasIndex("UserID");
 
@@ -245,15 +233,12 @@ namespace StartspelerMVC.Migrations
                     b.ToTable("User","SS");
                 });
 
-            modelBuilder.Entity("StartspelerMVC.Models.Bestellijn", b =>
+            modelBuilder.Entity("StartspelerMVC.Models.Bestelling", b =>
                 {
                     b.HasOne("StartspelerMVC.Models.Product", "Product")
                         .WithMany()
                         .HasForeignKey("ProductID");
-                });
 
-            modelBuilder.Entity("StartspelerMVC.Models.Bestelling", b =>
-                {
                     b.HasOne("StartspelerMVC.Models.User", null)
                         .WithMany("Bestellingen")
                         .HasForeignKey("UserID")
@@ -302,7 +287,7 @@ namespace StartspelerMVC.Migrations
 
             modelBuilder.Entity("StartspelerMVC.Models.Product", b =>
                 {
-                    b.HasOne("StartspelerMVC.Models.Categorie", null)
+                    b.HasOne("StartspelerMVC.Models.Categorie", "Categorie")
                         .WithMany("Producten")
                         .HasForeignKey("CategorieID")
                         .OnDelete(DeleteBehavior.Cascade)

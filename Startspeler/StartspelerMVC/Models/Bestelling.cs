@@ -10,5 +10,9 @@ namespace StartspelerMVC.Models
         public int BestellingID { get; set; }
 
         public int UserID { get; set; }
+
+        public int Aantal { get; set; }
+
+        public Product Product { get; set; }
     }
 }

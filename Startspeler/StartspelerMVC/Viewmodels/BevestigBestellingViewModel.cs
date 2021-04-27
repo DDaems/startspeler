@@ -8,6 +8,5 @@ namespace StartspelerMVC.Viewmodels
 {
     public class BevestigBestellingViewModel
     {
-        public List<Bestellijn> Bestellijnen { get; set; }
     }
 }

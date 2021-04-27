@@ -1,0 +1,40 @@
+﻿@model IEnumerable<Product>
+@{
+    ViewData["Title"] = "Stockbeheer";
+    int teller = 0;
+}
+
+<div class="container">
+    <table class="table table-bordered">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Naam)
+            </th>
+            <th class="text-center">
+                @Html.DisplayNameFor(model => model.Ijskast)
+            </th>
+            <th class="text-center">
+                @Html.DisplayNameFor(model => model.OverigeStock)
+            </th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Naam)
+                </td>
+                <td class="text-center  ">
+                    <p class="@((item.Ijskast <= 10) ? "text-danger" :"")">
+                        @Html.DisplayFor(modelItem => item.Ijskast)
+                    </p>
+                </td>
+                <td class="text-center  ">
+                    <p class="@((item.OverigeStock <= 10) ? "text-danger" :"") ">
+                        @Html.DisplayFor(modelItem => item.OverigeStock)
+                    </p>
+                </td>
+            </tr>
+            teller++;
+        }
+    </table>
+</div>

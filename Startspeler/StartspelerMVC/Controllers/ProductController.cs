@@ -34,6 +34,12 @@ namespace StartspelerMVC.Controllers
             return View(viewmodel);
         }
 
+        // GET: Stockbeheer
+        public async Task<IActionResult> Stockbeheer()
+        {
+            return View(await _context.Producten.ToListAsync());
+        }
+
         // GET: product gefilterd op categorie
 
         public async Task<IActionResult> Search(OverzichtProductViewModel viewmodel)
