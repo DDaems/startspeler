@@ -30,9 +30,10 @@ namespace StartspelerMVC
             services.AddDbContext<StartspelerContext>(options =>
                 //options.UseSqlServer(Configuration.GetConnectionString("StartspelerConnection")));
                 options.UseSqlServer(Configuration.GetConnectionString("Localhost")));
-            services.AddDefaultIdentity<User>().AddEntityFrameworkStores<StartspelerContext>();
+            
+            services.AddDefaultIdentity<User>().AddRoles<IdentityRole>().AddEntityFrameworkStores<StartspelerContext>();
             //services.AddIdentity<User, IdentityRole>()
-              //  .AddEntityFrameworkStores<StartspelerContext>();
+            //  .AddEntityFrameworkStores<StartspelerContext>();
             services.AddControllersWithViews();
 
             services.AddRazorPages();
@@ -85,7 +86,7 @@ namespace StartspelerMVC
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+            
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
@@ -95,6 +96,10 @@ namespace StartspelerMVC
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapAreaControllerRoute(
+                   name: "Admin",
+                   areaName: "Admin",
+                   pattern: "Admin/{controller=Home}/{action=Index}");
                 endpoints.MapRazorPages();
             });
         }

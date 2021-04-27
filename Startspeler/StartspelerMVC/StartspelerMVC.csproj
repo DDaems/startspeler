@@ -6,6 +6,22 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Areas\Admin\Views\Role\NewFolder\**" />
+    <Compile Remove="Areas\test\**" />
+    <Content Remove="Areas\Admin\Views\Role\NewFolder\**" />
+    <Content Remove="Areas\test\**" />
+    <EmbeddedResource Remove="Areas\Admin\Views\Role\NewFolder\**" />
+    <EmbeddedResource Remove="Areas\test\**" />
+    <None Remove="Areas\Admin\Views\Role\NewFolder\**" />
+    <None Remove="Areas\test\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Migrations\20210427174351_UpdateDrakkaart.cs" />
+    <Compile Remove="Migrations\20210427174351_UpdateDrakkaart.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.13" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.13" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.13" />
@@ -21,6 +37,11 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.BrowserLink" Version="2.2.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.5" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Utils" Version="3.1.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Areas\Admin\Data\" />
+    <Folder Include="Areas\Admin\Models\" />
   </ItemGroup>
 
 </Project>
