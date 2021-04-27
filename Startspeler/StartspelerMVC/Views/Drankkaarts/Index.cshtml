@@ -1,0 +1,49 @@
+﻿@model IEnumerable<StartspelerMVC.Models.Drankkaart>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Aantal_Verbruikt)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Aantal_Verbruikt)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.DrankkaartID">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.DrankkaartID">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.DrankkaartID">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<h1>Geschiedenis</h1>
+
+<div>
+    <h4>Drankkaart</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Aantal_Verbruikt)
+        </dt>
+        
+    </dl>
+</div>
