@@ -7,7 +7,7 @@
 <div class="container">
     <table class="table table-bordered">
         <tr>
-            <th>
+            <th class="text-left">
                 @Html.DisplayNameFor(model => model.Naam)
             </th>
             <th class="text-center">
@@ -20,18 +20,20 @@
         @foreach (var item in Model)
         {
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Naam)
+                <td class="text-left">
+                    <div>
+                        @Html.DisplayFor(modelItem => item.Naam)
+                    </div>
                 </td>
-                <td class="text-center  ">
-                    <p class="@((item.Ijskast <= 10) ? "text-danger" :"")">
+                <td class="text-center">
+                    <div class="@((item.Ijskast <= 10) ? "text-danger" :"")">
                         @Html.DisplayFor(modelItem => item.Ijskast)
-                    </p>
+                    </div>
                 </td>
-                <td class="text-center  ">
-                    <p class="@((item.OverigeStock <= 10) ? "text-danger" :"") ">
+                <td class="text-center">
+                    <div class=" @((item.OverigeStock <= 10) ? "text-danger" :"") ">
                         @Html.DisplayFor(modelItem => item.OverigeStock)
-                    </p>
+                    </div>
                 </td>
             </tr>
             teller++;
