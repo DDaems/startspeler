@@ -93,14 +93,14 @@ namespace StartspelerMVC
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapAreaControllerRoute(
                    name: "Admin",
                    areaName: "Admin",
-                   pattern: "Admin/{controller=Home}/{action=Index}");
-                endpoints.MapRazorPages();
+                   pattern: "{area:exists}/{controller=Home}/{action=Index}");
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
+            endpoints.MapRazorPages();
             });
         }
     }
