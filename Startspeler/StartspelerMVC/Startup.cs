@@ -96,9 +96,9 @@ namespace StartspelerMVC
                 endpoints.MapAreaControllerRoute(
                    name: "Admin",
                    areaName: "Admin",
-                   pattern: "{area:exists}/{controller=Home}/{action=Index}");
+                   pattern: "Admin/{controller=Home}/{action=Index}");
                 endpoints.MapControllerRoute(
-                    name: "default",
+                    name: "Default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             endpoints.MapRazorPages();
             });
