@@ -26,7 +26,7 @@ namespace StartspelerMVC.Controllers
             return View(await _context.Producten.ToListAsync());
         }
 
-        public async Task<IActionResult> BevestigBestelling(OverzichtProductViewModel viewmodel)
+        public IActionResult BevestigBestelling(OverzichtProductViewModel viewmodel)
         {
             return View(viewmodel);
         }
@@ -76,25 +76,42 @@ namespace StartspelerMVC.Controllers
         public async Task<IActionResult> Search(OverzichtProductViewModel viewmodel)
         {
             viewmodel.Categories = await _context.Categories.ToListAsync();
+            viewmodel.Bestelling = new Bestelling();
 
             if (!string.IsNullOrEmpty(viewmodel.CategorieSearch))
             {
                 if (viewmodel.CategorieSearch == "Alles")
                 {
-                    viewmodel.Producten = await _context.Producten.Include(b => b.Categorie).ToListAsync();
-                    return View("DrankOverzicht", viewmodel);
+                    var alleproducten = await _context.Producten.Include(b => b.Categorie).ToListAsync();
+
+                    viewmodel.Bestelling.Items = new List<Bestellijn>();
+                    foreach (var product in alleproducten)
+                    {
+                        Bestellijn nieuwelijn = new Bestellijn()
+                        {
+                            Prod = product,
+                            Aantal = 0
+                        };
+                        viewmodel.Bestelling.Items.Add(nieuwelijn);
+                    }
                 }
                 else
                 {
-                    viewmodel.Producten = await _context.Producten
-             .Include(x => x.Categorie)
-             .Where(x => x.Categorie.Naam.Contains(viewmodel.CategorieSearch))
-             .ToListAsync();
+                    var filterproducten = await _context.Producten.Include(x => x.Categorie).Where(x => x.Categorie.Naam.Contains(viewmodel.CategorieSearch)).ToListAsync();
+
+                    viewmodel.Bestelling.Items = new List<Bestellijn>();
+                    foreach (var product in filterproducten)
+                    {
+                        Bestellijn nieuwelijn = new Bestellijn()
+                        {
+                            Prod = product,
+                            Aantal = 0
+                        };
+                        viewmodel.Bestelling.Items.Add(nieuwelijn);
+                    }
                 }
-            }
-            else
-            {
-                viewmodel.Producten = await _context.Producten.Include(b => b.Categorie).ToListAsync();
+
+                return View("DrankOverzicht", viewmodel);
             }
 
             return View("DrankOverzicht", viewmodel);

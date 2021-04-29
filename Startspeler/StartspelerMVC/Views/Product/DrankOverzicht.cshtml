@@ -6,90 +6,95 @@
 
 <h1>Drankoverzicht</h1>
 
-<div class="row top-buffer">
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-9">
+            <form asp-controller="Product" asp-action="BevestigBestelling" enctype="multipart/form-data" method="post">
+                <input type="hidden" asp-for="@Model.Bestelling" />
 
-    <div class="col-8">
-        <table class="table-bordered">
-            <thead>
-                <tr>
-                    <th>
-                        Categorie
-                    </th>
-                    <th class="col-md-6">
-                        Product
-                    </th>
-                    <th class="text-center">
-                        Aantal Consumpties
-                    </th>
-                    <th>
-                        <p class="text-center">Aantal</p>
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                @{int count = 0;}
-                @foreach (var item in Model.Bestelling.Items)
-                {
-                    count++;
-                    <tr>
+                <div class="row">
+                    <table class="table-bordered">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Categorie
+                                </th>
+                                <th class="col-md-6">
+                                    Product
+                                </th>
+                                <th class="text-center">
+                                    Aantal Consumpties
+                                </th>
+                                <th>
+                                    <p class="text-center">Aantal</p>
+                                </th>
+                            </tr>
+                        </thead>
+                        @{int count = 0;}
+                        @foreach (var item in Model.Bestelling.Items)
+                        {
 
-                        <td>
-                            <text class="px-2">@Html.DisplayFor(modelItem => item.Prod.Categorie.Naam)</text>
-                        </td>
+                            <tbody>
+                                <text type="hidden" asp-for="@item.BestellijnID">
+                                    count++;
+                                    <tr>
+                                        <td>
+                                            <text class="px-2" asp-for="@item.Prod.Categorie.Naam">@item.Prod.Categorie.Naam</text>
+                                        </td>
 
-                        <td>
-                            <text class="px-2">@Html.DisplayFor(modelItem => item.Prod.Naam)</text>
-                        </td>
-                        <td class="text-center">
-                            <text class="px-2">@Html.DisplayFor(modelItem => item.Prod.Prijs)</text>
-                        </td>
-                        <td>
+                                        <td>
+                                            <text class="px-2" asp-for="@item.Prod.Naam">@item.Prod.Naam</text>
+                                        </td>
+                                        <td class="text-center">
+                                            <text class="px-2" asp-for="@item.Prod.Prijs">@item.Prod.Prijs</text>
+                                        </td>
+                                        <td>
 
-                            <table border="0">
-                                <tr>
-                                    <td>
-                                        <button type="button" class="btn btn-primary" onclick="amountDown(@count)"> - </button>
-                                    </td>
-                                    <td>
-                                        <input type="text" name="txtAantal" a id="@count" style="min-width:50px" class="text-center form-control" value="0" onkeypress="return isNumberKey(event)">
-                                    </td>
-                                    <td>
-                                        <button type="button" class="btn btn-primary" onclick="amountUp(@count)"> + </button>
-                                    </td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </div>
-    <div class="col-2">
-        <h5>Categorie</h5>
-        <form asp-controller="Product" asp-action="Search" method="get">
-            <!--Geprobeerd om met drukknoppen te werken, maar dan werkt het niet.-->
+                                            <table border="0">
+                                                <tr>
+                                                    <td>
+                                                        <button type="button" class="btn btn-primary" onclick="amountDown(@count)"> - </button>
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="txtAantal" asp-for="@item.Aantal" id="@count" style="min-width:50px" class="text-center form-control" value="0" onkeypress="return isNumberKey(event)">
+                                                    </td>
+                                                    <td>
+                                                        <button type="button" class="btn btn-primary" onclick="amountUp(@count)"> + </button>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                            </tbody>
+                        }
+                    </table>
+                </div>
+                <div class="row">
+                    <input type="submit" class="btn btn-primary" value="Plaats bestelling" />
+                </div>
+            </form>
+        </div>
+        <div class="col-3">
+            <h5>Categorie</h5>
+            <form asp-controller="Product" asp-action="Search" method="get">
+                <!--Geprobeerd om met drukknoppen te werken, maar dan werkt het niet.-->
 
-            <input type="radio" value="Alles" name="categorie" onclick="categorieselectie()" />
-            <label>Toon alles</label>
-            <br />
-
-            @foreach (var item in Model.Bestelling.Items)
-            {
-                <input type="radio" value="@Html.DisplayFor(modelItem => item.Prod.Categorie.Naam)" name="categorie" onclick="categorieselectie()" />
-                <label>@Html.DisplayFor(modelItem => item.Prod.Categorie.Naam)</label>
+                <input type="radio" value="Alles" name="categorie" onclick="categorieselectie()" />
+                <label>Toon alles</label>
                 <br />
-            }
 
-            <p>
-                <input asp-for="CategorieSearch" id="toon" type="text" hidden />
-                <input type="submit" value="Zoeken" class"btn btn-default" />
-            </p>
-        </form>
-    </div>
-</div>
+                @foreach (var item in Model.Categories)
+                {
+                    <input type="radio" value="@Html.DisplayFor(modelItem => item.Naam)" name="categorie" onclick="categorieselectie()" />
+                    <label>@Html.DisplayFor(modelItem => item.Naam)</label>
+                    <br />
+                }
 
-<div class="row top-buffer">
-    <div class="col-8">
-        <button type="button" class="btn btn-primary float-right">Plaats bestelling</button>
+                <p>
+                    <input asp-for="CategorieSearch" id="toon" type="text" hidden />
+                    <input type="submit" value="Zoeken" class"btn btn-default" />
+                </p>
+            </form>
+        </div>
     </div>
 </div>
