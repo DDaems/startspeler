@@ -1,0 +1,43 @@
+﻿
+@model IEnumerable<StartspelerMVC.Viewmodels.OverzichtDrankkaartenViewModel>
+@{
+    ViewData["Title"] = "View";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>View</h1>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Aankoopdatum)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Aantal_beschikbaar)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Groote)
+            </th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Aankoopdatum)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Aantal_beschikbaar)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Groote)
+            </td>
+
+        </tr>
+        }
+    </tbody></table>

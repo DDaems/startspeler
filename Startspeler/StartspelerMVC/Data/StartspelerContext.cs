@@ -16,6 +16,11 @@ namespace StartspelerMVC.Data
             : base(options)
         {
         }
+        public StartspelerContext()
+        {
+
+        }
+
         #region DBSet
         public DbSet<Inschrijving> Inschrijvingen { get; set; }
         public DbSet<Evenement> Evenementen { get; set; }
