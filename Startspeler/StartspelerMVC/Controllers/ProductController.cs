@@ -41,18 +41,21 @@ namespace StartspelerMVC.Controllers
                 viewmodel.Bestelling = new Bestelling();
 
                 List<Bestellijn> nieuwelijst = new List<Bestellijn>();
-
+                int i = 0;
                 //Logica om een lege shopping cart aan te maken.
                 foreach (var product in viewmodel.Producten)
                 {
+                    i++;
+
                     Bestellijn bestellijn = new Bestellijn(product.ProductID)
                     {
+                        BestellijnID = i,
                         Aantal = 0,
                         Prod = product
                     };
                     nieuwelijst.Add(bestellijn);
                 }
-
+                viewmodel.Bestelling.BestellingID = 1;
                 viewmodel.Bestelling.Items = nieuwelijst;
                 return View(viewmodel);
 

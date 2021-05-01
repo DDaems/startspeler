@@ -9,9 +9,9 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-9">
-            <form asp-controller="Product" asp-action="BevestigBestelling" enctype="multipart/form-data" method="post">
-                <input type="hidden" asp-for="@Model.Bestelling" />
 
+            <form asp-controller="Product" asp-action="BevestigBestelling" enctype="multipart/form-data" method="post">
+                <input type="hidden" asp-for="Bestelling.BestellingID" />
                 <div class="row">
                     <table class="table-bordered">
                         <thead>
@@ -31,41 +31,47 @@
                             </tr>
                         </thead>
                         @{int count = 0;}
+
                         @foreach (var item in Model.Bestelling.Items)
                         {
-
                             <tbody>
-                                <text type="hidden" asp-for="@item.BestellijnID">
-                                    count++;
-                                    <tr>
-                                        <td>
-                                            <text class="px-2" asp-for="@item.Prod.Categorie.Naam">@item.Prod.Categorie.Naam</text>
-                                        </td>
 
-                                        <td>
-                                            <text class="px-2" asp-for="@item.Prod.Naam">@item.Prod.Naam</text>
-                                        </td>
-                                        <td class="text-center">
-                                            <text class="px-2" asp-for="@item.Prod.Prijs">@item.Prod.Prijs</text>
-                                        </td>
-                                        <td>
+                                <tr>
+                                    <td>
+                                        <input type="hidden" asp-for="Bestelling.Items[count].BestellijnID" />
+                                        <input type="hidden" asp-for="@Model.Bestelling.Items[count].Prod" value="@Model.Bestelling.Items[count].Prod" />
+                                        <input type="hidden" asp-for="@Model.Bestelling.Items[count].ProductId" value="@Model.Bestelling.Items[count].ProductId" />
 
-                                            <table border="0">
-                                                <tr>
-                                                    <td>
-                                                        <button type="button" class="btn btn-primary" onclick="amountDown(@count)"> - </button>
-                                                    </td>
-                                                    <td>
-                                                        <input type="text" name="txtAantal" asp-for="@item.Aantal" id="@count" style="min-width:50px" class="text-center form-control" value="0" onkeypress="return isNumberKey(event)">
-                                                    </td>
-                                                    <td>
-                                                        <button type="button" class="btn btn-primary" onclick="amountUp(@count)"> + </button>
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                        </td>
-                                    </tr>
+                                        <text class="px-2" asp-for="Bestelling.Items[count].Prod.Categorie.Naam">@Html.DisplayFor(modelitem => item.Prod.Categorie.Naam)</text>
+                                    </td>
+
+                                    <td>
+                                        <text class="px-2">@Html.DisplayFor(modelitem => item.Prod.Naam)</text>
+                                    </td>
+                                    <td class="text-center">
+                                        <text class="px-2">@Html.DisplayFor(modelitem => item.Prod.Prijs)</text>
+                                    </td>
+                                    <td>
+                                        <table border="0">
+                                            <tr>
+                                                <td>
+                                                    <button type="button" class="btn btn-primary" onclick="amountDown(@count)"> - </button>
+                                                </td>
+                                                <td>
+                                                    <input type="text" name="@count" asp-for="@Model.Bestelling.Items[count].Aantal" style="min-width:50px" class="text-center form-control" readonly />
+                                                </td>
+
+                                                <td>
+
+                                                    <button type="button" class="btn btn-primary" onclick="amountUp(@count)"> + </button>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
                             </tbody>
+                            count++;
+
                         }
                     </table>
                 </div>

@@ -17,22 +17,22 @@ namespace StartspelerMVC.Models
             get { return _productId; }
             set
             {
-                // To ensure that the Prod object will be re-created
                 _productId = value;
             }
         }
 
         public Product Prod { get; set; }
 
-        public float SinglePrijs
-        {
-            get { return Prod.Prijs; }
-        }
+        /*          public float SinglePrijs
+                   {
+                       get { return Prod.Prijs; }
+                   }
 
-        public float TotalePrijs
-        {
-            get { return Aantal * SinglePrijs; }
-        }
+                   public float TotalePrijs
+                   {
+                       get { return Aantal * SinglePrijs; }
+                   }
+        */
 
         public Bestellijn()
         {
@@ -44,10 +44,12 @@ namespace StartspelerMVC.Models
             this.Prod = new Product(productid);
         }
 
-        public bool Equals(Bestellijn item)
-        {
-            // Twee lijnen zijn gelijk als het productID gelijk is!!!
-            return item.ProductId == this.ProductId;
-        }
+        /*
+                public bool Equals(Bestellijn item)
+                {
+                    // Twee lijnen zijn gelijk als het productID gelijk is!!!
+                    return item.ProductId == this.ProductId;
+                }
+        */
     }
 }
