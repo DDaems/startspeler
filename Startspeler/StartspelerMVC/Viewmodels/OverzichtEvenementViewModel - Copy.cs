@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace StartspelerMVC.Viewmodels
 {
-    public class OverzichtEvenementViewModel
+    public class OverzichtUserViewModel
     {
         public ICollection<Evenement> LiveEvenementen { get; set; }
 

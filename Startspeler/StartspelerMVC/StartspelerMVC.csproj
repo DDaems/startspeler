@@ -19,6 +19,8 @@
   <ItemGroup>
     <Compile Remove="Migrations\20210427174351_UpdateDrakkaart.cs" />
     <Compile Remove="Migrations\20210427174351_UpdateDrakkaart.Designer.cs" />
+    <Compile Remove="Migrations\20210501132649_CreateDrankkaart_0.cs" />
+    <Compile Remove="Migrations\20210501132649_CreateDrankkaart_0.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

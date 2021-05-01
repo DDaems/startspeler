@@ -10,11 +10,18 @@ namespace StartspelerMVC.Models
     
     public class Drankkaart
     {
+        public Drankkaart()
+        {
+            Aankoopdatum = DateTime.Now;
+            Status = "VOL";
+            //UserID = "2d05100f - 5382 - 4439 - 857d - 67d80b574d6d";
+            //DrankkaartTypeID = 1;
+        }
         [Key]
         public int DrankkaartID { get; set; }
 
-        [ForeignKey("UserID")]
-        public int UserID { get; set; }
+        // [ForeignKey("UserID")]
+        public string UserID { get; set; }
 
         public int Aantal_beschikbaar { get; set; }
 

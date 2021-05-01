@@ -30,6 +30,9 @@ namespace StartspelerMVC.Data
         public DbSet<Bestelling> Bestellingen { get; set; }
         public DbSet<Product> Producten { get; set; }
         public DbSet<Categorie> Categories { get; set; }
+
+        //public DbSet<User> Userss { get; set; }
+
         #endregion
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

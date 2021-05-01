@@ -37,9 +37,9 @@ namespace StartspelerMVC.Controllers
             var drankkaartenlijst = (from Drnk in dbContext.Drankkaarten
 
                                      join Type in dbContext.DrankkaartTypes on Drnk.DrankkaartTypeID equals Type.DrankkaartTypeID
-                                     //join Userss in dbContext.Users on Drnk.UserID equals Userss.Id
+                                     //join Userss in dbContext.Userss on Drnk.UserID equals Userss.Id
                                      orderby Drnk.Aankoopdatum
-                                     select new { Drnk.Aankoopdatum, Drnk.Aantal_beschikbaar, Type.Grootte, Userss.Id }).ToList();
+                                     select new { Drnk.Aankoopdatum, Drnk.Aantal_beschikbaar, Type.Grootte /*, Userss.Id */}).ToList();
 
             foreach (var item in drankkaartenlijst)
             {
@@ -83,7 +83,10 @@ namespace StartspelerMVC.Controllers
         // GET: Drankkaart/Create
         public IActionResult Create()
         {
-            return View();
+            CreateDrankkaartViewModel drankkaartViewModel = new CreateDrankkaartViewModel();
+            drankkaartViewModel.Drankkaart = new Drankkaart();
+            drankkaartViewModel.DrankkaartType = new SelectList(_context.DrankkaartTypes, "DrankkaartTypeID", "Selectnaam");
+            return View(drankkaartViewModel);
         }
 
         // POST: Drankkaart/Create
@@ -91,15 +94,28 @@ namespace StartspelerMVC.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("DrankkaartID,Aantal_beschikbaar,Status,Aankoopdatum,DrankkaartTypeID")] Drankkaart drankkaart)
+        public async Task<IActionResult> Create(CreateDrankkaartViewModel drankkaartVM)
         {
+            // drankkaartVM.Drankkaart.Aankoopdatum = DateTime.Now;
+            //drankkaartVM.Drankkaart.UserID = "2d05100f - 5382 - 4439 - 857d - 67d80b574d6d";
+
+            if (drankkaartVM.Drankkaart.DrankkaartTypeID == 1)
+            {
+                drankkaartVM.Drankkaart.Aantal_beschikbaar = 6;
+            }
+            else
+            {
+                drankkaartVM.Drankkaart.Aantal_beschikbaar = 12;
+            }
+
             if (ModelState.IsValid)
             {
-                _context.Add(drankkaart);
+                _context.Add(drankkaartVM.Drankkaart);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(drankkaart);
+
+            return View(drankkaartVM);
         }
 
         // GET: Drankkaart/Edit/5
