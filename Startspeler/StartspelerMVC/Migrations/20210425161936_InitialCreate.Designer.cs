@@ -10,7 +10,7 @@ using StartspelerMVC.Data;
 namespace StartspelerMVC.Migrations
 {
     [DbContext(typeof(StartspelerContext))]
-    [Migration("20210414190522_InitialCreate")]
+    [Migration("20210425161936_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -20,6 +20,86 @@ namespace StartspelerMVC.Migrations
                 .HasAnnotation("ProductVersion", "3.1.13")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("StartspelerMVC.Models.Bestelling", b =>
+                {
+                    b.Property<int>("BestellingID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("Aantal")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ProductID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserID")
+                        .HasColumnType("int");
+
+                    b.HasKey("BestellingID");
+
+                    b.HasIndex("ProductID");
+
+                    b.HasIndex("UserID");
+
+                    b.ToTable("Bestelling","SS");
+                });
+
+            modelBuilder.Entity("StartspelerMVC.Models.Categorie", b =>
+                {
+                    b.Property<int>("CategorieID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Naam")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("CategorieID");
+
+                    b.ToTable("Categorie","SS");
+                });
+
+            modelBuilder.Entity("StartspelerMVC.Models.Drankkaart", b =>
+                {
+                    b.Property<int>("DrankkaartID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("Aantal_Verbruikt")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DrankkaartTypeID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("userID")
+                        .HasColumnType("int");
+
+                    b.HasKey("DrankkaartID");
+
+                    b.HasIndex("DrankkaartTypeID");
+
+                    b.HasIndex("userID");
+
+                    b.ToTable("Drankkaart","SS");
+                });
+
+            modelBuilder.Entity("StartspelerMVC.Models.DrankkaartType", b =>
+                {
+                    b.Property<int>("DrankkaartTypeID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("Grootte")
+                        .HasColumnType("int");
+
+                    b.HasKey("DrankkaartTypeID");
+
+                    b.ToTable("DrankkaartType","SS");
+                });
 
             modelBuilder.Entity("StartspelerMVC.Models.Evenement", b =>
                 {
@@ -93,6 +173,35 @@ namespace StartspelerMVC.Migrations
                     b.ToTable("Inschrijving","SS");
                 });
 
+            modelBuilder.Entity("StartspelerMVC.Models.Product", b =>
+                {
+                    b.Property<int>("ProductID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CategorieID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Ijskast")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Naam")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("OverigeStock")
+                        .HasColumnType("int");
+
+                    b.Property<float>("Prijs")
+                        .HasColumnType("real");
+
+                    b.HasKey("ProductID");
+
+                    b.HasIndex("CategorieID");
+
+                    b.ToTable("Product","SS");
+                });
+
             modelBuilder.Entity("StartspelerMVC.Models.User", b =>
                 {
                     b.Property<int>("UserID")
@@ -126,6 +235,34 @@ namespace StartspelerMVC.Migrations
                     b.ToTable("User","SS");
                 });
 
+            modelBuilder.Entity("StartspelerMVC.Models.Bestelling", b =>
+                {
+                    b.HasOne("StartspelerMVC.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductID");
+
+                    b.HasOne("StartspelerMVC.Models.User", null)
+                        .WithMany("Bestellingen")
+                        .HasForeignKey("UserID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("StartspelerMVC.Models.Drankkaart", b =>
+                {
+                    b.HasOne("StartspelerMVC.Models.DrankkaartType", null)
+                        .WithMany("Drankkaarten")
+                        .HasForeignKey("DrankkaartTypeID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("StartspelerMVC.Models.User", null)
+                        .WithMany("Drankkaarten")
+                        .HasForeignKey("userID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("StartspelerMVC.Models.Evenement", b =>
                 {
                     b.HasOne("StartspelerMVC.Models.EvenementType", null)
@@ -146,6 +283,15 @@ namespace StartspelerMVC.Migrations
                     b.HasOne("StartspelerMVC.Models.User", null)
                         .WithMany("Inschrijvingen")
                         .HasForeignKey("UserID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("StartspelerMVC.Models.Product", b =>
+                {
+                    b.HasOne("StartspelerMVC.Models.Categorie", "Categorie")
+                        .WithMany("Producten")
+                        .HasForeignKey("CategorieID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

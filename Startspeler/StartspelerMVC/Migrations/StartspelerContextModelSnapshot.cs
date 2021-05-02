@@ -26,10 +26,18 @@ namespace StartspelerMVC.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("Aantal")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ProductID")
+                        .HasColumnType("int");
+
                     b.Property<int>("UserID")
                         .HasColumnType("int");
 
                     b.HasKey("BestellingID");
+
+                    b.HasIndex("ProductID");
 
                     b.HasIndex("UserID");
 
@@ -43,8 +51,8 @@ namespace StartspelerMVC.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("Naam")
-                        .HasColumnType("int");
+                    b.Property<string>("Naam")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("CategorieID");
 
@@ -227,6 +235,10 @@ namespace StartspelerMVC.Migrations
 
             modelBuilder.Entity("StartspelerMVC.Models.Bestelling", b =>
                 {
+                    b.HasOne("StartspelerMVC.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductID");
+
                     b.HasOne("StartspelerMVC.Models.User", null)
                         .WithMany("Bestellingen")
                         .HasForeignKey("UserID")
@@ -275,7 +287,7 @@ namespace StartspelerMVC.Migrations
 
             modelBuilder.Entity("StartspelerMVC.Models.Product", b =>
                 {
-                    b.HasOne("StartspelerMVC.Models.Categorie", null)
+                    b.HasOne("StartspelerMVC.Models.Categorie", "Categorie")
                         .WithMany("Producten")
                         .HasForeignKey("CategorieID")
                         .OnDelete(DeleteBehavior.Cascade)

@@ -1,0 +1,106 @@
+﻿@model StartspelerMVC.Viewmodels.OverzichtProductViewModel
+
+@{
+    ViewData["Title"] = "Drankoverzicht";
+}
+
+<h1>Drankoverzicht</h1>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-9">
+
+            <form asp-controller="Product" asp-action="BevestigBestelling" enctype="multipart/form-data" method="post">
+                <input type="hidden" asp-for="Bestelling.BestellingID" />
+                <div class="row">
+                    <table class="table-bordered">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Categorie
+                                </th>
+                                <th class="col-md-6">
+                                    Product
+                                </th>
+                                <th class="text-center">
+                                    Aantal Consumpties
+                                </th>
+                                <th>
+                                    <p class="text-center">Aantal</p>
+                                </th>
+                            </tr>
+                        </thead>
+                        @{int count = 0;}
+
+                        @foreach (var item in Model.Bestelling.Items)
+                        {
+                            <tbody>
+
+                                <tr>
+                                    <td>
+                                        <input type="hidden" asp-for="Bestelling.Items[count].BestellijnID" />
+                                        <input type="hidden" asp-for="@Model.Bestelling.Items[count].Prod" value="@Model.Bestelling.Items[count].Prod" />
+                                        <input type="hidden" asp-for="@Model.Bestelling.Items[count].ProductId" value="@Model.Bestelling.Items[count].ProductId" />
+
+                                        <text class="px-2" asp-for="Bestelling.Items[count].Prod.Categorie.Naam">@Html.DisplayFor(modelitem => item.Prod.Categorie.Naam)</text>
+                                    </td>
+
+                                    <td>
+                                        <text class="px-2">@Html.DisplayFor(modelitem => item.Prod.Naam)</text>
+                                    </td>
+                                    <td class="text-center">
+                                        <text class="px-2">@Html.DisplayFor(modelitem => item.Prod.Prijs)</text>
+                                    </td>
+                                    <td>
+                                        <table border="0">
+                                            <tr>
+                                                <td>
+                                                    <button type="button" class="btn btn-primary" onclick="amountDown(@count)"> - </button>
+                                                </td>
+                                                <td>
+                                                    <input type="text" id="@count" asp-for="Bestelling.Items[count].Aantal" style="min-width:50px" class="text-center form-control" />
+                                                </td>
+
+                                                <td>
+
+                                                    <button type="button" class="btn btn-primary" onclick="amountUp(@count)"> + </button>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            count++;
+
+                        }
+                    </table>
+                </div>
+                <div class="row">
+                    <input type="submit" class="btn btn-primary" value="Plaats bestelling" />
+                </div>
+            </form>
+        </div>
+        <div class="col-3">
+            <h5>Categorie</h5>
+            <form asp-controller="Product" asp-action="Search" method="get">
+                <!--Geprobeerd om met drukknoppen te werken, maar dan werkt het niet.-->
+
+                <input type="radio" value="Alles" name="categorie" onclick="categorieselectie()" />
+                <label>Toon alles</label>
+                <br />
+
+                @foreach (var item in Model.Categories)
+                {
+                    <input type="radio" value="@Html.DisplayFor(modelItem => item.Naam)" name="categorie" onclick="categorieselectie()" />
+                    <label>@Html.DisplayFor(modelItem => item.Naam)</label>
+                    <br />
+                }
+
+                <p>
+                    <input asp-for="CategorieSearch" id="toon" type="text" hidden />
+                    <input type="submit" value="Zoeken" class"btn btn-default" />
+                </p>
+            </form>
+        </div>
+    </div>
+</div>

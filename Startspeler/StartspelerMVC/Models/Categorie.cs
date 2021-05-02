@@ -9,7 +9,7 @@ namespace StartspelerMVC.Models
     {
         public int CategorieID { get; set; }
 
-        public int Naam { get; set; }
+        public string Naam { get; set; }
 
         public ICollection<Product> Producten { get; set; }
     }

@@ -1,0 +1,54 @@
+﻿@model StartspelerMVC.Viewmodels.OverzichtProductViewModel
+
+@if (Model.Bestelling.Items != null)
+{
+    <div class="row top-buffer">
+        <div class="col-12">
+            <table class="table-bordered">
+
+                <thead>
+                    <tr>
+                        <th style="width:50%;">
+                            Product
+                        </th>
+                        <th style="width:25%;">
+                            Aantal Consumpties
+                        </th>
+                        <th style="width:25%;text-align:center;">
+                            Totale prijs
+                        </th>
+                    </tr>
+                </thead>
+                @foreach (var item in Model.Bestelling.Items)
+                {
+                    <tr>
+                        <td>
+                            <text>@item.Prod.Naam</text>
+                        </td>
+                        <td class="text-center">
+                            <text>@item.Aantal</text>
+                        </td>
+                        <td style="text-align: center;">
+                            <text>Totale prijs per item</text>
+                        </td>
+                    </tr>
+                }
+                <tr>
+                    <td>
+                        <text>Totaal</text>
+                    </td>
+                    <td>
+                    </td>
+                    <td style="text-align: center;">
+                        <text class="text-center">@Model.TotalePrijs Bonnen</text>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="row">
+        <input type="submit" class="btn btn-primary" value="Bevestig bestelling" />
+    </div>
+
+}
