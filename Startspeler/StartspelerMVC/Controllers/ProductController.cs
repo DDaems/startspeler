@@ -28,6 +28,17 @@ namespace StartspelerMVC.Controllers
 
         public IActionResult BevestigBestelling(OverzichtProductViewModel viewmodel)
         {
+            int i = 0;
+            float prijs = 0;
+            foreach (var item in viewmodel.Bestelling.Items)
+            {
+                viewmodel.Bestelling.Items[i].Prod = _context.Producten.Include(x => x.Categorie).Where(x => x.ProductID == item.ProductId).FirstOrDefault();
+                prijs = prijs + item.Aantal * viewmodel.Bestelling.Items[i].Prod.Prijs;
+                i++;
+            }
+
+            viewmodel.TotalePrijs = prijs;
+
             return View(viewmodel);
         }
 

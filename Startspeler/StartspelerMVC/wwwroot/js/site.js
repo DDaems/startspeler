@@ -41,18 +41,18 @@ function categorieselectie() {
 }
 
 function amountUp(id) {
-    var aantal = parseInt(document.getElementsByName(id)[0].value);
+    var aantal = parseInt(document.getElementById(id).value);
     aantal = aantal + 1;
-    document.getElementsByName(id)[0].value = aantal;
+    document.getElementById(id).value = aantal;
 }
 
 function amountDown(id) {
-    var aantal = parseInt(document.getElementsByName(id)[0].value);
+    var aantal = parseInt(document.getElementById(id).value);
 
     if (aantal == 0) {
-        document.getElementsByName(id)[0].value = aantal;
+        document.getElementById(id).value = aantal;
     } else {
         aantal = aantal - 1;
-        document.getElementsByName(id)[0].value = aantal;
+        document.getElementById(id).value = aantal;
     }
 }

@@ -58,7 +58,7 @@
                                                     <button type="button" class="btn btn-primary" onclick="amountDown(@count)"> - </button>
                                                 </td>
                                                 <td>
-                                                    <input type="text" name="@count" asp-for="@Model.Bestelling.Items[count].Aantal" style="min-width:50px" class="text-center form-control" readonly />
+                                                    <input type="text" id="@count" asp-for="Bestelling.Items[count].Aantal" style="min-width:50px" class="text-center form-control" />
                                                 </td>
 
                                                 <td>

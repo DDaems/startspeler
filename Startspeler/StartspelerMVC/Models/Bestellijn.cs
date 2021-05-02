@@ -8,7 +8,13 @@ namespace StartspelerMVC.Models
     public class Bestellijn
     {
         public int BestellijnID { get; set; }
-        public int Aantal { get; set; }
+        private int _aantal;
+
+        public int Aantal
+        {
+            get { return _aantal; }
+            set { _aantal = value; }
+        }
 
         private int _productId;
 
