@@ -15,11 +15,18 @@ namespace StartspelerMVC.Viewmodels
 
         */
 
+        public string Zoekterm { get; set; }
+
+        public string Voornaam { get; set; }
+
+        public string Achternaam { get; set; }
         public DateTime Aankoopdatum { get; set; }
 
         public int Aantal_beschikbaar { get; set; }
 
         public int Groote { get; set; }
+
+        
 
     }
 }

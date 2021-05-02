@@ -1,47 +1,62 @@
 ﻿@model IEnumerable<StartspelerMVC.Models.Drankkaart>
+@using Microsoft.AspNetCore.Identity
+
+@inject UserManager<User> UserManager
 
 @{
     ViewData["Title"] = "Index";
+    var user = await UserManager.GetUserAsync(User);
 }
 
-<h1>Index</h1>
+@if (User.Identity.IsAuthenticated)
+{
+    <h1>
+        <a id="manage" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Vind je drank @user.Voornaam !</a>
+    </h1>
+}
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Nieuwe drankkaart aankopen?</a>
 </p>
 <table class="table">
     <thead>
         <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Aankoopdatum)
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Aantal_beschikbaar)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Status)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Aankoopdatum)
-            </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Aantal_beschikbaar)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Status)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Aankoopdatum)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.DrankkaartID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.DrankkaartID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.DrankkaartID">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Aankoopdatum)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Aantal_beschikbaar)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Status)
+                </td>
+
+                @if (this.User.IsInRole("Admin"))
+                {
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.DrankkaartID">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.DrankkaartID">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.DrankkaartID">Delete</a>
+                    </td>
+                }
+
+            </tr>
+        }
     </tbody>
 </table>
