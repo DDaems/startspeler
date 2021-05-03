@@ -10,6 +10,7 @@ using StartspelerMVC.Data;
 using StartspelerMVC.Models;
 using StartspelerMVC.Viewmodels;
 using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
 
 namespace StartspelerMVC.Controllers
 {
@@ -26,24 +27,39 @@ namespace StartspelerMVC.Controllers
             
         }
 
+        [Authorize]
         // GET: Drankkaart
         public async Task<IActionResult> Index(/*string voornaam*/)
         {
-            /*
-            var drankkaartenlijst = await _context.Users
-                .Include(x => x.Drankkaarten)
-                .Where(x => x.Voornaam == voornaam)
-                 .Include(x => x.Drankkaarten)
-                 .ToListAsync();
-            return View(drankkaartenlijst);
-            */
 
-            //var mailadres = await _userManager.GetUserAsync(HttpContext.User);
-
-            //var regel = mailadres.ToString();
-
-            return View(await _context.Drankkaarten.ToListAsync());
+            var mailadres = await _userManager.GetUserAsync(HttpContext.User);
             
+            var regel = mailadres.ToString();
+
+
+            List<UserOverzichtViewModel> listVM = new List<UserOverzichtViewModel>();
+
+            var drankkaartenlijst = (from Drnk in _context.Drankkaarten
+                                     join Type in _context.DrankkaartTypes on Drnk.DrankkaartTypeID equals Type.DrankkaartTypeID
+                                     join Users in _context.Users on Drnk.UserID equals Users.Id
+                                     where Users.Email == regel
+                                     orderby Drnk.Aankoopdatum
+                                     select new { Drnk.DrankkaartID, Drnk.Aankoopdatum, Drnk.Aantal_beschikbaar, Drnk.Status, Type.Grootte }).ToList();
+            foreach (var item in drankkaartenlijst)
+            {
+                UserOverzichtViewModel userDrankkaart = new UserOverzichtViewModel();
+                userDrankkaart.Aankoopdatum = item.Aankoopdatum;
+                userDrankkaart.Aantal_beschikbaar = item.Aantal_beschikbaar;
+                userDrankkaart.DrankkaartID = item.DrankkaartID;
+                userDrankkaart.Status = item.Status;
+                userDrankkaart.Grootte = item.Grootte;
+                listVM.Add(userDrankkaart);
+
+            }
+
+                return View(listVM);
+            //return View(await _context.Drankkaarten.ToListAsync());
+
         }
 
         public async Task<IActionResult> Overzicht()
@@ -56,7 +72,7 @@ namespace StartspelerMVC.Controllers
                                      join Type in _context.DrankkaartTypes on Drnk.DrankkaartTypeID equals Type.DrankkaartTypeID
                                      join Users in _context.Users on Drnk.UserID equals Users.Id
                                      orderby Drnk.Aankoopdatum
-                                     select new { Drnk.Aankoopdatum, Drnk.Aantal_beschikbaar, Type.Grootte , Users.Voornaam, Users.Achternaam}).ToList();
+                                     select new { Drnk.DrankkaartID, Drnk.Aankoopdatum, Drnk.Aantal_beschikbaar, Type.Grootte , Users.Voornaam, Users.Achternaam, Drnk.Status}).ToList();
 
             foreach (var item in drankkaartenlijst)
             {
@@ -66,6 +82,8 @@ namespace StartspelerMVC.Controllers
                 overzichtItem.Groote = item.Grootte;
                 overzichtItem.Voornaam = item.Voornaam;
                 overzichtItem.Achternaam = item.Achternaam;
+                overzichtItem.Status = item.Status;
+                overzichtItem.DrankkaartID = item.DrankkaartID;
                 DrankkaartenVMlijst.Add(overzichtItem);
             }
 
@@ -170,8 +188,10 @@ namespace StartspelerMVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CreateDrankkaartViewModel drankkaartVM)
         {
-            // drankkaartVM.Drankkaart.Aankoopdatum = DateTime.Now;
-            //drankkaartVM.Drankkaart.UserID = "2d05100f - 5382 - 4439 - 857d - 67d80b574d6d";
+
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+
+            drankkaartVM.Drankkaart.UserID = user.Id;
 
             if (drankkaartVM.Drankkaart.DrankkaartTypeID == 1)
             {
@@ -193,34 +213,52 @@ namespace StartspelerMVC.Controllers
         }
 
 
-        [Authorize(Roles = "Admin")]
+        // [Authorize(Roles = "Admin")]
         // GET: Drankkaart/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+
+
+            CreateDrankkaartViewModel drankkaartViewModel = new CreateDrankkaartViewModel();
+            drankkaartViewModel.Drankkaart = new Drankkaart();
+            drankkaartViewModel.DrankkaartType = new SelectList(_context.DrankkaartTypes, "DrankkaartTypeID", "Selectnaam");
+
             if (id == null)
             {
                 return NotFound();
             }
 
-            var drankkaart = await _context.Drankkaarten.FindAsync(id);
-            if (drankkaart == null)
+            drankkaartViewModel.Drankkaart = await _context.Drankkaarten.FindAsync(id);
+            drankkaartViewModel.Drankkaart.UserID = drankkaartViewModel.Drankkaart.UserID;
+            if (drankkaartViewModel.Drankkaart == null)
             {
                 return NotFound();
             }
-            return View(drankkaart);
+            return View(drankkaartViewModel);
         }
+
+
 
         // POST: Drankkaart/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("DrankkaartID,Aantal_beschikbaar,Status,Aankoopdatum,DrankkaartTypeID")] Drankkaart drankkaart)
+        public async Task<IActionResult> Edit(int id, [Bind("DrankkaartID,UserID, Aantal_beschikbaar,Status,DrankkaartTypeID")] Drankkaart drankkaart)
         {
+            
             if (id != drankkaart.DrankkaartID)
             {
                 return NotFound();
             }
+
+            /*
+            // userId wordt niet meegegeven
+            var drankkaartMeta = await _context.Drankkaarten
+                .FirstOrDefaultAsync(m => m.DrankkaartID == id);
+
+            drankkaart.UserID = drankkaartMeta.UserID;
+            */
 
             if (ModelState.IsValid)
             {

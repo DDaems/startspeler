@@ -5,6 +5,7 @@
     ViewData["Title"] = "View";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var zoekterm = "";
+    //zoekterm moet gekoppeld worden aan OverzichtDrankkaartenViewModel.Zoekterm
 }
 
 <h1>Overzicht</h1>
@@ -13,6 +14,7 @@
     <div class="form-actions no-color">
         <p>
             Zoek op naam:
+            
             <input asp-for="@zoekterm" />
             <!-- <input asp-for="" /> -->
             <input type="submit" value="Zoeken" class="btn btn-default" /> |
@@ -39,6 +41,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.Groote)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
 
         </tr>
     </thead>
@@ -61,6 +66,12 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Groote)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.DrankkaartID">Edit</a>
             </td>
 
         </tr>

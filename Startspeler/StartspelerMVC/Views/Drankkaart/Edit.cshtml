@@ -1,4 +1,4 @@
-﻿@model StartspelerMVC.Models.Drankkaart
+﻿@model StartspelerMVC.Viewmodels.CreateDrankkaartViewModel
 
 @{
     ViewData["Title"] = "Edit";
@@ -12,26 +12,22 @@
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="DrankkaartID" />
+            <input type="hidden" asp-for="Drankkaart.DrankkaartID" />
+            <input type="hidden" asp-for="Drankkaart.UserID" />
             <div class="form-group">
-                <label asp-for="Aantal_beschikbaar" class="control-label"></label>
-                <input asp-for="Aantal_beschikbaar" class="form-control" />
-                <span asp-validation-for="Aantal_beschikbaar" class="text-danger"></span>
+                <label asp-for="Drankkaart.Aantal_beschikbaar" class="control-label"></label>
+                <input asp-for="Drankkaart.Aantal_beschikbaar" class="form-control" />
+                <span asp-validation-for="Drankkaart.Aantal_beschikbaar" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Status" class="control-label"></label>
-                <input asp-for="Status" class="form-control" />
-                <span asp-validation-for="Status" class="text-danger"></span>
+                <label asp-for="Drankkaart.Status" class="control-label"></label>
+                <input asp-for="Drankkaart.Status" class="form-control" />
+                <span asp-validation-for="Drankkaart.Status" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Aankoopdatum" class="control-label"></label>
-                <input asp-for="Aankoopdatum" class="form-control" />
-                <span asp-validation-for="Aankoopdatum" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DrankkaartTypeID" class="control-label"></label>
-                <select asp-for="DrankkaartTypeID" class="form-control" asp-items="ViewBag.DrankkaartTypeID"></select>
-                <span asp-validation-for="DrankkaartTypeID" class="text-danger"></span>
+                <label asp-for="Drankkaart.DrankkaartTypeID" class="control-label"></label>
+                <select asp-for="Drankkaart.DrankkaartTypeID" class="form-control" asp-items="Model.DrankkaartType"></select>
+                <span asp-validation-for="Drankkaart.DrankkaartTypeID" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

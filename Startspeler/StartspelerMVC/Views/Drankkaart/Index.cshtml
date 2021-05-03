@@ -1,4 +1,4 @@
-﻿@model IEnumerable<StartspelerMVC.Models.Drankkaart>
+﻿@model IEnumerable<StartspelerMVC.Viewmodels.UserOverzichtViewModel>
 @using Microsoft.AspNetCore.Identity
 
 @inject UserManager<User> UserManager
@@ -11,7 +11,7 @@
 @if (User.Identity.IsAuthenticated)
 {
     <h1>
-        <a id="manage" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Vind je drank @user.Voornaam !</a>
+        <a id="manage" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hoi @user.Voornaam !</a>
     </h1>
 }
 

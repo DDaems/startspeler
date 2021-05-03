@@ -26,7 +26,12 @@ namespace StartspelerMVC.Viewmodels
 
         public int Groote { get; set; }
 
-        
+        public string Status { get; set; }
+
+        public int DrankkaartID { get; set; }
+
+
+
 
     }
 }
