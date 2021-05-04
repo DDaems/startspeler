@@ -1,0 +1,80 @@
+﻿
+@model IEnumerable<StartspelerMVC.Viewmodels.OverzichtDrankkaartenViewModel>
+
+@{
+    ViewData["Title"] = "View";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var zoekterm = "";
+    //zoekterm moet gekoppeld worden aan OverzichtDrankkaartenViewModel.Zoekterm
+}
+
+<h1>Overzicht</h1>
+
+<form asp-controller="Drankkaart" asp-action="Search" method="get">
+    <div class="form-actions no-color">
+        <p>
+            Zoek op naam:
+            
+            <input asp-for="@zoekterm" />
+            <!-- <input asp-for="" /> -->
+            <input type="submit" value="Zoeken" class="btn btn-default" /> |
+            <a asp-controller="Drankkaart" asp-action="Overzicht">Terug  naar volledige lijst</a>
+        </p>
+    </div>
+</form>
+
+<table class="table table-bordered table-condensed table-striped">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Aankoopdatum)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Voornaam)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Achternaam)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Aantal_beschikbaar)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Groote)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Aankoopdatum)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Voornaam)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Achternaam)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Aantal_beschikbaar)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Groote)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.DrankkaartID">Edit</a>
+            </td>
+
+        </tr>
+        }
+    </tbody>
+</table>

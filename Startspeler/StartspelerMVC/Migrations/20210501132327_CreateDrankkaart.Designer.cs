@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StartspelerMVC.Data;
 
 namespace StartspelerMVC.Migrations
 {
     [DbContext(typeof(StartspelerContext))]
-    partial class StartspelerContextModelSnapshot : ModelSnapshot
+    [Migration("20210501132327_CreateDrankkaart")]
+    partial class CreateDrankkaart
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -162,20 +164,12 @@ namespace StartspelerMVC.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("Aantal")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ProductID")
-                        .HasColumnType("int");
-
                     b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");;
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("BestellingID");
 
-                    b.HasIndex("ProductID");
-
-                    b.HasIndex("UserID");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Bestellingen");
                 });
@@ -187,8 +181,8 @@ namespace StartspelerMVC.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Naam")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Naam")
+                        .HasColumnType("int");
 
                     b.HasKey("CategorieID");
 
@@ -429,10 +423,6 @@ namespace StartspelerMVC.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("StartspelerMVC.Models.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductID");
-
                     b.HasOne("StartspelerMVC.Models.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
@@ -517,7 +507,7 @@ namespace StartspelerMVC.Migrations
 
             modelBuilder.Entity("StartspelerMVC.Models.Product", b =>
                 {
-                    b.HasOne("StartspelerMVC.Models.Categorie", "Categorie")
+                    b.HasOne("StartspelerMVC.Models.Categorie", null)
                         .WithMany("Producten")
                         .HasForeignKey("CategorieID")
                         .OnDelete(DeleteBehavior.Cascade)
