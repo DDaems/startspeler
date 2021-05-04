@@ -1,26 +1,35 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace StartspelerMVC.Models
 {
-    public class User
+    public class User : IdentityUser
     {
-        public int UserID { get; set; }
+        //[Key]
+        //public int UserID { get; set; }
+
+        [Required]
+        [PersonalData]
         public string Voornaam { get; set; }
-
+        [Required]
+        [PersonalData]
         public string Achternaam { get; set; }
-
+        [Required]
+        [PersonalData]
+        [DataType(DataType.Date)]
         public DateTime Geboortedatum { get; set; }
+        //We gebruiken password veld van Identity
+        //public int Pincode { get; set; }
 
-        public int Pincode { get; set; }
+        //public string token { get; set; }
 
-        public string token { get; set; }
+        //public Boolean Admin { get; set; }
 
-        public Boolean Admin { get; set; }
-
-        public string Email { get; set; }
+       // public string Email { get; set; }
 
         public ICollection<Inschrijving> Inschrijvingen { get; set; }
 

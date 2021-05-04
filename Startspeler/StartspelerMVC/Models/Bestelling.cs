@@ -9,7 +9,7 @@ namespace StartspelerMVC.Models
     {
         public int BestellingID { get; set; }
 
-        public int UserID { get; set; }
+       // public int UserID { get; set; }
 
         public List<Bestellijn> Items { get; set; }
 
