@@ -12,6 +12,11 @@
             <hr />
             <div asp-validation-summary="All" class="text-danger"></div>
             <div class="form-group">
+                <label asp-for="Input.Usernaam"></label>
+                <input asp-for="Input.Usernaam" class="form-control" />
+                <span asp-validation-for="Input.Usernaam" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="Input.Achternaam"></label>
                 <input asp-for="Input.Achternaam" class="form-control" />
                 <span asp-validation-for="Input.Achternaam" class="text-danger"></span>
@@ -31,7 +36,7 @@
                 <input asp-for="Input.Email" class="form-control" />
                 <span asp-validation-for="Input.Email" class="text-danger"></span>
             </div>
-            
+
             <div class="form-group mt-5">
                 <label asp-for="Input.Password"></label>
                 <input asp-for="Input.Password" class="form-control" />

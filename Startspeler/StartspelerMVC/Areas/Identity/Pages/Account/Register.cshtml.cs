@@ -47,6 +47,10 @@ namespace StartspelerMVC.Areas.Identity.Pages.Account
         public class InputModel
         {
             [Required]
+            [Display(Name = "Alias")]
+            public string Usernaam { get; set; }
+
+            [Required]
             [Display(Name = "Naam")]
             public string Achternaam { get; set; }
 
@@ -92,7 +96,7 @@ namespace StartspelerMVC.Areas.Identity.Pages.Account
                     Achternaam = Input.Achternaam,
                     Voornaam = Input.Voornaam,
                     Geboortedatum = Convert.ToDateTime(Input.Geboortedatum),
-                    UserName = Input.Email, 
+                    UserName = Input.Usernaam,
                     Email = Input.Email };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
