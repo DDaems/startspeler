@@ -13,7 +13,7 @@ namespace StartspelerMVC.Models
         public Drankkaart()
         {
             Aankoopdatum = DateTime.Now;
-            Status = "VOL";
+            Status = "LEEG";
             //UserID = "2d05100f - 5382 - 4439 - 857d - 67d80b574d6d";
             //DrankkaartTypeID = 1;
         }
