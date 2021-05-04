@@ -30,6 +30,7 @@ namespace StartspelerMVC.Areas.Identity.Pages.Account
             _signInManager = signInManager;
             _logger = logger;
         }
+        
 
         [BindProperty]
         public InputModel Input { get; set; }
@@ -44,14 +45,15 @@ namespace StartspelerMVC.Areas.Identity.Pages.Account
         public class InputModel
         {
             [Required]
-            [EmailAddress]
+            [Display(Name ="Gebruikersnaam")]
             public string Email { get; set; }
 
             [Required]
             [DataType(DataType.Password)]
+            [Display(Name = "Pincode")]
             public string Password { get; set; }
 
-            [Display(Name = "Remember me?")]
+            [Display(Name = "Onthouden?")]
             public bool RememberMe { get; set; }
         }
 
@@ -97,7 +99,7 @@ namespace StartspelerMVC.Areas.Identity.Pages.Account
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    ModelState.AddModelError(string.Empty, "Login gegevens niet correct.");
                     return Page();
                 }
             }

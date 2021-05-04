@@ -46,7 +46,7 @@ namespace StartspelerMVC.Areas.Identity.Pages.Account.Manage
         {
             [Required]
             [EmailAddress]
-            [Display(Name = "New email")]
+            [Display(Name = "Nieuwe email")]
             public string NewEmail { get; set; }
         }
 
@@ -101,14 +101,14 @@ namespace StartspelerMVC.Areas.Identity.Pages.Account.Manage
                     protocol: Request.Scheme);
                 await _emailSender.SendEmailAsync(
                     Input.NewEmail,
-                    "Confirm your email",
-                    $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                    "Bevestig uw email",
+                    $"Bevestig uw email door <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>hier te klikken</a>.");
 
-                StatusMessage = "Confirmation link to change email sent. Please check your email.";
+                StatusMessage = "Bevestigings email met link verzonden. Graag uw email controleren.";
                 return RedirectToPage();
             }
 
-            StatusMessage = "Your email is unchanged.";
+            StatusMessage = "Uw email is niet gewijzigd.";
             return RedirectToPage();
         }
 
@@ -137,10 +137,11 @@ namespace StartspelerMVC.Areas.Identity.Pages.Account.Manage
                 protocol: Request.Scheme);
             await _emailSender.SendEmailAsync(
                 email,
-                "Confirm your email",
-                $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                    "Bevestig uw email",
+                    $"Bevestig uw email door <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>hier te klikken</a>.");
 
-            StatusMessage = "Verification email sent. Please check your email.";
+
+            StatusMessage = "Bevestigings email met link verzonden. Graag uw email controleren.";
             return RedirectToPage();
         }
     }

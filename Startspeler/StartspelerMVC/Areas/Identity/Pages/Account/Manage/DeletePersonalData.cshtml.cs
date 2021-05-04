@@ -32,6 +32,7 @@ namespace StartspelerMVC.Areas.Identity.Pages.Account.Manage
         {
             [Required]
             [DataType(DataType.Password)]
+            [Display(Name = "Pincode")]
             public string Password { get; set; }
         }
 
@@ -62,7 +63,7 @@ namespace StartspelerMVC.Areas.Identity.Pages.Account.Manage
             {
                 if (!await _userManager.CheckPasswordAsync(user, Input.Password))
                 {
-                    ModelState.AddModelError(string.Empty, "Incorrect password.");
+                    ModelState.AddModelError(string.Empty, "Pincode niet juist.");
                     return Page();
                 }
             }

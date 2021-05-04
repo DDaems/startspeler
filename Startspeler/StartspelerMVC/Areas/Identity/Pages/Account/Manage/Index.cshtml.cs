@@ -34,7 +34,7 @@ namespace StartspelerMVC.Areas.Identity.Pages.Account.Manage
         public class InputModel
         {
             [Phone]
-            [Display(Name = "Phone number")]
+            [Display(Name = "Telefoon nummer")]
             public string PhoneNumber { get; set; }
         }
 
@@ -83,13 +83,13 @@ namespace StartspelerMVC.Areas.Identity.Pages.Account.Manage
                 var setPhoneResult = await _userManager.SetPhoneNumberAsync(user, Input.PhoneNumber);
                 if (!setPhoneResult.Succeeded)
                 {
-                    StatusMessage = "Unexpected error when trying to set phone number.";
+                    StatusMessage = "Onverwachte fout bij het instellen van het telefoonnummer.";
                     return RedirectToPage();
                 }
             }
 
             await _signInManager.RefreshSignInAsync(user);
-            StatusMessage = "Your profile has been updated";
+            StatusMessage = "Uw profiel is aangepast.";
             return RedirectToPage();
         }
     }

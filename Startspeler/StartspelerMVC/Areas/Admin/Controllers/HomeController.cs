@@ -11,7 +11,8 @@ namespace StartspelerMVC.Admin.Controllers
     {
         public IActionResult Index()
         {
-            return View();
+            return RedirectToAction("Index", "Gebruiker");
+            //return View();
         }
 
     }
