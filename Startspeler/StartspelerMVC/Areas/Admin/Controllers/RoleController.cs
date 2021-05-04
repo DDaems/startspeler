@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
-using StartspelerMVC.Areas.Identity.Models;
+using StartspelerMVC.Areas.Admin.Models;
 using StartspelerMVC.Models;
 using Microsoft.AspNetCore.Authorization;
 
