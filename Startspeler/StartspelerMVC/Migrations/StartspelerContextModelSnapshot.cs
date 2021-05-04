@@ -162,20 +162,12 @@ namespace StartspelerMVC.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("Aantal")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ProductID")
-                        .HasColumnType("int");
-
                     b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");;
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("BestellingID");
 
-                    b.HasIndex("ProductID");
-
-                    b.HasIndex("UserID");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Bestellingen");
                 });
@@ -429,10 +421,6 @@ namespace StartspelerMVC.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("StartspelerMVC.Models.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductID");
-
                     b.HasOne("StartspelerMVC.Models.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
@@ -475,7 +463,7 @@ namespace StartspelerMVC.Migrations
 
             modelBuilder.Entity("StartspelerMVC.Models.Bestelling", b =>
                 {
-                    b.HasOne("StartspelerMVC.Models.User", null)
+                    b.HasOne("StartspelerMVC.Models.User", "User")
                         .WithMany("Bestellingen")
                         .HasForeignKey("UserId");
                 });

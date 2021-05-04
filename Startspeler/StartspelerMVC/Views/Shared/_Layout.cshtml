@@ -25,17 +25,16 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
-                        @if (this.User.IsInRole("Admin")) { 
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="Admin" asp-controller="Home" asp-action="Index">Beheer</a>
-                        </li>
-<<<<<<< HEAD
+                        @if (this.User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="Admin" asp-controller="Home" asp-action="Index">Beheer</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Drankkaart" asp-action="Index">Drankkaarten</a>
+                            </li>
                         }
-=======
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Drankkaart" asp-action="Index">Drankkaarten</a>
-                        </li>
->>>>>>> be312a59380582536c25cdd0cc0ff287a1c23dec
                     </ul>
                 </div>
             </div>

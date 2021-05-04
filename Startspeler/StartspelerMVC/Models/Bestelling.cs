@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -9,8 +10,11 @@ namespace StartspelerMVC.Models
     {
         public int BestellingID { get; set; }
 
-       // public int UserID { get; set; }
+        //public int UserID { get; set; }
 
+        public User User { get; set; }
+
+        [NotMapped]
         public List<Bestellijn> Items { get; set; }
 
         public void ItemToevoegen(int productId)
