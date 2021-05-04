@@ -22,7 +22,7 @@ namespace StartspelerMVC.Controllers
 
         public async Task<IActionResult> Overzicht()
         {
-            OverzichtUserViewModel viewmodel = new OverzichtUserViewModel();
+            OverzichtEvenementenViewModel viewmodel = new OverzichtEvenementenViewModel();
             viewmodel.LiveEvenementen = await _context.Evenementen
                 .Where(x => x.Startdatum < DateTime.Now)
                 .Where(x => x.Einddatum > DateTime.Now)
