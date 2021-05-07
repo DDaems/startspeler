@@ -1,12 +1,12 @@
-﻿using StartspelerMVC.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using StartspelerMVC.Models;
 
 namespace StartspelerMVC.Viewmodels
 {
-    public class OverzichtEvenementViewModel
+    public class OverzichtEvenementenViewModel
     {
         public ICollection<Evenement> LiveEvenementen { get; set; }
 

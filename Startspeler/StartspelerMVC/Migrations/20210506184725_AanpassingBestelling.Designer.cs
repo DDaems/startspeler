@@ -10,8 +10,8 @@ using StartspelerMVC.Data;
 namespace StartspelerMVC.Migrations
 {
     [DbContext(typeof(StartspelerContext))]
-    [Migration("20210425073611_remove-Pincode")]
-    partial class removePincode
+    [Migration("20210506184725_AanpassingBestelling")]
+    partial class AanpassingBestelling
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -164,6 +164,9 @@ namespace StartspelerMVC.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("UserID")
+                        .HasColumnType("int");
+
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
@@ -181,8 +184,8 @@ namespace StartspelerMVC.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("Naam")
-                        .HasColumnType("int");
+                    b.Property<string>("Naam")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("CategorieID");
 
@@ -196,20 +199,26 @@ namespace StartspelerMVC.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("Aantal_Verbruikt")
+                    b.Property<DateTime>("Aankoopdatum")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Aantal_beschikbaar")
                         .HasColumnType("int");
 
                     b.Property<int>("DrankkaartTypeID")
                         .HasColumnType("int");
 
-                    b.Property<string>("UserId")
+                    b.Property<string>("Status")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserID")
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("DrankkaartID");
 
                     b.HasIndex("DrankkaartTypeID");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserID");
 
                     b.ToTable("Drankkaarten");
                 });
@@ -342,9 +351,6 @@ namespace StartspelerMVC.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("Admin")
-                        .HasColumnType("bit");
-
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
@@ -388,18 +394,11 @@ namespace StartspelerMVC.Migrations
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
 
-                    b.Property<int>("UserID")
-                        .HasColumnType("int");
-
                     b.Property<string>("UserName")
                         .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256);
 
                     b.Property<string>("Voornaam")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("token")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -413,7 +412,7 @@ namespace StartspelerMVC.Migrations
                         .HasName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
-                    b.ToTable("AspNetUsers");
+                    b.ToTable("User");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -484,7 +483,7 @@ namespace StartspelerMVC.Migrations
 
                     b.HasOne("StartspelerMVC.Models.User", null)
                         .WithMany("Drankkaarten")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserID");
                 });
 
             modelBuilder.Entity("StartspelerMVC.Models.Evenement", b =>
@@ -511,7 +510,7 @@ namespace StartspelerMVC.Migrations
 
             modelBuilder.Entity("StartspelerMVC.Models.Product", b =>
                 {
-                    b.HasOne("StartspelerMVC.Models.Categorie", null)
+                    b.HasOne("StartspelerMVC.Models.Categorie", "Categorie")
                         .WithMany("Producten")
                         .HasForeignKey("CategorieID")
                         .OnDelete(DeleteBehavior.Cascade)

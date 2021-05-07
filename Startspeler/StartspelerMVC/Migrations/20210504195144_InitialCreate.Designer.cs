@@ -10,8 +10,8 @@ using StartspelerMVC.Data;
 namespace StartspelerMVC.Migrations
 {
     [DbContext(typeof(StartspelerContext))]
-    [Migration("20210427174504_UpdateDrakkaart")]
-    partial class UpdateDrakkaart
+    [Migration("20210504195144_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -181,8 +181,8 @@ namespace StartspelerMVC.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("Naam")
-                        .HasColumnType("int");
+                    b.Property<string>("Naam")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("CategorieID");
 
@@ -208,14 +208,14 @@ namespace StartspelerMVC.Migrations
                     b.Property<string>("Status")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UserId")
+                    b.Property<string>("UserID")
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("DrankkaartID");
 
                     b.HasIndex("DrankkaartTypeID");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserID");
 
                     b.ToTable("Drankkaarten");
                 });
@@ -465,7 +465,7 @@ namespace StartspelerMVC.Migrations
 
             modelBuilder.Entity("StartspelerMVC.Models.Bestelling", b =>
                 {
-                    b.HasOne("StartspelerMVC.Models.User", null)
+                    b.HasOne("StartspelerMVC.Models.User", "User")
                         .WithMany("Bestellingen")
                         .HasForeignKey("UserId");
                 });
@@ -480,7 +480,7 @@ namespace StartspelerMVC.Migrations
 
                     b.HasOne("StartspelerMVC.Models.User", null)
                         .WithMany("Drankkaarten")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserID");
                 });
 
             modelBuilder.Entity("StartspelerMVC.Models.Evenement", b =>
@@ -507,7 +507,7 @@ namespace StartspelerMVC.Migrations
 
             modelBuilder.Entity("StartspelerMVC.Models.Product", b =>
                 {
-                    b.HasOne("StartspelerMVC.Models.Categorie", null)
+                    b.HasOne("StartspelerMVC.Models.Categorie", "Categorie")
                         .WithMany("Producten")
                         .HasForeignKey("CategorieID")
                         .OnDelete(DeleteBehavior.Cascade)

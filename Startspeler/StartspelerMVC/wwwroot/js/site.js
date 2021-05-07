@@ -56,3 +56,11 @@ function amountDown(id) {
         document.getElementById(id).value = aantal;
     }
 }
+
+function Toevoegen(getal) {
+    document.getElementById('code').value = document.getElementById('code').value + getal;
+}
+
+function Verwijder() {
+    document.getElementById('code').value = document.getElementById('code').value.slice(0, -1);
+}

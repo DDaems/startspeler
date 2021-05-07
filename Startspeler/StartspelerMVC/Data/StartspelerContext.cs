@@ -16,6 +16,11 @@ namespace StartspelerMVC.Data
             : base(options)
         {
         }
+        public StartspelerContext()
+        {
+
+        }
+
         #region DBSet
         public DbSet<Inschrijving> Inschrijvingen { get; set; }
         public DbSet<Evenement> Evenementen { get; set; }
@@ -25,6 +30,9 @@ namespace StartspelerMVC.Data
         public DbSet<Bestelling> Bestellingen { get; set; }
         public DbSet<Product> Producten { get; set; }
         public DbSet<Categorie> Categories { get; set; }
+
+        //public DbSet<User> Userss { get; set; }
+
         #endregion
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -8,6 +8,9 @@ using Microsoft.EntityFrameworkCore;
 using StartspelerMVC.Data;
 using StartspelerMVC.Models;
 using StartspelerMVC.Viewmodels;
+using System.Web;
+using Microsoft.AspNetCore.Identity;
+using System.Security.Principal;
 
 namespace StartspelerMVC.Controllers
 {
@@ -15,9 +18,12 @@ namespace StartspelerMVC.Controllers
     {
         private readonly StartspelerContext _context;
 
-        public ProductController(StartspelerContext context)
+        private UserManager<User> _userManager;
+
+        public ProductController(StartspelerContext context, UserManager<User> UserManager)
         {
             _context = context;
+            _userManager = UserManager;
         }
 
         // GET: Product
@@ -26,7 +32,7 @@ namespace StartspelerMVC.Controllers
             return View(await _context.Producten.ToListAsync());
         }
 
-        public IActionResult BevestigBestelling(OverzichtProductViewModel viewmodel)
+        public async Task<IActionResult> BevestigBestelling(OverzichtProductViewModel viewmodel)
         {
             int i = 0;
             float prijs = 0;
@@ -36,10 +42,17 @@ namespace StartspelerMVC.Controllers
                 prijs = prijs + item.Aantal * viewmodel.Bestelling.Items[i].Prod.Prijs;
                 i++;
             }
-
+            //var gebruiker =  await _userManager.GetUserAsync(HttpContext.User);
             viewmodel.TotalePrijs = prijs;
+            //viewmodel.Bestelling.User.Id = gebruiker.Id;
 
             return View(viewmodel);
+        }
+
+        public async Task<IActionResult> VerificatieBestelling(OverzichtProductViewModel viewmodel)
+        {
+            //Afhandelen pincode
+            return View();
         }
 
         public async Task<IActionResult> Drankoverzicht(OverzichtProductViewModel initieelmodel)

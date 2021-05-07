@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace StartspelerMVC.Models
 {
+    [NotMapped]
     public class Bestellijn
     {
         public int BestellijnID { get; set; }

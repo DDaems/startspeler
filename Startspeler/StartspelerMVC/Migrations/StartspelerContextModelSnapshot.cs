@@ -162,20 +162,15 @@ namespace StartspelerMVC.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("Aantal")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ProductID")
+                    b.Property<int>("UserID")
                         .HasColumnType("int");
 
                     b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");;
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("BestellingID");
 
-                    b.HasIndex("ProductID");
-
-                    b.HasIndex("UserID");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Bestellingen");
                 });
@@ -214,14 +209,14 @@ namespace StartspelerMVC.Migrations
                     b.Property<string>("Status")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UserId")
+                    b.Property<string>("UserID")
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("DrankkaartID");
 
                     b.HasIndex("DrankkaartTypeID");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserID");
 
                     b.ToTable("Drankkaarten");
                 });
@@ -429,10 +424,6 @@ namespace StartspelerMVC.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("StartspelerMVC.Models.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductID");
-
                     b.HasOne("StartspelerMVC.Models.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
@@ -490,7 +481,7 @@ namespace StartspelerMVC.Migrations
 
                     b.HasOne("StartspelerMVC.Models.User", null)
                         .WithMany("Drankkaarten")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserID");
                 });
 
             modelBuilder.Entity("StartspelerMVC.Models.Evenement", b =>
