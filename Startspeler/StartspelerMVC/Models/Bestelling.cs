@@ -10,7 +10,7 @@ namespace StartspelerMVC.Models
     {
         public int BestellingID { get; set; }
 
-        //public int UserID { get; set; }
+        public string UserId { get; set; }
 
         public User User { get; set; }
 

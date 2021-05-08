@@ -40,18 +40,22 @@ namespace StartspelerMVC.Controllers
             {
                 viewmodel.Bestelling.Items[i].Prod = _context.Producten.Include(x => x.Categorie).Where(x => x.ProductID == item.ProductId).FirstOrDefault();
                 prijs = prijs + item.Aantal * viewmodel.Bestelling.Items[i].Prod.Prijs;
+
+                //   _context.Add(viewmodel.Bestelling.Items[i]);
+                //   await _context.SaveChangesAsync();
                 i++;
             }
             //var gebruiker =  await _userManager.GetUserAsync(HttpContext.User);
             viewmodel.TotalePrijs = prijs;
             //viewmodel.Bestelling.User.Id = gebruiker.Id;
 
+            //  _context.Add(viewmodel.Bestelling);
+            //  await _context.SaveChangesAsync();
             return View(viewmodel);
         }
 
         public async Task<IActionResult> VerificatieBestelling(OverzichtProductViewModel viewmodel)
         {
-            //Afhandelen pincode
             return View();
         }
 

@@ -18,5 +18,7 @@ namespace StartspelerMVC.Viewmodels
         public Bestelling Bestelling { get; set; }
 
         public float TotalePrijs { get; set; }
+
+        public int Pincode { get; set; }
     }
 }

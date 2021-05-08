@@ -60,7 +60,8 @@
         <h3>Voer je pincode in om je bevestiging te bestellen</h3>
         <div class="btn-group-vertical ml-4 mt-4 d-flex" role="group">
             <div class="btn-group">
-                <input class="text-center form-control-lg mb-2" id="code">
+
+                <input asp-for="Pincode" type="password" class="text-center form-control-lg mb-2" id="code">
             </div>
             <div class="btn-group mb-3" style="height:100px">
                 <button type="button" class="rounded-circle mr-3" style="width:100px" onclick="Toevoegen(1)">1</button>
@@ -83,6 +84,8 @@
                 <button type="button" class="rounded-circle mr-3" style="width:100px">Go</button>
             </div>
         </div>
+
+        <a asp-controller="Product" asp-action="VerificatieBestelling"><text type="button">Test</text></a>
     }
     else
     {

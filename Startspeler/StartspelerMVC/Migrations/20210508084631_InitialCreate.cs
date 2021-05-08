@@ -178,14 +178,15 @@ namespace StartspelerMVC.Migrations
                 {
                     BestellingID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<string>(nullable: true)
+                    UserId = table.Column<int>(nullable: false),
+                    UserId1 = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Bestellingen", x => x.BestellingID);
                     table.ForeignKey(
-                        name: "FK_Bestellingen_User_UserId",
-                        column: x => x.UserId,
+                        name: "FK_Bestellingen_User_UserId1",
+                        column: x => x.UserId1,
                         principalSchema: "SS",
                         principalTable: "User",
                         principalColumn: "Id",
@@ -199,7 +200,7 @@ namespace StartspelerMVC.Migrations
                 {
                     DrankkaartID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserID = table.Column<string>(nullable: true),
+                    UserId = table.Column<string>(nullable: true),
                     Aantal_beschikbaar = table.Column<int>(nullable: false),
                     Status = table.Column<string>(nullable: true),
                     Aankoopdatum = table.Column<DateTime>(nullable: false),
@@ -216,8 +217,8 @@ namespace StartspelerMVC.Migrations
                         principalColumn: "DrankkaartTypeID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Drankkaarten_User_UserID",
-                        column: x => x.UserID,
+                        name: "FK_Drankkaarten_User_UserId",
+                        column: x => x.UserId,
                         principalSchema: "SS",
                         principalTable: "User",
                         principalColumn: "Id",
@@ -348,10 +349,10 @@ namespace StartspelerMVC.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Bestellingen_UserId",
+                name: "IX_Bestellingen_UserId1",
                 schema: "SS",
                 table: "Bestellingen",
-                column: "UserId");
+                column: "UserId1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Drankkaarten_DrankkaartTypeID",
@@ -360,10 +361,10 @@ namespace StartspelerMVC.Migrations
                 column: "DrankkaartTypeID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Drankkaarten_UserID",
+                name: "IX_Drankkaarten_UserId",
                 schema: "SS",
                 table: "Drankkaarten",
-                column: "UserID");
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Evenementen_EvenementTypeID",
