@@ -56,13 +56,20 @@ namespace StartspelerMVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("DrankkaartTypeID,Grootte")] DrankkaartType drankkaartType)
         {
-            if (ModelState.IsValid)
+            var drankkaartControle = _context.DrankkaartTypes
+                .Where( x => x.Grootte == drankkaartType.Grootte)
+                .SingleOrDefault();
+            if (drankkaartControle == null)
             {
-                _context.Add(drankkaartType);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                if (ModelState.IsValid)
+                {
+                    _context.Add(drankkaartType);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                return View(drankkaartType);
             }
-            return View(drankkaartType);
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: DrankkaartType/Edit/5

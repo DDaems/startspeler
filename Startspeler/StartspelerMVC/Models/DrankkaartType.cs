@@ -11,6 +11,7 @@ namespace StartspelerMVC.Models
     {
         public int DrankkaartTypeID { get; set; }
 
+        
         public int Grootte { get; set; }
 
         [NotMapped]

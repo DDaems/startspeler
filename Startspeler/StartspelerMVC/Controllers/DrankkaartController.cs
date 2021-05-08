@@ -79,7 +79,7 @@ namespace StartspelerMVC.Controllers
                 OverzichtDrankkaartenViewModel overzichtItem = new OverzichtDrankkaartenViewModel();
                 overzichtItem.Aankoopdatum = item.Aankoopdatum;
                 overzichtItem.Aantal_beschikbaar = item.Aantal_beschikbaar;
-                overzichtItem.Groote = item.Grootte;
+                overzichtItem.Grootte = item.Grootte;
                 overzichtItem.Voornaam = item.Voornaam;
                 overzichtItem.Achternaam = item.Achternaam;
                 overzichtItem.Status = item.Status;
@@ -122,7 +122,7 @@ namespace StartspelerMVC.Controllers
                     OverzichtDrankkaartenViewModel overzichtItem = new OverzichtDrankkaartenViewModel();
                     overzichtItem.Aankoopdatum = item.Aankoopdatum;
                     overzichtItem.Aantal_beschikbaar = item.Aantal_beschikbaar;
-                    overzichtItem.Groote = item.Grootte;
+                    overzichtItem.Grootte = item.Grootte;
                     overzichtItem.Voornaam = item.Voornaam;
                     overzichtItem.Achternaam = item.Achternaam;
                     DrankkaartenVMlijst.Add(overzichtItem);
@@ -144,7 +144,7 @@ namespace StartspelerMVC.Controllers
                     OverzichtDrankkaartenViewModel overzichtItem = new OverzichtDrankkaartenViewModel();
                     overzichtItem.Aankoopdatum = item.Aankoopdatum;
                     overzichtItem.Aantal_beschikbaar = item.Aantal_beschikbaar;
-                    overzichtItem.Groote = item.Grootte;
+                    overzichtItem.Grootte = item.Grootte;
                     overzichtItem.Voornaam = item.Voornaam;
                     overzichtItem.Achternaam = item.Achternaam;
                     DrankkaartenVMlijst.Add(overzichtItem);
@@ -190,17 +190,12 @@ namespace StartspelerMVC.Controllers
         {
 
             var user = await _userManager.GetUserAsync(HttpContext.User);
-
             drankkaartVM.Drankkaart.UserID = user.Id;
+            var drankkaarttype = _context.DrankkaartTypes
+                .Where(x => x.DrankkaartTypeID == drankkaartVM.Drankkaart.DrankkaartTypeID)
+                 .SingleOrDefault();
 
-            if (drankkaartVM.Drankkaart.DrankkaartTypeID == 1)
-            {
-                drankkaartVM.Drankkaart.Aantal_beschikbaar = 6;
-            }
-            else
-            {
-                drankkaartVM.Drankkaart.Aantal_beschikbaar = 12;
-            }
+            drankkaartVM.Drankkaart.Aantal_beschikbaar = drankkaarttype.Grootte;
 
             if (ModelState.IsValid)
             {

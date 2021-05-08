@@ -23,13 +23,24 @@ namespace StartspelerMVC.Models
         // [ForeignKey("UserID")]
         public string UserID { get; set; }
 
+        [Display(Name = "#/")]
         public int Aantal_beschikbaar { get; set; }
 
-        public string Status { get; set; }
+        // public string Status { get {; } set; }
 
         public DateTime Aankoopdatum { get; set; }
 
         
         public int DrankkaartTypeID { get; set; }
+
+        private string _status;
+
+        public string Status
+        {
+            get { return _status; }
+            set { _status = value; }
+        }
+
+
     }
 }
