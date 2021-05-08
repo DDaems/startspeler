@@ -162,9 +162,6 @@ namespace StartspelerMVC.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("UserID")
-                        .HasColumnType("int");
-
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
@@ -466,7 +463,7 @@ namespace StartspelerMVC.Migrations
 
             modelBuilder.Entity("StartspelerMVC.Models.Bestelling", b =>
                 {
-                    b.HasOne("StartspelerMVC.Models.User", null)
+                    b.HasOne("StartspelerMVC.Models.User", "User")
                         .WithMany("Bestellingen")
                         .HasForeignKey("UserId");
                 });
