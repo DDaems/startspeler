@@ -13,7 +13,7 @@
                 <ul>
                     @foreach (var kaart in user.Drankkaarten)
                     {
-                        if (kaart.Status == null)
+                        if (kaart.Status == "Openstaand")
                         {
 
                             if (kaart.Aantal_beschikbaar == 0)
