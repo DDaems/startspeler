@@ -1,6 +1,5 @@
 ﻿@model StartspelerMVC.Viewmodels.OverzichtProductViewModel
 
-
 <form asp-controller="Product" asp-action="VerificatieBestelling" enctype="multipart/form-data" method="post">
 
     <input type="hidden" asp-for="Bestelling.BestellingID" />
@@ -86,10 +85,9 @@
                 <div class="btn-group mb-3" style="height:100px">
                     <button type="button" class="rounded-circle mr-3" style="width:100px" onclick="Verwijder()">&lt;</button>
                     <button type="button" class="rounded-circle mr-3" style="width:100px" onclick="Toevoegen(0)">0</button>
-                    <button type="button" class="rounded-circle mr-3" style="width:100px">Go</button>
                 </div>
             </div>
-
+            <p>@Model.Errors</p>
             <input type="submit" class="btn btn-primary" value="Plaats bestelling" />
 
         }

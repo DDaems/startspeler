@@ -20,20 +20,45 @@
         @foreach (var item in Model)
         {
             <tr>
-                <td class="text-left">
-                    <div>
+                <td class="text-left align-middle">
+                    <div class="align-content-md-center">
                         @Html.DisplayFor(modelItem => item.Naam)
                     </div>
                 </td>
-                <td class="text-center">
-                    <div class="@((item.Ijskast <= 10) ? "text-danger" :"")">
-                        @Html.DisplayFor(modelItem => item.Ijskast)
-                    </div>
+                <td class="text-center justify-content-md-center">
+                    <table class="table-borderless table-responsive" style="margin:auto; width:50%">
+                        <tr>
+
+                            <td class="text-center align-middle">
+                                <div class="@((item.Ijskast <= 10) ? "text-danger" :"")">
+                                    @Html.DisplayFor(modelItem => item.Ijskast)
+                                </div>
+                            </td>
+
+                            <td>
+
+                                <button type="button" class="btn btn-primary"> + </button>
+                            </td>
+                        </tr>
+                    </table>
                 </td>
                 <td class="text-center">
-                    <div class=" @((item.OverigeStock <= 10) ? "text-danger" :"") ">
-                        @Html.DisplayFor(modelItem => item.OverigeStock)
-                    </div>
+
+                    <table class="table-borderless table-responsive" style="margin:auto; width:50%">
+                        <tr>
+
+                            <td class="text-center align-middle">
+                                <div class="@((item.OverigeStock <= 10) ? "text-danger" :"")">
+                                    @Html.DisplayFor(modelItem => item.OverigeStock)
+                                </div>
+                            </td>
+
+                            <td>
+
+                                <button type="button" class="btn btn-primary"> + </button>
+                            </td>
+                        </tr>
+                    </table>
                 </td>
             </tr>
         }
