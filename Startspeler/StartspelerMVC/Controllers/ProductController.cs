@@ -156,7 +156,7 @@ namespace StartspelerMVC.Controllers
                                     Prod = product
                                 };
                                 i++;
-
+                                VorigeViewmodel.TotalePrijs = VorigeViewmodel.TotalePrijs + bestellijn.Aantal * bestellijn.Prod.Prijs;
                                 nieuwelijst.Add(bestellijn);
                             }
                             VorigeViewmodel.Bestelling.BestellingID = 1;
@@ -206,10 +206,6 @@ namespace StartspelerMVC.Controllers
                         //Verdere validatie van stock en drankbonnencorrectie van de user.
 
                         return View("VerificatieBestelling", nieuwViewmodel);
-                        ///
-                        /// Pincode OK, Handel de bestelling verder af
-                        ///
-                        //BevestigBestelling(viewmodel);
                     }
                     else
                     {
@@ -239,6 +235,7 @@ namespace StartspelerMVC.Controllers
                                 Prod = product
                             };
                             i++;
+                            VorigeViewmodel.TotalePrijs = VorigeViewmodel.TotalePrijs + bestellijn.Aantal * bestellijn.Prod.Prijs;
 
                             nieuwelijst.Add(bestellijn);
                         }
