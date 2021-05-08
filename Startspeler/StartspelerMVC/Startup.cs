@@ -29,10 +29,9 @@ namespace StartspelerMVC
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<StartspelerContext>(options =>
-
-             // options.UseSqlServer(Configuration.GetConnectionString("StartspelerConnection")));
-             options.UseSqlServer(Configuration.GetConnectionString("Localhost"))
-             );
+               // options.UseSqlServer(Configuration.GetConnectionString("StartspelerConnection")));
+            options.UseSqlServer(Configuration.GetConnectionString("Localhost"))
+            );
 
             services.AddDefaultIdentity<User>().AddRoles<IdentityRole>().AddEntityFrameworkStores<StartspelerContext>();
             //services.AddIdentity<User, IdentityRole>()
