@@ -19,7 +19,7 @@ namespace StartspelerMVC.Viewmodels
         public int Grootte { get; set; }
 
         [NotMapped]
-        [Display(Name = "verbruikt/beschikbaar")]
+        [Display(Name = "beschikbaar/totaal")]
         public string SamengesteldeKolom => $"{Aantal_beschikbaar.ToString()}/{Grootte.ToString()}";
 
         public string Status { get; set; }

@@ -12,8 +12,9 @@ namespace StartspelerMVC.Models
     {
         public Drankkaart()
         {
-            Aankoopdatum = DateTime.Now;
-            Status = "LEEG";
+            
+            //Aankoopdatum = DateTime.Now;    
+            //Status = "Openstaand";
             //UserID = "2d05100f - 5382 - 4439 - 857d - 67d80b574d6d";
             //DrankkaartTypeID = 1;
         }
@@ -23,8 +24,18 @@ namespace StartspelerMVC.Models
         // [ForeignKey("UserID")]
         public string UserID { get; set; }
 
+
+        //public int Aantal_beschikbaar { get; set; }
+
         [Display(Name = "#/")]
-        public int Aantal_beschikbaar { get; set; }
+        private int _aantal_beschikbaar;
+
+        public int Aantal_beschikbaar
+        {
+            get { return _aantal_beschikbaar; }
+            set { _aantal_beschikbaar = value; }
+        }
+
 
         // public string Status { get {; } set; }
 
@@ -37,7 +48,7 @@ namespace StartspelerMVC.Models
 
         public string Status
         {
-            get { return _status; }
+            get {  return _status; }
             set { _status = value; }
         }
 

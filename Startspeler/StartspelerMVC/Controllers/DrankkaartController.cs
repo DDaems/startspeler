@@ -29,7 +29,7 @@ namespace StartspelerMVC.Controllers
 
         [Authorize]
         // GET: Drankkaart
-        public async Task<IActionResult> Index(/*string voornaam*/)
+        public async Task<IActionResult> Index()
         {
 
             var mailadres = await _userManager.GetUserAsync(HttpContext.User);
@@ -43,7 +43,7 @@ namespace StartspelerMVC.Controllers
                                      join Type in _context.DrankkaartTypes on Drnk.DrankkaartTypeID equals Type.DrankkaartTypeID
                                      join Users in _context.Users on Drnk.UserID equals Users.Id
                                      where Users.Email == regel
-                                     orderby Drnk.Aankoopdatum
+                                     orderby Drnk.Aankoopdatum descending
                                      select new { Drnk.DrankkaartID, Drnk.Aankoopdatum, Drnk.Aantal_beschikbaar, Drnk.Status, Type.Grootte }).ToList();
             foreach (var item in drankkaartenlijst)
             {
@@ -177,7 +177,7 @@ namespace StartspelerMVC.Controllers
         {
             CreateDrankkaartViewModel drankkaartViewModel = new CreateDrankkaartViewModel();
             drankkaartViewModel.Drankkaart = new Drankkaart();
-            drankkaartViewModel.DrankkaartType = new SelectList(_context.DrankkaartTypes, "DrankkaartTypeID", "Selectnaam");
+            drankkaartViewModel.DrankkaartType = new SelectList(_context.DrankkaartTypes.OrderBy(x => x.Grootte), "DrankkaartTypeID", "Selectnaam");
             return View(drankkaartViewModel);
         }
 
@@ -196,6 +196,9 @@ namespace StartspelerMVC.Controllers
                  .SingleOrDefault();
 
             drankkaartVM.Drankkaart.Aantal_beschikbaar = drankkaarttype.Grootte;
+            drankkaartVM.Drankkaart.Aankoopdatum = DateTime.Now;
+            drankkaartVM.Drankkaart.Status = "Openstaand";
+
 
             if (ModelState.IsValid)
             {
@@ -212,11 +215,15 @@ namespace StartspelerMVC.Controllers
         // GET: Drankkaart/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-
-
             CreateDrankkaartViewModel drankkaartViewModel = new CreateDrankkaartViewModel();
             drankkaartViewModel.Drankkaart = new Drankkaart();
             drankkaartViewModel.DrankkaartType = new SelectList(_context.DrankkaartTypes, "DrankkaartTypeID", "Selectnaam");
+
+            List<string> lijstStatussen = new List<string>();
+            lijstStatussen.Add("Betaald");
+            lijstStatussen.Add("Openstaand");
+
+            drankkaartViewModel.Statussen = new SelectList(lijstStatussen);
 
             if (id == null)
             {
@@ -232,8 +239,6 @@ namespace StartspelerMVC.Controllers
             return View(drankkaartViewModel);
         }
 
-
-
         // POST: Drankkaart/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -242,18 +247,11 @@ namespace StartspelerMVC.Controllers
         public async Task<IActionResult> Edit(int id, [Bind("DrankkaartID,UserID, Aantal_beschikbaar,Status,DrankkaartTypeID")] Drankkaart drankkaart)
         {
             
+
             if (id != drankkaart.DrankkaartID)
             {
                 return NotFound();
             }
-
-            /*
-            // userId wordt niet meegegeven
-            var drankkaartMeta = await _context.Drankkaarten
-                .FirstOrDefaultAsync(m => m.DrankkaartID == id);
-
-            drankkaart.UserID = drankkaartMeta.UserID;
-            */
 
             if (ModelState.IsValid)
             {
@@ -273,7 +271,7 @@ namespace StartspelerMVC.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Overzicht));
             }
             return View(drankkaart);
         }

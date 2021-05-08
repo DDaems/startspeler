@@ -56,6 +56,11 @@ namespace StartspelerMVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("DrankkaartTypeID,Grootte")] DrankkaartType drankkaartType)
         {
+            if (drankkaartType.Grootte <= 0)
+            {
+                return View(drankkaartType);
+            }
+
             var drankkaartControle = _context.DrankkaartTypes
                 .Where( x => x.Grootte == drankkaartType.Grootte)
                 .SingleOrDefault();
