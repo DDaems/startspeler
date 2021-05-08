@@ -11,9 +11,13 @@ using StartspelerMVC.Viewmodels;
 using System.Web;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Principal;
+using StartspelerMVC.Helpers;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace StartspelerMVC.Controllers
 {
+    [Authorize]
     public class ProductController : Controller
     {
         private readonly StartspelerContext _context;
@@ -27,13 +31,19 @@ namespace StartspelerMVC.Controllers
         }
 
         // GET: Product
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
+            ViewBag.userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
             return View(await _context.Producten.ToListAsync());
         }
 
+
+
         public async Task<IActionResult> BevestigBestelling(OverzichtProductViewModel viewmodel)
         {
+
             int i = 0;
             float prijs = 0;
             foreach (var item in viewmodel.Bestelling.Items)
@@ -46,27 +56,65 @@ namespace StartspelerMVC.Controllers
                 i++;
             }
             //var gebruiker =  await _userManager.GetUserAsync(HttpContext.User);
+            viewmodel.userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             viewmodel.TotalePrijs = prijs;
             //viewmodel.Bestelling.User.Id = gebruiker.Id;
 
-            //  _context.Add(viewmodel.Bestelling);
-            //  await _context.SaveChangesAsync();
             return View(viewmodel);
         }
 
         public async Task<IActionResult> VerificatieBestelling(OverzichtProductViewModel viewmodel)
-        {
-            return View();
+        {          
+            if (ModelState.IsValid)
+            {
+                string userId = viewmodel.userId;
+                string pincode = viewmodel.Pincode;
+                viewmodel.Errors = "";
+
+                User u = await _userManager.FindByIdAsync(userId);
+
+                if (u != null)
+                {
+                    var succes = await verficiatiePincode.verify(u, _userManager, pincode);
+
+                    if (succes > 0)
+                    {
+                        viewmodel.Errors += "BESTELLING GEPLAATST";
+                        return View("Drankoverzicht", viewmodel);
+                        ///
+                        /// Pincode OK, Handel de bestelling verder af
+                        /// 
+                        //BevestigBestelling(viewmodel);
+                    }
+                    else
+                    {
+                        viewmodel.Errors += "Pincode verificatie is gefaald. probeer opnieuw";
+                        return View("Drankoverzicht", viewmodel);
+                    }
+                }
+                else
+                {
+                    // viewmodel.Errors += "U moet eerst aanmelden alvorens een bestelling te plaatsen.";
+                     return View("Drankoverzicht", viewmodel);
+                }
+
+            }
+
+            return View("Drankoverzicht", viewmodel);
         }
 
         public async Task<IActionResult> Drankoverzicht(OverzichtProductViewModel initieelmodel)
         {
+
+            
+
             if (initieelmodel.Bestelling == null)
             {
                 OverzichtProductViewModel viewmodel = new OverzichtProductViewModel();
                 viewmodel.Producten = await _context.Producten.Include(x => x.Categorie).ToListAsync();
                 viewmodel.Categories = await _context.Categories.ToListAsync();
                 viewmodel.Bestelling = new Bestelling();
+                viewmodel.userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
                 List<Bestellijn> nieuwelijst = new List<Bestellijn>();
                 int i = 0;
@@ -92,6 +140,7 @@ namespace StartspelerMVC.Controllers
             else
             {
                 //Anders stuur je de vorige view terug. (Bijvoorbeeld wanneer je toch iets wil aanpassen aan je shoppingcart)
+                initieelmodel.userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
                 return View(initieelmodel);
             }
         }

@@ -41,7 +41,7 @@ namespace StartspelerMVC.Admin.Controllers
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
-            this.ctx = ctx;
+
         }
 
         public async Task<IActionResult> Index()

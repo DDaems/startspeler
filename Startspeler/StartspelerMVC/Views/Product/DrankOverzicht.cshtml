@@ -12,6 +12,8 @@
 
             <form asp-controller="Product" asp-action="BevestigBestelling" enctype="multipart/form-data" method="post">
                 <input type="hidden" asp-for="Bestelling.BestellingID" />
+                <input type="hidden" asp-for="userId" />
+                 
                 <div class="row">
                     <table class="table-bordered">
                         <thead>

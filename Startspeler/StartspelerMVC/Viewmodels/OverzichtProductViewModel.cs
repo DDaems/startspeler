@@ -19,6 +19,10 @@ namespace StartspelerMVC.Viewmodels
 
         public float TotalePrijs { get; set; }
 
-        public int Pincode { get; set; }
+        public string Pincode { get; set; }
+
+        public string Errors { get; set; }
+
+        public string userId { get; set; }
     }
 }
