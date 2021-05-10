@@ -267,7 +267,7 @@ namespace StartspelerMVC.Controllers
             if (initieelmodel.Bestelling == null)
             {
                 OverzichtProductViewModel viewmodel = new OverzichtProductViewModel();
-                viewmodel.Producten = await _context.Producten.Include(x => x.Categorie).ToListAsync();
+                viewmodel.Producten = await _context.Producten.Include(x => x.Categorie).OrderBy(x => x.CategorieID).ToListAsync();
                 viewmodel.Categories = await _context.Categories.ToListAsync();
                 viewmodel.Bestelling = new Bestelling();
                 viewmodel.userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -313,7 +313,9 @@ namespace StartspelerMVC.Controllers
         // GET: Stockbeheer
         public async Task<IActionResult> Stockbeheer()
         {
-            return View(await _context.Producten.ToListAsync());
+            return View(await _context.Producten
+                .OrderBy(x => x.CategorieID)
+                .ToListAsync());
         }
 
         // GET: product gefilterd op categorie
@@ -384,7 +386,7 @@ namespace StartspelerMVC.Controllers
         public IActionResult Create()
         {
             CreateProductViewModel viewmodel = new CreateProductViewModel();
-            //viewmodel.NieuwProduct = new Product();
+            viewmodel.NieuwProduct = new Product();
             viewmodel.Categories = new SelectList(_context.Categories, "CategorieID", "Naam");
             return View(viewmodel);
         }
@@ -400,7 +402,7 @@ namespace StartspelerMVC.Controllers
             {
                 _context.Add(viewmodel.NieuwProduct);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Stockbeheer));
             }
 
             return View(viewmodel);
@@ -409,17 +411,19 @@ namespace StartspelerMVC.Controllers
         // GET: Product/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            CreateProductViewModel viewmodel = new CreateProductViewModel();
             if (id == null)
             {
                 return NotFound();
             }
 
-            var product = await _context.Producten.FindAsync(id);
-            if (product == null)
+            viewmodel.NieuwProduct = await _context.Producten.FindAsync(id);
+            viewmodel.Categories = new SelectList(_context.Categories, "CategorieID", "Naam");
+            if (viewmodel.NieuwProduct == null)
             {
                 return NotFound();
             }
-            return View(product);
+            return View(viewmodel);
         }
 
         // POST: Product/Edit/5
@@ -427,23 +431,18 @@ namespace StartspelerMVC.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ProductID,Naam,Prijs,Ijskast,OverigeStock,CategorieID")] Product product)
+        public async Task<IActionResult> Edit(CreateProductViewModel viewmodel)
         {
-            if (id != product.ProductID)
-            {
-                return NotFound();
-            }
-
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _context.Update(product);
+                    _context.Update(viewmodel.NieuwProduct);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ProductExists(product.ProductID))
+                    if (!ProductExists(viewmodel.NieuwProduct.ProductID))
                     {
                         return NotFound();
                     }
@@ -452,9 +451,9 @@ namespace StartspelerMVC.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Stockbeheer));
             }
-            return View(product);
+            return View(viewmodel);
         }
 
         // GET: Product/Delete/5
