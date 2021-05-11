@@ -16,7 +16,6 @@ namespace StartspelerMVC.Controllers
 {
     public class DrankkaartController : Controller
     {
-        
         private readonly StartspelerContext _context;
         private UserManager<User> _userManager;
 
@@ -24,24 +23,21 @@ namespace StartspelerMVC.Controllers
         {
             _context = context;
             _userManager = UserManager;
-            
         }
 
         [Authorize]
         // GET: Drankkaart
         public async Task<IActionResult> Index(/*string voornaam*/)
         {
-
             var mailadres = await _userManager.GetUserAsync(HttpContext.User);
-            
-            var regel = mailadres.ToString();
 
+            var regel = mailadres.ToString();
 
             List<UserOverzichtViewModel> listVM = new List<UserOverzichtViewModel>();
 
             var drankkaartenlijst = (from Drnk in _context.Drankkaarten
                                      join Type in _context.DrankkaartTypes on Drnk.DrankkaartTypeID equals Type.DrankkaartTypeID
-                                     join Users in _context.Users on Drnk.UserID equals Users.Id
+                                     join Users in _context.Users on Drnk.UserId equals Users.Id
                                      where Users.Email == regel
                                      orderby Drnk.Aankoopdatum
                                      select new { Drnk.DrankkaartID, Drnk.Aankoopdatum, Drnk.Aantal_beschikbaar, Drnk.Status, Type.Grootte }).ToList();
@@ -54,25 +50,22 @@ namespace StartspelerMVC.Controllers
                 userDrankkaart.Status = item.Status;
                 userDrankkaart.Grootte = item.Grootte;
                 listVM.Add(userDrankkaart);
-
             }
 
-                return View(listVM);
+            return View(listVM);
             //return View(await _context.Drankkaarten.ToListAsync());
-
         }
 
         public async Task<IActionResult> Overzicht()
         {
-
             List<OverzichtDrankkaartenViewModel> DrankkaartenVMlijst = new List<OverzichtDrankkaartenViewModel>();
 
             var drankkaartenlijst = (from Drnk in _context.Drankkaarten
 
                                      join Type in _context.DrankkaartTypes on Drnk.DrankkaartTypeID equals Type.DrankkaartTypeID
-                                     join Users in _context.Users on Drnk.UserID equals Users.Id
+                                     join Users in _context.Users on Drnk.UserId equals Users.Id
                                      orderby Drnk.Aankoopdatum
-                                     select new { Drnk.DrankkaartID, Drnk.Aankoopdatum, Drnk.Aantal_beschikbaar, Type.Grootte , Users.Voornaam, Users.Achternaam, Drnk.Status}).ToList();
+                                     select new { Drnk.DrankkaartID, Drnk.Aankoopdatum, Drnk.Aantal_beschikbaar, Type.Grootte, Users.Voornaam, Users.Achternaam, Drnk.Status }).ToList();
 
             foreach (var item in drankkaartenlijst)
             {
@@ -102,6 +95,7 @@ namespace StartspelerMVC.Controllers
 
             return View(DrankkaartenVMlijst);
         }
+
         //Search
         public async Task<IActionResult> Search(OverzichtDrankkaartenViewModel viewModel)
         {
@@ -112,7 +106,7 @@ namespace StartspelerMVC.Controllers
                 var drankkaartenlijst = (from Drnk in _context.Drankkaarten
 
                                          join Type in _context.DrankkaartTypes on Drnk.DrankkaartTypeID equals Type.DrankkaartTypeID
-                                         join Users in _context.Users on Drnk.UserID equals Users.Id
+                                         join Users in _context.Users on Drnk.UserId equals Users.Id
                                          where Users.Voornaam.Contains(viewModel.Zoekterm) || Users.Achternaam.Contains(viewModel.Zoekterm)
                                          orderby Drnk.Aankoopdatum
                                          select new { Drnk.Aankoopdatum, Drnk.Aantal_beschikbaar, Type.Grootte, Users.Voornaam, Users.Achternaam }).ToList();
@@ -135,7 +129,7 @@ namespace StartspelerMVC.Controllers
                 var drankkaartenlijst = (from Drnk in _context.Drankkaarten
 
                                          join Type in _context.DrankkaartTypes on Drnk.DrankkaartTypeID equals Type.DrankkaartTypeID
-                                         join Users in _context.Users on Drnk.UserID equals Users.Id
+                                         join Users in _context.Users on Drnk.UserId equals Users.Id
                                          orderby Drnk.Aankoopdatum
                                          select new { Drnk.Aankoopdatum, Drnk.Aantal_beschikbaar, Type.Grootte, Users.Voornaam, Users.Achternaam }).ToList();
 
@@ -182,16 +176,15 @@ namespace StartspelerMVC.Controllers
         }
 
         // POST: Drankkaart/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CreateDrankkaartViewModel drankkaartVM)
         {
-
             var user = await _userManager.GetUserAsync(HttpContext.User);
 
-            drankkaartVM.Drankkaart.UserID = user.Id;
+            drankkaartVM.Drankkaart.UserId = user.Id;
 
             if (drankkaartVM.Drankkaart.DrankkaartTypeID == 1)
             {
@@ -212,13 +205,10 @@ namespace StartspelerMVC.Controllers
             return View(drankkaartVM);
         }
 
-
         // [Authorize(Roles = "Admin")]
         // GET: Drankkaart/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-
-
             CreateDrankkaartViewModel drankkaartViewModel = new CreateDrankkaartViewModel();
             drankkaartViewModel.Drankkaart = new Drankkaart();
             drankkaartViewModel.DrankkaartType = new SelectList(_context.DrankkaartTypes, "DrankkaartTypeID", "Selectnaam");
@@ -229,7 +219,7 @@ namespace StartspelerMVC.Controllers
             }
 
             drankkaartViewModel.Drankkaart = await _context.Drankkaarten.FindAsync(id);
-            drankkaartViewModel.Drankkaart.UserID = drankkaartViewModel.Drankkaart.UserID;
+            drankkaartViewModel.Drankkaart.UserId = drankkaartViewModel.Drankkaart.UserId;
             if (drankkaartViewModel.Drankkaart == null)
             {
                 return NotFound();
@@ -237,16 +227,13 @@ namespace StartspelerMVC.Controllers
             return View(drankkaartViewModel);
         }
 
-
-
         // POST: Drankkaart/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("DrankkaartID,UserID, Aantal_beschikbaar,Status,DrankkaartTypeID")] Drankkaart drankkaart)
+        public async Task<IActionResult> Edit(int id, [Bind("DrankkaartID,UserId, Aantal_beschikbaar,Status,DrankkaartTypeID")] Drankkaart drankkaart)
         {
-            
             if (id != drankkaart.DrankkaartID)
             {
                 return NotFound();
@@ -257,7 +244,7 @@ namespace StartspelerMVC.Controllers
             var drankkaartMeta = await _context.Drankkaarten
                 .FirstOrDefaultAsync(m => m.DrankkaartID == id);
 
-            drankkaart.UserID = drankkaartMeta.UserID;
+            drankkaart.UserId = drankkaartMeta.UserId;
             */
 
             if (ModelState.IsValid)

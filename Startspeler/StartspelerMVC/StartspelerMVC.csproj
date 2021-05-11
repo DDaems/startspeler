@@ -23,6 +23,8 @@
     <Compile Remove="Migrations\20210501132649_CreateDrankkaart_0.Designer.cs" />
     <Compile Remove="Migrations\20210502113602_Zoekbalk.cs" />
     <Compile Remove="Migrations\20210502113602_Zoekbalk.Designer.cs" />
+    <Compile Remove="Migrations\20210508081145_Bestellijn.cs" />
+    <Compile Remove="Migrations\20210508081145_Bestellijn.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -45,7 +47,6 @@
 
   <ItemGroup>
     <Folder Include="Areas\Admin\Data\" />
-    <Folder Include="Migrations\" />
   </ItemGroup>
 
 </Project>

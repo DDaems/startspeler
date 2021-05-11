@@ -16,12 +16,13 @@ namespace StartspelerMVC.Data
             : base(options)
         {
         }
+
         public StartspelerContext()
         {
-
         }
 
         #region DBSet
+
         public DbSet<Inschrijving> Inschrijvingen { get; set; }
         public DbSet<Evenement> Evenementen { get; set; }
         public DbSet<EvenementType> EvenementTypes { get; set; }
@@ -31,15 +32,20 @@ namespace StartspelerMVC.Data
         public DbSet<Product> Producten { get; set; }
         public DbSet<Categorie> Categories { get; set; }
 
-        //public DbSet<User> Userss { get; set; }
+        public DbSet<Bestellijn> Bestellijnen { get; set; }
 
-        #endregion
+        //public DbSet<User> Users { get; set; }
+
+        #endregion DBSet
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.HasDefaultSchema("SS");
+
             #region Remap Identity Tables
+
             modelBuilder.Entity<User>(entity =>
             {
                 entity.ToTable(name: "User");
@@ -68,22 +74,23 @@ namespace StartspelerMVC.Data
             {
                 e.ToTable("UserTokens");
             });
-            #endregion
-            #region Remap Identiy Columns
 
-            #endregion
+            #endregion Remap Identity Tables
+
             #region PK users to ID
+
             // Besloten om toch maar met de <string>ID van Identity te werken
             // op basis van het volgende.
             // https://github.com/dotnet/aspnetcore/issues/24580
 
             //modelBuilder.Entity<User>(e =>
             //{
-            //    e.HasKey(e => e.UserID);
+            //    e.HasKey(e => e.UserId);
             //});
 
             //modelBuilder.Ignore<User>(e => e.Id);
-            #endregion
+
+            #endregion PK users to ID
         }
     }
 }
