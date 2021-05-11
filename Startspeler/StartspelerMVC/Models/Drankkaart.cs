@@ -12,46 +12,27 @@ namespace StartspelerMVC.Models
     {
         public Drankkaart()
         {
-            
-            //Aankoopdatum = DateTime.Now;    
-            //Status = "Openstaand";
-            //UserID = "2d05100f - 5382 - 4439 - 857d - 67d80b574d6d";
-            //DrankkaartTypeID = 1;
         }
         [Key]
         public int DrankkaartID { get; set; }
 
         [ForeignKey("UserID")]
         public string UserID { get; set; }
-
-        User user { get; set; }
-
-        //public int Aantal_beschikbaar { get; set; }
+        public User User { get; set; }
 
         [Display(Name = "#/")]
-        private int _aantal_beschikbaar;
+        public int Aantal_beschikbaar { get; set; }
 
-        public int Aantal_beschikbaar
-        {
-            get { return _aantal_beschikbaar; }
-            set { _aantal_beschikbaar = value; }
-        }
-
-
-        // public string Status { get {; } set; }
+        public string Status { get;  set; }
 
         public DateTime Aankoopdatum { get; set; }
-
-        
+       
+        [ForeignKey("DrankkaartTypeID")]
         public int DrankkaartTypeID { get; set; }
+       
+        public DrankkaartType DrankkaartType { get; set; }
 
-        private string _status;
-
-        public string Status
-        {
-            get {  return _status; }
-            set { _status = value; }
-        }
+        // public virtual ICollection<DrankkaartType> DrankkaartType { get; set; }
 
 
     }

@@ -11,12 +11,13 @@ namespace StartspelerMVC.Models
     {
         public int DrankkaartTypeID { get; set; }
 
-        
+        //[ForeignKey("DrankkaartID")]
+        //Drankkaart Drankkaart { get; set; }virtual
+        //public Drankkaart Drankkaart { get; set; }
+        public ICollection<Drankkaart> Drankkaarten { get; set; }
         public int Grootte { get; set; }
 
         [NotMapped]
         public string Selectnaam => $"{Grootte.ToString()}";
-
-        public ICollection<Drankkaart> Drankkaarten { get; set; }
     }
 }
