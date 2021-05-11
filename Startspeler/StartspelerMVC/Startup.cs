@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -28,8 +29,9 @@ namespace StartspelerMVC
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<StartspelerContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("StartspelerConnection")));
-            // options.UseSqlServer(Configuration.GetConnectionString("Localhost")));
+               // options.UseSqlServer(Configuration.GetConnectionString("StartspelerConnection")));
+            options.UseSqlServer(Configuration.GetConnectionString("Localhost"))
+            );
 
             services.AddDefaultIdentity<User>().AddRoles<IdentityRole>().AddEntityFrameworkStores<StartspelerContext>();
             //services.AddIdentity<User, IdentityRole>()
@@ -57,6 +59,8 @@ namespace StartspelerMVC
                 options.User.AllowedUserNameCharacters =
                 "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
                 options.User.RequireUniqueEmail = false;
+
+                
             });
 
             services.ConfigureApplicationCookie(options =>
@@ -69,6 +73,14 @@ namespace StartspelerMVC
                 options.AccessDeniedPath = "/Identity/Account/AccessDenied";
                 options.SlidingExpiration = true;
             });
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("RequireAdminRole",
+                     policy => policy.RequireRole("Admin"));
+            });
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -102,6 +114,6 @@ namespace StartspelerMVC
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
-        }
+        }   
     }
 }

@@ -162,6 +162,7 @@ namespace StartspelerMVC.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+
                     b.Property<int>("Aantal")
                         .HasColumnType("int");
 
@@ -181,6 +182,7 @@ namespace StartspelerMVC.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
