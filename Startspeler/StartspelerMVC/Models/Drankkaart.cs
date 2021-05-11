@@ -16,8 +16,8 @@ namespace StartspelerMVC.Models
         [Key]
         public int DrankkaartID { get; set; }
 
-        [ForeignKey("UserID")]
-        public string UserID { get; set; }
+        [ForeignKey("UserId")]
+        public string UserId { get; set; }
         public User User { get; set; }
 
         [Display(Name = "#/")]

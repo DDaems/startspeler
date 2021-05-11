@@ -208,14 +208,14 @@ namespace StartspelerMVC.Migrations
                     b.Property<string>("Status")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UserID")
+                    b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("DrankkaartID");
 
                     b.HasIndex("DrankkaartTypeID");
 
-                    b.HasIndex("UserID");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Drankkaarten");
                 });
@@ -480,7 +480,7 @@ namespace StartspelerMVC.Migrations
 
                     b.HasOne("StartspelerMVC.Models.User", null)
                         .WithMany("Drankkaarten")
-                        .HasForeignKey("UserID");
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("StartspelerMVC.Models.Evenement", b =>

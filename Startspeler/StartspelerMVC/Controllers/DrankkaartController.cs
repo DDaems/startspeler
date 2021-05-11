@@ -162,7 +162,7 @@ namespace StartspelerMVC.Controllers
         public async Task<IActionResult> Create(CreateDrankkaartViewModel drankkaartVM)
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
-            drankkaartVM.Drankkaart.UserID = user.Id;
+            drankkaartVM.Drankkaart.UserId = user.Id;
             var drankkaarttype = _context.DrankkaartTypes
                 .Where(x => x.DrankkaartTypeID == drankkaartVM.Drankkaart.DrankkaartTypeID)
                  .SingleOrDefault();
