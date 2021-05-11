@@ -22,7 +22,7 @@ namespace StartspelerMVC.Controllers
         // GET: DrankkaartType
         public async Task<IActionResult> Index()
         {
-            return View(await _context.DrankkaartTypes.ToListAsync());
+            return View(await _context.DrankkaartTypes.OrderBy(x => x.Grootte).ToListAsync());
         }
 
         // GET: DrankkaartType/Details/5

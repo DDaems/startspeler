@@ -87,71 +87,29 @@ namespace StartspelerMVC.Controllers
                 DrankkaartenVMlijst.Add(overzichtItem);
             }
 
-            /*
-
-            SearchDrankkaartenViewModel searchDrankkaartenViewModel = new SearchDrankkaartenViewModel();
-            searchDrankkaartenViewModel.overzichtdrankkaarten = DrankkaartenVMlijst;
-
-            */
-            /*
-
-            var drankkaartenlijst = await _context.DrankkaartTypes
-                 .Include(x => x.Drankkaarten)
-                 .ToListAsync();
-            */
-
             return View(DrankkaartenVMlijst);
         }
         //Search
-        public async Task<IActionResult> Search(OverzichtDrankkaartenViewModel viewModel)
+        public async Task<IActionResult> Search(IEnumerable<OverzichtDrankkaartenViewModel> viewModel)
         {
+
+            var iets = viewModel.SingleOrDefault();
+            string zoekterm = iets.Zoekterm;
+            
+            /*
+            SearchDrankkaartenViewModel searchViewModel = new SearchDrankkaartenViewModel();
+
+            searchViewModel.overzichtdrankkaarten = ;
+
             if (!string.IsNullOrEmpty(viewModel.Zoekterm))
             {
-                List<OverzichtDrankkaartenViewModel> DrankkaartenVMlijst = new List<OverzichtDrankkaartenViewModel>();
 
-                var drankkaartenlijst = (from Drnk in _context.Drankkaarten
-
-                                         join Type in _context.DrankkaartTypes on Drnk.DrankkaartTypeID equals Type.DrankkaartTypeID
-                                         join Users in _context.Users on Drnk.UserID equals Users.Id
-                                         where Users.Voornaam.Contains(viewModel.Zoekterm) || Users.Achternaam.Contains(viewModel.Zoekterm)
-                                         orderby Drnk.Aankoopdatum
-                                         select new { Drnk.Aankoopdatum, Drnk.Aantal_beschikbaar, Type.Grootte, Users.Voornaam, Users.Achternaam }).ToList();
-
-                foreach (var item in drankkaartenlijst)
-                {
-                    OverzichtDrankkaartenViewModel overzichtItem = new OverzichtDrankkaartenViewModel();
-                    overzichtItem.Aankoopdatum = item.Aankoopdatum;
-                    overzichtItem.Aantal_beschikbaar = item.Aantal_beschikbaar;
-                    overzichtItem.Grootte = item.Grootte;
-                    overzichtItem.Voornaam = item.Voornaam;
-                    overzichtItem.Achternaam = item.Achternaam;
-                    DrankkaartenVMlijst.Add(overzichtItem);
-                }
             }
-            else
-            {
-                List<OverzichtDrankkaartenViewModel> DrankkaartenVMlijst = new List<OverzichtDrankkaartenViewModel>();
 
-                var drankkaartenlijst = (from Drnk in _context.Drankkaarten
-
-                                         join Type in _context.DrankkaartTypes on Drnk.DrankkaartTypeID equals Type.DrankkaartTypeID
-                                         join Users in _context.Users on Drnk.UserID equals Users.Id
-                                         orderby Drnk.Aankoopdatum
-                                         select new { Drnk.Aankoopdatum, Drnk.Aantal_beschikbaar, Type.Grootte, Users.Voornaam, Users.Achternaam }).ToList();
-
-                foreach (var item in drankkaartenlijst)
-                {
-                    OverzichtDrankkaartenViewModel overzichtItem = new OverzichtDrankkaartenViewModel();
-                    overzichtItem.Aankoopdatum = item.Aankoopdatum;
-                    overzichtItem.Aantal_beschikbaar = item.Aantal_beschikbaar;
-                    overzichtItem.Grootte = item.Grootte;
-                    overzichtItem.Voornaam = item.Voornaam;
-                    overzichtItem.Achternaam = item.Achternaam;
-                    DrankkaartenVMlijst.Add(overzichtItem);
-                }
-            }
+            */
 
             return View("Overzicht", viewModel);
+
         }
 
         // GET: Drankkaart/Details/5
