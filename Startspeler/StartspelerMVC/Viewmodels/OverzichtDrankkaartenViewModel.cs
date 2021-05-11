@@ -3,6 +3,8 @@ using StartspelerMVC.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 
 namespace StartspelerMVC.Viewmodels
 {
@@ -24,7 +26,12 @@ namespace StartspelerMVC.Viewmodels
 
         public int Aantal_beschikbaar { get; set; }
 
-        public int Groote { get; set; }
+        public int Grootte { get; set; }
+
+        [NotMapped]
+        [Display(Name = "Beschikbaar/totaal")]
+        public string SamengesteldeKolom => $"{Aantal_beschikbaar.ToString()}/{Grootte.ToString()}";
+
 
         public string Status { get; set; }
 

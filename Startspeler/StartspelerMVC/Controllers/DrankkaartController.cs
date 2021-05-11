@@ -27,7 +27,7 @@ namespace StartspelerMVC.Controllers
 
         [Authorize]
         // GET: Drankkaart
-        public async Task<IActionResult> Index(/*string voornaam*/)
+        public async Task<IActionResult> Index()
         {
             var mailadres = await _userManager.GetUserAsync(HttpContext.User);
 
@@ -39,7 +39,7 @@ namespace StartspelerMVC.Controllers
                                      join Type in _context.DrankkaartTypes on Drnk.DrankkaartTypeID equals Type.DrankkaartTypeID
                                      join Users in _context.Users on Drnk.UserId equals Users.Id
                                      where Users.Email == regel
-                                     orderby Drnk.Aankoopdatum
+                                     orderby Drnk.Aankoopdatum descending
                                      select new { Drnk.DrankkaartID, Drnk.Aankoopdatum, Drnk.Aantal_beschikbaar, Drnk.Status, Type.Grootte }).ToList();
             foreach (var item in drankkaartenlijst)
             {
@@ -72,7 +72,7 @@ namespace StartspelerMVC.Controllers
                 OverzichtDrankkaartenViewModel overzichtItem = new OverzichtDrankkaartenViewModel();
                 overzichtItem.Aankoopdatum = item.Aankoopdatum;
                 overzichtItem.Aantal_beschikbaar = item.Aantal_beschikbaar;
-                overzichtItem.Groote = item.Grootte;
+                overzichtItem.Grootte = item.Grootte;
                 overzichtItem.Voornaam = item.Voornaam;
                 overzichtItem.Achternaam = item.Achternaam;
                 overzichtItem.Status = item.Status;
@@ -80,30 +80,18 @@ namespace StartspelerMVC.Controllers
                 DrankkaartenVMlijst.Add(overzichtItem);
             }
 
-            /*
-
-            SearchDrankkaartenViewModel searchDrankkaartenViewModel = new SearchDrankkaartenViewModel();
-            searchDrankkaartenViewModel.overzichtdrankkaarten = DrankkaartenVMlijst;
-
-            */
-            /*
-
-            var drankkaartenlijst = await _context.DrankkaartTypes
-                 .Include(x => x.Drankkaarten)
-                 .ToListAsync();
-            */
-
             return View(DrankkaartenVMlijst);
         }
 
         //Search
-        public async Task<IActionResult> Search(OverzichtDrankkaartenViewModel viewModel)
+        public async Task<IActionResult> Search(IEnumerable<OverzichtDrankkaartenViewModel> viewModel)
         {
-            if (!string.IsNullOrEmpty(viewModel.Zoekterm))
-            {
-                List<OverzichtDrankkaartenViewModel> DrankkaartenVMlijst = new List<OverzichtDrankkaartenViewModel>();
 
-                var drankkaartenlijst = (from Drnk in _context.Drankkaarten
+            var iets = viewModel.SingleOrDefault();
+            string zoekterm = iets.Zoekterm;
+            
+            /*
+            SearchDrankkaartenViewModel searchViewModel = new SearchDrankkaartenViewModel();
 
                                          join Type in _context.DrankkaartTypes on Drnk.DrankkaartTypeID equals Type.DrankkaartTypeID
                                          join Users in _context.Users on Drnk.UserId equals Users.Id
@@ -111,20 +99,8 @@ namespace StartspelerMVC.Controllers
                                          orderby Drnk.Aankoopdatum
                                          select new { Drnk.Aankoopdatum, Drnk.Aantal_beschikbaar, Type.Grootte, Users.Voornaam, Users.Achternaam }).ToList();
 
-                foreach (var item in drankkaartenlijst)
-                {
-                    OverzichtDrankkaartenViewModel overzichtItem = new OverzichtDrankkaartenViewModel();
-                    overzichtItem.Aankoopdatum = item.Aankoopdatum;
-                    overzichtItem.Aantal_beschikbaar = item.Aantal_beschikbaar;
-                    overzichtItem.Groote = item.Grootte;
-                    overzichtItem.Voornaam = item.Voornaam;
-                    overzichtItem.Achternaam = item.Achternaam;
-                    DrankkaartenVMlijst.Add(overzichtItem);
-                }
-            }
-            else
+            if (!string.IsNullOrEmpty(viewModel.Zoekterm))
             {
-                List<OverzichtDrankkaartenViewModel> DrankkaartenVMlijst = new List<OverzichtDrankkaartenViewModel>();
 
                 var drankkaartenlijst = (from Drnk in _context.Drankkaarten
 
@@ -145,7 +121,10 @@ namespace StartspelerMVC.Controllers
                 }
             }
 
+            */
+
             return View("Overzicht", viewModel);
+
         }
 
         // GET: Drankkaart/Details/5
@@ -171,7 +150,7 @@ namespace StartspelerMVC.Controllers
         {
             CreateDrankkaartViewModel drankkaartViewModel = new CreateDrankkaartViewModel();
             drankkaartViewModel.Drankkaart = new Drankkaart();
-            drankkaartViewModel.DrankkaartType = new SelectList(_context.DrankkaartTypes, "DrankkaartTypeID", "Selectnaam");
+            drankkaartViewModel.DrankkaartType = new SelectList(_context.DrankkaartTypes.OrderBy(x => x.Grootte), "DrankkaartTypeID", "Selectnaam");
             return View(drankkaartViewModel);
         }
 
@@ -183,17 +162,15 @@ namespace StartspelerMVC.Controllers
         public async Task<IActionResult> Create(CreateDrankkaartViewModel drankkaartVM)
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
+            drankkaartVM.Drankkaart.UserID = user.Id;
+            var drankkaarttype = _context.DrankkaartTypes
+                .Where(x => x.DrankkaartTypeID == drankkaartVM.Drankkaart.DrankkaartTypeID)
+                 .SingleOrDefault();
 
-            drankkaartVM.Drankkaart.UserId = user.Id;
+            drankkaartVM.Drankkaart.Aantal_beschikbaar = drankkaarttype.Grootte;
+            drankkaartVM.Drankkaart.Aankoopdatum = DateTime.Now;
+            drankkaartVM.Drankkaart.Status = "Openstaand";
 
-            if (drankkaartVM.Drankkaart.DrankkaartTypeID == 1)
-            {
-                drankkaartVM.Drankkaart.Aantal_beschikbaar = 6;
-            }
-            else
-            {
-                drankkaartVM.Drankkaart.Aantal_beschikbaar = 12;
-            }
 
             if (ModelState.IsValid)
             {
@@ -212,6 +189,12 @@ namespace StartspelerMVC.Controllers
             CreateDrankkaartViewModel drankkaartViewModel = new CreateDrankkaartViewModel();
             drankkaartViewModel.Drankkaart = new Drankkaart();
             drankkaartViewModel.DrankkaartType = new SelectList(_context.DrankkaartTypes, "DrankkaartTypeID", "Selectnaam");
+
+            List<string> lijstStatussen = new List<string>();
+            lijstStatussen.Add("Betaald");
+            lijstStatussen.Add("Openstaand");
+
+            drankkaartViewModel.Statussen = new SelectList(lijstStatussen);
 
             if (id == null)
             {
@@ -234,18 +217,12 @@ namespace StartspelerMVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("DrankkaartID,UserId, Aantal_beschikbaar,Status,DrankkaartTypeID")] Drankkaart drankkaart)
         {
+            
+
             if (id != drankkaart.DrankkaartID)
             {
                 return NotFound();
             }
-
-            /*
-            // userId wordt niet meegegeven
-            var drankkaartMeta = await _context.Drankkaarten
-                .FirstOrDefaultAsync(m => m.DrankkaartID == id);
-
-            drankkaart.UserId = drankkaartMeta.UserId;
-            */
 
             if (ModelState.IsValid)
             {
@@ -265,7 +242,7 @@ namespace StartspelerMVC.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Overzicht));
             }
             return View(drankkaart);
         }

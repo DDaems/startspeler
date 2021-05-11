@@ -25,7 +25,7 @@
                 @Html.DisplayNameFor(model => model.Aankoopdatum)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Aantal_beschikbaar)
+                @Html.DisplayNameFor(model => model.SamengesteldeKolom)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Status)
@@ -36,27 +36,27 @@
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Aankoopdatum)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Aantal_beschikbaar)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Status)
-                </td>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Aankoopdatum)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SamengesteldeKolom)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
 
-                @if (this.User.IsInRole("Admin"))
-                {
-                    <td>
-                        <a asp-action="Edit" asp-route-id="@item.DrankkaartID">Edit</a> |
-                        <a asp-action="Details" asp-route-id="@item.DrankkaartID">Details</a> |
-                        <a asp-action="Delete" asp-route-id="@item.DrankkaartID">Delete</a>
-                    </td>
-                }
+            @if (this.User.IsInRole("Admin"))
+            {
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.DrankkaartID">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.DrankkaartID">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.DrankkaartID">Delete</a>
+                </td>
+            }
 
-            </tr>
+        </tr>
         }
     </tbody>
 </table>

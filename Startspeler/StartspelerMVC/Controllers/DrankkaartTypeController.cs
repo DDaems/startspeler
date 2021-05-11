@@ -22,7 +22,7 @@ namespace StartspelerMVC.Controllers
         // GET: DrankkaartType
         public async Task<IActionResult> Index()
         {
-            return View(await _context.DrankkaartTypes.ToListAsync());
+            return View(await _context.DrankkaartTypes.OrderBy(x => x.Grootte).ToListAsync());
         }
 
         // GET: DrankkaartType/Details/5
@@ -56,13 +56,25 @@ namespace StartspelerMVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("DrankkaartTypeID,Grootte")] DrankkaartType drankkaartType)
         {
-            if (ModelState.IsValid)
+            if (drankkaartType.Grootte <= 0)
             {
-                _context.Add(drankkaartType);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return View(drankkaartType);
             }
-            return View(drankkaartType);
+
+            var drankkaartControle = _context.DrankkaartTypes
+                .Where( x => x.Grootte == drankkaartType.Grootte)
+                .SingleOrDefault();
+            if (drankkaartControle == null)
+            {
+                if (ModelState.IsValid)
+                {
+                    _context.Add(drankkaartType);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                return View(drankkaartType);
+            }
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: DrankkaartType/Edit/5

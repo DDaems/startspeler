@@ -11,5 +11,6 @@ namespace StartspelerMVC.Viewmodels
     {
         public Drankkaart Drankkaart { get; set; }
         public SelectList DrankkaartType { get; set; }
+        public SelectList Statussen { get; set; }
     }
 }
