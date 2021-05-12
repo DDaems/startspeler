@@ -31,14 +31,14 @@ namespace StartspelerMVC.Controllers
         {
             var mailadres = await _userManager.GetUserAsync(HttpContext.User);
 
-            var regel = mailadres.ToString();
+            var regel = mailadres.Id.ToString();
 
             List<UserOverzichtViewModel> listVM = new List<UserOverzichtViewModel>();
 
             var drankkaartenlijst = (from Drnk in _context.Drankkaarten
                                      join Type in _context.DrankkaartTypes on Drnk.DrankkaartTypeID equals Type.DrankkaartTypeID
                                      join Users in _context.Users on Drnk.UserId equals Users.Id
-                                     where Users.Email == regel
+                                     where Users.Id == regel
                                      orderby Drnk.Aankoopdatum descending
                                      select new { Drnk.DrankkaartID, Drnk.Aankoopdatum, Drnk.Aantal_beschikbaar, Drnk.Status, Type.Grootte }).ToList();
             foreach (var item in drankkaartenlijst)
@@ -86,10 +86,9 @@ namespace StartspelerMVC.Controllers
         //Search
         public async Task<IActionResult> Search(IEnumerable<OverzichtDrankkaartenViewModel> viewModel)
         {
-
             var iets = viewModel.SingleOrDefault();
             string zoekterm = iets.Zoekterm;
-            
+
             /*
             SearchDrankkaartenViewModel searchViewModel = new SearchDrankkaartenViewModel();
 
@@ -101,7 +100,6 @@ namespace StartspelerMVC.Controllers
 
             if (!string.IsNullOrEmpty(viewModel.Zoekterm))
             {
-
                 var drankkaartenlijst = (from Drnk in _context.Drankkaarten
 
                                          join Type in _context.DrankkaartTypes on Drnk.DrankkaartTypeID equals Type.DrankkaartTypeID
@@ -124,7 +122,6 @@ namespace StartspelerMVC.Controllers
             */
 
             return View("Overzicht", viewModel);
-
         }
 
         // GET: Drankkaart/Details/5
@@ -171,7 +168,6 @@ namespace StartspelerMVC.Controllers
             drankkaartVM.Drankkaart.Aankoopdatum = DateTime.Now;
             drankkaartVM.Drankkaart.Status = "Openstaand";
 
-
             if (ModelState.IsValid)
             {
                 _context.Add(drankkaartVM.Drankkaart);
@@ -217,8 +213,6 @@ namespace StartspelerMVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("DrankkaartID,UserId, Aantal_beschikbaar,Status,DrankkaartTypeID")] Drankkaart drankkaart)
         {
-            
-
             if (id != drankkaart.DrankkaartID)
             {
                 return NotFound();
