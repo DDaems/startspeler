@@ -44,7 +44,7 @@ namespace StartspelerMVC.Admin.Controllers
 
         }
 
-        public async Task<IActionResult> Index()    
+        public IActionResult Index()    
         {
             users = ctx.Users.Include(x => x.Drankkaarten).ThenInclude(y => y.DrankkaartType).ToList();
 

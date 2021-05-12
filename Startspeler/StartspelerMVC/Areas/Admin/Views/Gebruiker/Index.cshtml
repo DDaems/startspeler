@@ -22,20 +22,19 @@
 
                             if (kaart.Aantal_beschikbaar == 0)
                             {
-                    <li class="text-danger">
-
-                        id: @kaart.DrankkaartID / @kaart.DrankkaartType.Grootte <br />
-                        beschikbaar: @kaart.Aantal_beschikbaar
-                    </li>
-                            <li>@kaart</li>
-                        }
-                        else
-                        {
-                <li>
-                    id: @kaart.DrankkaartID<br />
-                    beschikbaar: @kaart.Aantal_beschikbaar / @kaart.DrankkaartType.Grootte <br />
-                </li>
-                        }
+                            <li class="list-group-item-danger">
+                                <a asp-area="" asp-controller="Drankkaart" asp-action="Edit" asp-route-id="@kaart.DrankkaartID">
+                                    @kaart.Aantal_beschikbaar / @kaart.DrankkaartType.Grootte
+                                </a>
+                            </li>
+                            }
+                            else
+                            {
+                                <li>
+                                    <a asp-area="" asp-controller="Drankkaart" asp-action="Edit" asp-route-id="@kaart.DrankkaartID">
+                                    @kaart.Aantal_beschikbaar / @kaart.DrankkaartType.Grootte</a>
+                                </li>
+                            }
                     }
                 }
                 </ul>
