@@ -10,22 +10,22 @@ using StartspelerMVC.Models;
 
 namespace StartspelerMVC.Controllers
 {
-    public class DrankkaartTypeController : Controller
+    public class CategorieController : Controller
     {
         private readonly StartspelerContext _context;
 
-        public DrankkaartTypeController(StartspelerContext context)
+        public CategorieController(StartspelerContext context)
         {
             _context = context;
         }
 
-        // GET: DrankkaartType
+        // GET: Categorie
         public async Task<IActionResult> Index()
         {
-            return View(await _context.DrankkaartTypes.OrderBy(x => x.Grootte).ToListAsync());
+            return View(await _context.Categories.ToListAsync());
         }
 
-        // GET: DrankkaartType/Details/5
+        // GET: Categorie/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,51 +33,39 @@ namespace StartspelerMVC.Controllers
                 return NotFound();
             }
 
-            var drankkaartType = await _context.DrankkaartTypes
-                .FirstOrDefaultAsync(m => m.DrankkaartTypeID == id);
-            if (drankkaartType == null)
+            var categorie = await _context.Categories
+                .FirstOrDefaultAsync(m => m.CategorieID == id);
+            if (categorie == null)
             {
                 return NotFound();
             }
 
-            return View(drankkaartType);
+            return View(categorie);
         }
 
-        // GET: DrankkaartType/Create
+        // GET: Categorie/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: DrankkaartType/Create
+        // POST: Categorie/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("DrankkaartTypeID,Grootte")] DrankkaartType drankkaartType)
+        public async Task<IActionResult> Create([Bind("CategorieID,Naam")] Categorie categorie)
         {
-            if (drankkaartType.Grootte <= 0)
+            if (ModelState.IsValid)
             {
-                return View(drankkaartType);
+                _context.Add(categorie);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
             }
-
-            var drankkaartControle = _context.DrankkaartTypes
-                .Where( x => x.Grootte == drankkaartType.Grootte)
-                .SingleOrDefault();
-            if (drankkaartControle == null)
-            {
-                if (ModelState.IsValid)
-                {
-                    _context.Add(drankkaartType);
-                    await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Index));
-                }
-                return View(drankkaartType);
-            }
-            return RedirectToAction(nameof(Index));
+            return View(categorie);
         }
 
-        // GET: DrankkaartType/Edit/5
+        // GET: Categorie/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -85,22 +73,22 @@ namespace StartspelerMVC.Controllers
                 return NotFound();
             }
 
-            var drankkaartType = await _context.DrankkaartTypes.FindAsync(id);
-            if (drankkaartType == null)
+            var categorie = await _context.Categories.FindAsync(id);
+            if (categorie == null)
             {
                 return NotFound();
             }
-            return View(drankkaartType);
+            return View(categorie);
         }
 
-        // POST: DrankkaartType/Edit/5
+        // POST: Categorie/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("DrankkaartTypeID,Grootte")] DrankkaartType drankkaartType)
+        public async Task<IActionResult> Edit(int id, [Bind("CategorieID,Naam")] Categorie categorie)
         {
-            if (id != drankkaartType.DrankkaartTypeID)
+            if (id != categorie.CategorieID)
             {
                 return NotFound();
             }
@@ -109,12 +97,12 @@ namespace StartspelerMVC.Controllers
             {
                 try
                 {
-                    _context.Update(drankkaartType);
+                    _context.Update(categorie);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!DrankkaartTypeExists(drankkaartType.DrankkaartTypeID))
+                    if (!CategorieExists(categorie.CategorieID))
                     {
                         return NotFound();
                     }
@@ -125,10 +113,10 @@ namespace StartspelerMVC.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(drankkaartType);
+            return View(categorie);
         }
 
-        // GET: DrankkaartType/Delete/5
+        // GET: Categorie/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -136,30 +124,30 @@ namespace StartspelerMVC.Controllers
                 return NotFound();
             }
 
-            var drankkaartType = await _context.DrankkaartTypes
-                .FirstOrDefaultAsync(m => m.DrankkaartTypeID == id);
-            if (drankkaartType == null)
+            var categorie = await _context.Categories
+                .FirstOrDefaultAsync(m => m.CategorieID == id);
+            if (categorie == null)
             {
                 return NotFound();
             }
 
-            return View(drankkaartType);
+            return View(categorie);
         }
 
-        // POST: DrankkaartType/Delete/5
+        // POST: Categorie/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var drankkaartType = await _context.DrankkaartTypes.FindAsync(id);
-            _context.DrankkaartTypes.Remove(drankkaartType);
+            var categorie = await _context.Categories.FindAsync(id);
+            _context.Categories.Remove(categorie);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool DrankkaartTypeExists(int id)
+        private bool CategorieExists(int id)
         {
-            return _context.DrankkaartTypes.Any(e => e.DrankkaartTypeID == id);
+            return _context.Categories.Any(e => e.CategorieID == id);
         }
     }
 }

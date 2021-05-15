@@ -23,12 +23,12 @@
                 <span asp-validation-for="NieuwProduct.Prijs" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="NieuwProduct.Ijskast" class="control-label"></label>
+                <label class="control-label">Voorraad toog</label>
                 <input asp-for="NieuwProduct.Ijskast" class="form-control" />
                 <span asp-validation-for="NieuwProduct.Ijskast" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="NieuwProduct.OverigeStock" class="control-label"></label>
+                <label class="control-label">Voorraad stockage</label>
                 <input asp-for="NieuwProduct.OverigeStock" class="form-control" />
                 <span asp-validation-for="NieuwProduct.OverigeStock" class="text-danger"></span>
             </div>
@@ -45,7 +45,7 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Stockbeheer">Terug naar overzicht</a>
 </div>
 
 @section Scripts {

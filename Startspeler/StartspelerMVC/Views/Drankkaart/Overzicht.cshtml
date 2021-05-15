@@ -10,20 +10,9 @@
 
 <h1>Overzicht</h1>
 
-<form asp-controller="Drankkaart" asp-action="Search" method="get">
-    <div class="form-actions no-color">
-        <p>
-            Zoek op naam:
-            
-            <input asp-for="@zoekterm" />
-            <!-- <input asp-for="" /> -->
-            <input type="submit" value="Zoeken" class="btn btn-default" /> |
-            <a asp-controller="Drankkaart" asp-action="Overzicht">Terug  naar volledige lijst</a>
-        </p>
-    </div>
-</form>
 
-<table class="table table-bordered table-condensed table-striped">
+
+<table class="table table-bordered table-condensed table-striped sortable">
     <thead>
         <tr>
             <th>
@@ -36,10 +25,7 @@
                 @Html.DisplayNameFor(model => model.Achternaam)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Aantal_beschikbaar)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Groote)
+                @Html.DisplayNameFor(model => model.SamengesteldeKolom)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Status)
@@ -62,10 +48,7 @@
                 @Html.DisplayFor(modelItem => item.Achternaam)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Aantal_beschikbaar)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Groote)
+                @Html.DisplayFor(modelItem => item.SamengesteldeKolom)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Status)

@@ -23,10 +23,13 @@
     <Compile Remove="Migrations\20210501132649_CreateDrankkaart_0.Designer.cs" />
     <Compile Remove="Migrations\20210502113602_Zoekbalk.cs" />
     <Compile Remove="Migrations\20210502113602_Zoekbalk.Designer.cs" />
+    <Compile Remove="Migrations\20210508081145_Bestellijn.cs" />
+    <Compile Remove="Migrations\20210508081145_Bestellijn.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="ClosedXML" Version="0.95.4" />
+    <PackageReference Include="bootstrap-sortable" Version="2.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.13" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Extensions" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.13" />
@@ -47,7 +50,6 @@
 
   <ItemGroup>
     <Folder Include="Areas\Admin\Data\" />
-    <Folder Include="Migrations\" />
   </ItemGroup>
 
 </Project>

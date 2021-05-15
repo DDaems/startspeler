@@ -7,29 +7,33 @@ using System.Threading.Tasks;
 
 namespace StartspelerMVC.Models
 {
-    
     public class Drankkaart
     {
         public Drankkaart()
         {
-            Aankoopdatum = DateTime.Now;
-            Status = "LEEG";
-            //UserID = "2d05100f - 5382 - 4439 - 857d - 67d80b574d6d";
-            //DrankkaartTypeID = 1;
         }
+
         [Key]
         public int DrankkaartID { get; set; }
 
-        // [ForeignKey("UserID")]
-        public string UserID { get; set; }
+        [ForeignKey("UserId")]
+        public string UserId { get; set; }
+        public User User { get; set; }
 
+        [Display(Name = "#/")]
         public int Aantal_beschikbaar { get; set; }
 
-        public string Status { get; set; }
+        public string Status { get;  set; }
 
         public DateTime Aankoopdatum { get; set; }
 
-        
+        [ForeignKey("DrankkaartTypeID")]
         public int DrankkaartTypeID { get; set; }
+       
+        public DrankkaartType DrankkaartType { get; set; }
+
+        // public virtual ICollection<DrankkaartType> DrankkaartType { get; set; }
+
+
     }
 }

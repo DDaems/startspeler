@@ -1,95 +1,103 @@
 ﻿@model StartspelerMVC.Viewmodels.OverzichtProductViewModel
 
-@if (Model.Bestelling.Items != null)
-{
-    <div class="row top-buffer">
-        <div class="col-12">
-            <table class="table-bordered">
+<form asp-controller="Product" asp-action="VerificatieBestelling" enctype="multipart/form-data" method="post">
 
-                <thead>
-                    <tr>
-                        <th style="width:35%;">
-                            Product
-                        </th>
-                        <th style="width:20%;" class="text-center">
-                            Aantal producten
-                        </th>
-                        <th style="width:20%;" class="text-center">
-                            Bonnetjes per consumptie
-                        </th>
-                        <th style="width:35%;text-align:center;" class="text-center">
-                            Subtotaal
-                        </th>
-                    </tr>
-                </thead>
-                @foreach (var item in Model.Bestelling.Items)
-                {
+    <input type="hidden" asp-for="Bestelling.BestellingID" />
+    <input type="hidden" asp-for="userId" />
+    @if (Model.Bestelling.Items != null)
+    {
+        <div class="row top-buffer">
+            <div class="col-12">
+                <table class="table-bordered">
+
+                    <thead>
+                        <tr>
+                            <th style="width:35%;">
+                                Product
+                            </th>
+                            <th style="width:20%;" class="text-center">
+                                Aantal producten
+                            </th>
+                            <th style="width:20%;" class="text-center">
+                                Bonnetjes per consumptie
+                            </th>
+                            <th style="width:35%;text-align:center;" class="text-center">
+                                Subtotaal
+                            </th>
+                        </tr>
+                    </thead>
+                    @foreach (var item in Model.Bestelling.Items)
+                    {
+                        <tr>
+                            <td>
+                                <text>@item.Prod.Naam</text>
+                            </td>
+                            <td class="text-center">
+                                <text>@item.Aantal</text>
+                            </td>
+                            <td class="text-center">
+                                <text>@item.Prod.Prijs</text>
+                            </td>
+                            <td class="text-center">
+                                <text>@(item.Aantal * item.Prod.Prijs)</text>
+                            </td>
+                        </tr>
+                    }
                     <tr>
                         <td>
-                            <text>@item.Prod.Naam</text>
+                            <text>Totaal</text>
+                        </td>
+                        <td>
+                        </td>
+                        <td>
                         </td>
                         <td class="text-center">
-                            <text>@item.Aantal</text>
-                        </td>
-                        <td class="text-center">
-                            <text>@item.Prod.Prijs</text>
-                        </td>
-                        <td class="text-center">
-                            <text>@(item.Aantal * item.Prod.Prijs)</text>
+                            <text class="text-center">@Model.TotalePrijs Bonnen</text>
                         </td>
                     </tr>
-                }
-                <tr>
-                    <td>
-                        <text>Totaal</text>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td class="text-center">
-                        <text class="text-center">@Model.TotalePrijs Bonnen</text>
-                    </td>
-                </tr>
-            </table>
+                </table>
+            </div>
         </div>
-    </div>
 
-    @if (User.Identity.IsAuthenticated)
-    {
-        <h3>Voer je pincode in om je bevestiging te bestellen</h3>
-        <div class="btn-group-vertical ml-4 mt-4 d-flex" role="group">
-            <div class="btn-group">
-                <input class="text-center form-control-lg mb-2" id="code">
+        @if (User.Identity.IsAuthenticated)
+        {
+            <h3>Voer je pincode in om je bevestiging te bestellen</h3>
+            <div class="btn-group-vertical ml-4 mt-4 d-flex" role="group">
+                <div class="btn-group">
+
+                    <input asp-for="Pincode" type="password" class="text-center form-control-lg mb-2" id="code">
+                </div>
+                <div class="btn-group mb-3" style="height:100px">
+                    <button type="button" class="rounded-circle mr-3" style="width:100px" onclick="Toevoegen(1)">1</button>
+                    <button type="button" class="rounded-circle mr-3" style="width:100px" onclick="Toevoegen(2)">2</button>
+                    <button type="button" class="rounded-circle mr-3" style="width:100px" onclick="Toevoegen(3)">3</button>
+                </div>
+                <div class="btn-group mb-3" style="height:100px">
+                    <button type="button" class="rounded-circle mr-3" style="width:100px" onclick="Toevoegen(4)">4</button>
+                    <button type="button" class="rounded-circle mr-3" style="width:100px" onclick="Toevoegen(5)">5</button>
+                    <button type="button" class="rounded-circle mr-3" style="width:100px" onclick="Toevoegen(6)">6</button>
+                </div>
+                <div class="btn-group mb-3" style="height:100px">
+                    <button type="button" class="rounded-circle mr-3" style="width:100px" onclick="Toevoegen(7)">7</button>
+                    <button type="button" class="rounded-circle mr-3" style="width:100px" onclick="Toevoegen(8)">8</button>
+                    <button type="button" class="rounded-circle mr-3" style="width:100px" onclick="Toevoegen(9)">9</button>
+                </div>
+                <div class="btn-group mb-3" style="height:100px">
+                    <button type="button" class="rounded-circle mr-3" style="width:100px" onclick="Verwijder()">&lt;</button>
+                    <button type="button" class="rounded-circle mr-3" style="width:100px" onclick="Toevoegen(0)">0</button>
+                </div>
             </div>
-            <div class="btn-group mb-3" style="height:100px">
-                <button type="button" class="rounded-circle mr-3" style="width:100px" onclick="Toevoegen(1)">1</button>
-                <button type="button" class="rounded-circle mr-3" style="width:100px" onclick="Toevoegen(2)">2</button>
-                <button type="button" class="rounded-circle mr-3" style="width:100px" onclick="Toevoegen(3)">3</button>
+            <p>@Model.Errors</p>
+            <input type="submit" class="btn btn-primary" value="Plaats bestelling" />
+
+        }
+        else
+        {
+            <div>
+                <p>Er ging iets mis. De gebruiker had zich eerst moeten aanmelden vooraleer hij kon starten met een bestelling te plaatsen.</p>
             </div>
-            <div class="btn-group mb-3" style="height:100px">
-                <button type="button" class="rounded-circle mr-3" style="width:100px" onclick="Toevoegen(4)">4</button>
-                <button type="button" class="rounded-circle mr-3" style="width:100px" onclick="Toevoegen(5)">5</button>
-                <button type="button" class="rounded-circle mr-3" style="width:100px" onclick="Toevoegen(6)">6</button>
-            </div>
-            <div class="btn-group mb-3" style="height:100px">
-                <button type="button" class="rounded-circle mr-3" style="width:100px" onclick="Toevoegen(7)">7</button>
-                <button type="button" class="rounded-circle mr-3" style="width:100px" onclick="Toevoegen(8)">8</button>
-                <button type="button" class="rounded-circle mr-3" style="width:100px" onclick="Toevoegen(9)">9</button>
-            </div>
-            <div class="btn-group mb-3" style="height:100px">
-                <button type="button" class="rounded-circle mr-3" style="width:100px" onclick="Verwijder()">&lt;</button>
-                <button type="button" class="rounded-circle mr-3" style="width:100px" onclick="Toevoegen(0)">0</button>
-                <button type="button" class="rounded-circle mr-3" style="width:100px">Go</button>
-            </div>
-        </div>
-    }
-    else
-    {
-        <div>
-            <p>Er ging iets mis. De gebruiker had zich eerst moeten aanmelden vooraleer hij kon starten met een bestelling te plaatsen.</p>
-        </div>
+
+        }
 
     }
-
-}
+</form>

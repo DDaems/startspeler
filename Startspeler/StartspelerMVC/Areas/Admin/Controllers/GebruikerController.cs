@@ -36,17 +36,18 @@ namespace StartspelerMVC.Admin.Controllers
                 ILogger<CreateModel> logger,
                 IEmailSender emailSender)
         {
-            this.ctx = ctx;
+            this.ctx = ctx; 
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
-            this.ctx = ctx;
+
         }
 
-        public async Task<IActionResult> Index()
+        public IActionResult Index()    
         {
-            users = await ctx.Users.Include(x => x.Drankkaarten).ToListAsync();
+            users = ctx.Users.Include(x => x.Drankkaarten).ThenInclude(y => y.DrankkaartType).ToList();
+
             return View(users);
         }
 

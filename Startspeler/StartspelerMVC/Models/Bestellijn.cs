@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace StartspelerMVC.Models
 {
-    [NotMapped]
     public class Bestellijn
     {
         public int BestellijnID { get; set; }

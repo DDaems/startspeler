@@ -1,4 +1,5 @@
-﻿<h1 class="bg-info text-white">Alle Gebruikers</h1>
+﻿
+<h1 class="bg-info text-white">Alle Gebruikers</h1>
 <a asp-action="Create" class="btn btn-secondary">Voeg een gebruiker toe</a>
 
 <table class="table table-sm table-bordered table-bordered">
@@ -13,25 +14,29 @@
                 <ul>
                     @foreach (var kaart in user.Drankkaarten)
                     {
-                        if (kaart.Status == null)
+                        
+                       
+                        if (kaart.Status == "Openstaand")
                         {
+
 
                             if (kaart.Aantal_beschikbaar == 0)
                             {
-                                <li class="text-danger">
-                                    id: @kaart.DrankkaartID<br />
-                                    beschikbaar: @kaart.Aantal_beschikbaar
-                                </li>
+                            <li class="list-group-item-danger">
+                                <a asp-area="" asp-controller="Drankkaart" asp-action="Edit" asp-route-id="@kaart.DrankkaartID">
+                                    @kaart.Aantal_beschikbaar / @kaart.DrankkaartType.Grootte
+                                </a>
+                            </li>
                             }
                             else
                             {
                                 <li>
-                                    id: @kaart.DrankkaartID<br />
-                                    beschikbaar: @kaart.Aantal_beschikbaar
+                                    <a asp-area="" asp-controller="Drankkaart" asp-action="Edit" asp-route-id="@kaart.DrankkaartID">
+                                    @kaart.Aantal_beschikbaar / @kaart.DrankkaartType.Grootte</a>
                                 </li>
                             }
-                        }
                     }
+                }
                 </ul>
             </td>
             <td>@user.Geboortedatum.</td>

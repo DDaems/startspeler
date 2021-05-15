@@ -199,7 +199,7 @@ namespace StartspelerMVC.Migrations
                 {
                     DrankkaartID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserID = table.Column<string>(nullable: true),
+                    UserId = table.Column<string>(nullable: true),
                     Aantal_beschikbaar = table.Column<int>(nullable: false),
                     Status = table.Column<string>(nullable: true),
                     Aankoopdatum = table.Column<DateTime>(nullable: false),
@@ -216,8 +216,8 @@ namespace StartspelerMVC.Migrations
                         principalColumn: "DrankkaartTypeID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Drankkaarten_User_UserID",
-                        column: x => x.UserID,
+                        name: "FK_Drankkaarten_User_UserId",
+                        column: x => x.UserId,
                         principalSchema: "SS",
                         principalTable: "User",
                         principalColumn: "Id",
@@ -319,6 +319,28 @@ namespace StartspelerMVC.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Bestellijnen",
+                schema: "SS",
+                columns: table => new
+                {
+                    BestellijnID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Aantal = table.Column<int>(nullable: false),
+                    ProductId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Bestellijnen", x => x.BestellijnID);
+                    table.ForeignKey(
+                        name: "FK_Bestellijnen_Producten_ProductId",
+                        column: x => x.ProductId,
+                        principalSchema: "SS",
+                        principalTable: "Producten",
+                        principalColumn: "ProductID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Inschrijvingen",
                 schema: "SS",
                 columns: table => new
@@ -348,6 +370,12 @@ namespace StartspelerMVC.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Bestellijnen_ProductId",
+                schema: "SS",
+                table: "Bestellijnen",
+                column: "ProductId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Bestellingen_UserId",
                 schema: "SS",
                 table: "Bestellingen",
@@ -360,10 +388,10 @@ namespace StartspelerMVC.Migrations
                 column: "DrankkaartTypeID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Drankkaarten_UserID",
+                name: "IX_Drankkaarten_UserId",
                 schema: "SS",
                 table: "Drankkaarten",
-                column: "UserID");
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Evenementen_EvenementTypeID",
@@ -439,6 +467,10 @@ namespace StartspelerMVC.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "Bestellijnen",
+                schema: "SS");
+
+            migrationBuilder.DropTable(
                 name: "Bestellingen",
                 schema: "SS");
 
@@ -448,10 +480,6 @@ namespace StartspelerMVC.Migrations
 
             migrationBuilder.DropTable(
                 name: "Inschrijvingen",
-                schema: "SS");
-
-            migrationBuilder.DropTable(
-                name: "Producten",
                 schema: "SS");
 
             migrationBuilder.DropTable(
@@ -475,6 +503,10 @@ namespace StartspelerMVC.Migrations
                 schema: "SS");
 
             migrationBuilder.DropTable(
+                name: "Producten",
+                schema: "SS");
+
+            migrationBuilder.DropTable(
                 name: "DrankkaartTypes",
                 schema: "SS");
 
@@ -483,15 +515,15 @@ namespace StartspelerMVC.Migrations
                 schema: "SS");
 
             migrationBuilder.DropTable(
-                name: "Categories",
-                schema: "SS");
-
-            migrationBuilder.DropTable(
                 name: "Role",
                 schema: "SS");
 
             migrationBuilder.DropTable(
                 name: "User",
+                schema: "SS");
+
+            migrationBuilder.DropTable(
+                name: "Categories",
                 schema: "SS");
 
             migrationBuilder.DropTable(

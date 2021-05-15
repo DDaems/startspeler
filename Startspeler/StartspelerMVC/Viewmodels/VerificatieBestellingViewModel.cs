@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
-using StartspelerMVC.Models;
+﻿using StartspelerMVC.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace StartspelerMVC.Viewmodels
 {
-    public class OverzichtProductViewModel
+    public class VerificatieBestellingViewModel
     {
         public string CategorieSearch { get; set; }
 
