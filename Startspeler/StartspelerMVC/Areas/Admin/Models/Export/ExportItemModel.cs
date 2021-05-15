@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace StartspelerMVC.Areas.Admin.Models.Export
+﻿namespace StartspelerMVC.Areas.Admin.Models.Export
 {
     public class ExportItemModel
     {

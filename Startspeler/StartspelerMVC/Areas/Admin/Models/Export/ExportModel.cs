@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace StartspelerMVC.Areas.Admin.Models.Export
 {
@@ -11,5 +7,7 @@ namespace StartspelerMVC.Areas.Admin.Models.Export
         public List<ExportItemModel> ExportItems { get; set; }
 
         public string Errors { get; set; }
+
+
     }
 }
