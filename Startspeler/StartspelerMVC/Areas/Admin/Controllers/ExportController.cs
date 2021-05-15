@@ -154,7 +154,7 @@ namespace StartspelerMVC.Admin.Controllers
                     // Orginele Q van Jan
                     var drankkaartenlijst = (from Drnk in ctx.Drankkaarten
                                              join Type in ctx.DrankkaartTypes on Drnk.DrankkaartTypeID equals Type.DrankkaartTypeID
-                                             join Users in ctx.Users on Drnk.UserID equals Users.Id
+                                             join Users in ctx.Users on Drnk.UserId equals Users.Id
                                              orderby Drnk.Aankoopdatum
                                              select new DrankkaartExcelInfo { Users.UserName, Users.Voornaam, Users.Achternaam, Drnk.Aankoopdatum, Drnk.Aantal_beschikbaar, Type.Grootte, Drnk.Status }).ToList();
 
