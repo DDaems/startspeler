@@ -1,32 +1,91 @@
-﻿@{
+﻿@using StartspelerMVC.Areas.Identity.Pages.Account
+
+@model LoginModel
+
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+
+@{
     ViewData["Title"] = "Home Page";
+    var user = await UserManager.GetUserAsync(User);
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
 
-<a asp-controller="Evenement" asp-action="Overzicht">Klik hier om naar evenementen te springen.</a>
 
-<br />
-<br />
-<a asp-controller="Product" asp-action="Drankoverzicht">Klik hier om naar Drankoverzicht te springen.</a>
-<br />
-<br />
-<a asp-controller="Product" asp-action="Stockbeheer">Klik hier om naar Stockbeheer te springen.</a>
-<br />
-<br />
-<a asp-controller="Drankkaart" asp-action="Index">Klik hier om naar een <b>drankkaartoverzicht</b> van een <b>user</b> te springen.</a>
-<br />
-<br />
-<a asp-controller="Drankkaart" asp-action="Create">Klik hier om een <b>drankkaart</b> toe te voegen bij een <b>user</b> </a>
-<br />
-<br />
-<a asp-controller="Drankkaart" asp-action="Overzicht">Klik hier om naar een <b>drankkaartoverzicht</b> van een <b>admin</b> te springen.</a>
-<br />
-<br />
-<a asp-controller="Drankkaarttype" asp-action="Index">Klik hier om een <b>adminoverzicht</b> te krijgen van de <b>drankkaarttypes</b>.</a>
-<br />
-<br />
-<a asp-controller="Drankkaarttype" asp-action="Create">Klik hier om een nieuw <b>drankkaarttype</b> aan te maken via een <b>admin</b>.</a>
+@if (User.Identity.IsAuthenticated)
+{
+    <div class="text-center mb-4">
+        <h1 class="display-4">Welkom @user.Voornaam </h1>
+    </div>
+
+    <div class="row text-center">
+        <div class="col-4">
+            <a class="" asp-controller="Product" asp-action="Drankoverzicht">
+                <img class="" width="160" height="160">
+            </a>
+            <p>Bestelling</p>
+        </div>
+        <div class="col-4">
+            <a class="" asp-controller="Drankkaart" asp-action="Index">
+                <img class="" width="160" height="160">
+            </a>
+            <p>Overzicht</p>
+        </div>
+        <div class="col-4">
+            <a class="" asp-controller="Drankkaart" asp-action="Create">
+                <img class="" width="160" height="160">
+            </a>
+            <p>Drankkaart</p>
+        </div>
+    </div>
+}
+else
+{
+    <div class="text-center mb-4">
+        <h1 class="display-4">Welkom</h1>
+        <p>Dit is een webapplicatie voor StartSpeler. Login in of registreer je om hiervan gebruik te kunnen maken.</p>
+    </div>
+
+    <div class="text-center" >
+        <div class="btn btn-lg btn-danger">
+        <a class="nav-link text-dark" id="login" asp-area="Identity" asp-page="/Account/Login">Aanmelden</a>
+        </div>
+    </div>
+    
+
+}
+
+@if (this.User.IsInRole("Admin"))
+{
+    <div class="">
+        <h4>Admin tools:</h4>
+    </div>
+    <hr />
+    <div class="row text-center">
+        <div class="col-3 col-sm-4">
+            <a class="" asp-controller="Drankkaart" asp-action="Overzicht">
+                <img class="" width="160" height="160">
+            </a>
+            <p>Overzicht drankkaarten</p>
+        </div>
+        <div class="col-3 col-sm-4">
+            <a class="" asp-controller="Product" asp-action="Stockbeheer">
+                <img class="" width="160" height="160">
+            </a>
+            <p>Stockbeheer</p>
+        </div>
+        <div class="col-3 col-sm-4">
+            <a class="" asp-controller="Soortendrankkaart" asp-action="Index">
+                <img class="" width="160" height="160">
+            </a>
+            <p>Drankkaarttypes</p>
+        </div>
+        <div class="col-3 col-sm-12">
+            <a class="" asp-area="Admin" asp-controller="Home" asp-action="Index">
+                <img class="" width="160" height="160">
+            </a>
+            <p>Admin beheer</p>
+        </div>
+
+    </div>
+}
