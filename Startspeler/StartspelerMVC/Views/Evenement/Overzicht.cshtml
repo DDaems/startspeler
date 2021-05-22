@@ -4,7 +4,7 @@
     ViewData["Title"] = "Evenementen Overzicht";
 }
 <br />
-<button type="button" class="Eventheader active"> Live evenementen</button>
+<button type="button" class="Eventheader active" style="background-color:#0088cc"> Live evenementen</button>
 <div class="content" style="display:block">
     @foreach (var item in Model.LiveEvenementen)
     {
@@ -14,8 +14,10 @@
                     @Html.DisplayFor(modelItem => item.Titel)
                 </h3>
             </div>
-            <div class="col-4">
-                <p>Aantal personen</p>
+            <div class="col-4 text-right">
+                <h3>
+                    @Html.DisplayFor(modelitem => item.Inschrijvingen.Count) / @Html.DisplayFor(modelItem => item.Max_Deelnemers)
+                </h3>
             </div>
         </div>
         <div class="row">
@@ -24,7 +26,7 @@
                     @Html.DisplayFor(modelItem => item.Beschrijving)
                 </p>
             </div>
-            <div class="col-4">
+            <div class="col-4 text-right">
                 <p>
                     @Convert.ToString(string.Format("{0:dd/MM/yyyy hh:mm}", item.Startdatum))
                 </p>
@@ -35,7 +37,7 @@
 <br />
 <br />
 
-<button type="button" class="Eventheader active">Aankomenden evenementen</button>
+<button type="button" class="Eventheader active" style="background-color:#0088cc">Aankomenden evenementen</button>
 <div class="content" style="display:block">
     @foreach (var item in Model.AankomendeEvenementen)
     {
@@ -72,7 +74,7 @@
 <br />
 
 <br />
-<button type="button" class="Eventheader active">Afgelopen Evenementen</button>
+<button type="button" class="Eventheader active" style="background-color:#0088cc">Afgelopen Evenementen</button>
 <div class="content" style="display:block">
     @foreach (var item in Model.AfgelopenEvenementen)
     {
@@ -82,8 +84,10 @@
                     @Html.DisplayFor(modelItem => item.Titel)
                 </h3>
             </div>
-            <div class="col-4">
-                <p>Aantal personen</p>
+            <div class="col-4 text-right">
+                <h3>
+                    @Html.DisplayFor(modelitem => item.Inschrijvingen.Count) / @Html.DisplayFor(modelItem => item.Max_Deelnemers)
+                </h3>
             </div>
         </div>
         <div class="row">
@@ -92,7 +96,7 @@
                     @Html.DisplayFor(modelItem => item.Beschrijving)
                 </p>
             </div>
-            <div class="col-4">
+            <div class="col-4 text-right">
                 <p>
                     @Convert.ToString(string.Format("{0:dd/MM/yyyy hh:mm}", item.Startdatum))
                 </p>
