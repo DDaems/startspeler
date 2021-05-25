@@ -89,6 +89,8 @@
 
                 <input type="radio" value="Alles" name="categorie" onclick="categorieselectie()" />
                 <label>Toon alles</label>
+                <input type="hidden" asp-for="Bestelling.BestellingID" />
+                <input type="hidden" asp-for="userId" />
                 <br />
 
                 @foreach (var item in Model.Categories)

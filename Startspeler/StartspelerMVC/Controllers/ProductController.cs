@@ -340,7 +340,8 @@ namespace StartspelerMVC.Controllers
                         Bestellijn nieuwelijn = new Bestellijn()
                         {
                             Prod = product,
-                            Aantal = 0
+                            Aantal = 0,
+                            ProductId = product.ProductID
                         };
                         viewmodel.Bestelling.Items.Add(nieuwelijn);
                     }
@@ -355,7 +356,8 @@ namespace StartspelerMVC.Controllers
                         Bestellijn nieuwelijn = new Bestellijn()
                         {
                             Prod = product,
-                            Aantal = 0
+                            Aantal = 0,
+                            ProductId = product.ProductID
                         };
                         viewmodel.Bestelling.Items.Add(nieuwelijn);
                     }
