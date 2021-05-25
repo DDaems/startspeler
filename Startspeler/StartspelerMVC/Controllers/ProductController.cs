@@ -44,6 +44,31 @@ namespace StartspelerMVC.Controllers
             var Lijstlijnen = new List<Bestellijn>();
             int i = 0;
             float prijs = 0;
+
+            //Je krijgt hier mogelijks een gefilterde lijst binnen. Je zou nu eigenlijk je viewmodel willen uitbreiden naar de complete lijst van producten.
+            List<int> GestuurdeProductIDs = new List<int>();
+            foreach (var item in viewmodel.Bestelling.Items)
+            {
+                GestuurdeProductIDs.Add(item.ProductId);
+            }
+            List<int> AlleProductIDs = new List<int>();
+            AlleProductIDs = _context.Producten.Select(x => x.ProductID).ToList();
+
+            //verschillijst bevat alle productid's die er mogelijks uit gefilterd zijn.
+            var verschillijst = AlleProductIDs.Except(GestuurdeProductIDs).ToList();
+
+            foreach (var item in verschillijst)
+            {
+                Bestellijn lijn = new Bestellijn()
+                {
+                    ProductId = item,
+                    Aantal = 0,
+                };
+                viewmodel.Bestelling.Items.Add(lijn);
+            }
+
+            viewmodel.Bestelling.Items = viewmodel.Bestelling.Items.OrderBy(x => x.ProductId).ToList();
+
             foreach (var item in viewmodel.Bestelling.Items)
             {
                 viewmodel.Bestelling.Items[i].Prod = _context.Producten.Include(x => x.Categorie).Where(x => x.ProductID == item.ProductId).FirstOrDefault();
@@ -60,6 +85,7 @@ namespace StartspelerMVC.Controllers
 
                 //We voegen hier alle bestellijnen toe aan de database. Achteraf moeten we ervoor zorgen dat alle lijnen gewist worden.
                 //Hierdoor bewaren we op termijn niet alle individuele lijnen.
+
                 _context.Add(lijn);
                 await _context.SaveChangesAsync();
 
