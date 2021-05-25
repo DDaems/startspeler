@@ -354,45 +354,53 @@ namespace StartspelerMVC.Controllers
             viewmodel.Categories = await _context.Categories.ToListAsync();
             viewmodel.Bestelling = new Bestelling();
 
-            if (!string.IsNullOrEmpty(viewmodel.CategorieSearch))
+            if (viewmodel.CategorieSearch != null)
             {
-                if (viewmodel.CategorieSearch == "Alles")
+                if (!string.IsNullOrEmpty(viewmodel.CategorieSearch))
                 {
-                    var alleproducten = await _context.Producten.Include(b => b.Categorie).ToListAsync();
-
-                    viewmodel.Bestelling.Items = new List<Bestellijn>();
-                    foreach (var product in alleproducten)
+                    if (viewmodel.CategorieSearch == "Alles")
                     {
-                        Bestellijn nieuwelijn = new Bestellijn()
-                        {
-                            Prod = product,
-                            Aantal = 0,
-                            ProductId = product.ProductID
-                        };
-                        viewmodel.Bestelling.Items.Add(nieuwelijn);
-                    }
-                }
-                else
-                {
-                    var filterproducten = await _context.Producten.Include(x => x.Categorie).Where(x => x.Categorie.Naam.Contains(viewmodel.CategorieSearch)).ToListAsync();
+                        var alleproducten = await _context.Producten.Include(b => b.Categorie).ToListAsync();
 
-                    viewmodel.Bestelling.Items = new List<Bestellijn>();
-                    foreach (var product in filterproducten)
-                    {
-                        Bestellijn nieuwelijn = new Bestellijn()
+                        viewmodel.Bestelling.Items = new List<Bestellijn>();
+                        foreach (var product in alleproducten)
                         {
-                            Prod = product,
-                            Aantal = 0,
-                            ProductId = product.ProductID
-                        };
-                        viewmodel.Bestelling.Items.Add(nieuwelijn);
+                            Bestellijn nieuwelijn = new Bestellijn()
+                            {
+                                Prod = product,
+                                Aantal = 0,
+                                ProductId = product.ProductID
+                            };
+                            viewmodel.Bestelling.Items.Add(nieuwelijn);
+                        }
                     }
+                    else
+                    {
+                        var filterproducten = await _context.Producten.Include(x => x.Categorie).Where(x => x.Categorie.Naam.Contains(viewmodel.CategorieSearch)).ToListAsync();
+
+                        viewmodel.Bestelling.Items = new List<Bestellijn>();
+                        foreach (var product in filterproducten)
+                        {
+                            Bestellijn nieuwelijn = new Bestellijn()
+                            {
+                                Prod = product,
+                                Aantal = 0,
+                                ProductId = product.ProductID
+                            };
+                            viewmodel.Bestelling.Items.Add(nieuwelijn);
+                        }
+                    }
+
+                    return View("DrankOverzicht", viewmodel);
                 }
 
                 return View("DrankOverzicht", viewmodel);
             }
-
-            return View("DrankOverzicht", viewmodel);
+            else
+            {
+                OverzichtProductViewModel initieel = new OverzichtProductViewModel();
+                return View("DrankOverzicht", initieel);
+            }
         }
 
         // GET: Product/Details/5

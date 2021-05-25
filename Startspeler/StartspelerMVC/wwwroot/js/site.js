@@ -64,3 +64,7 @@ function Toevoegen(getal) {
 function Verwijder() {
     document.getElementById('code').value = document.getElementById('code').value.slice(0, -1);
 }
+
+$('input[name="categorie"]').change(function () {
+    $(".radio-visibility").toggle($('.radio-selection').is(':checked'));
+}).change(); //trigger change to see changes

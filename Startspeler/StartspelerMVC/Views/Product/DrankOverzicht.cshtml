@@ -87,7 +87,7 @@
             <form asp-controller="Product" asp-action="Search" method="get">
                 <!--Geprobeerd om met drukknoppen te werken, maar dan werkt het niet.-->
 
-                <input type="radio" value="Alles" name="categorie" onclick="categorieselectie()" />
+                <input type="radio" value="Alles" name="categorie" onclick="categorieselectie()" class="radio-selection" />
                 <label>Toon alles</label>
                 <input type="hidden" asp-for="Bestelling.BestellingID" />
                 <input type="hidden" asp-for="userId" />
@@ -95,12 +95,12 @@
 
                 @foreach (var item in Model.Categories)
                 {
-                    <input type="radio" value="@Html.DisplayFor(modelItem => item.Naam)" name="categorie" onclick="categorieselectie()" />
+                    <input type="radio" value="@Html.DisplayFor(modelItem => item.Naam)" name="categorie" onclick="categorieselectie()" class="radio-selection" />
                     <label>@Html.DisplayFor(modelItem => item.Naam)</label>
                     <br />
                 }
 
-                <div>
+                <div class="radio-visibility">
                     <input asp-for="CategorieSearch" id="toon" type="text" hidden />
                     <input type="submit" value="Zoeken" class="btn btn-primary" />
                 </div>
