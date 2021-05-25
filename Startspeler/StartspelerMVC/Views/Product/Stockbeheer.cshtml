@@ -9,6 +9,9 @@
     <table class="table table-bordered">
         <tr>
             <th class="text-left">
+                Categorie
+            </th>
+            <th class="text-left">
                 @Html.DisplayNameFor(model => model.Naam)
             </th>
             <th class="text-center">
@@ -22,6 +25,9 @@
         @foreach (var item in Model)
         {
             <tr>
+                <td class="text-left align-middle">
+                    @Html.DisplayFor(modelitem => item.Categorie.Naam)
+                </td>
                 <td class="text-left align-middle">
                     <table class="table-borderless table-responsive float-left" style="margin:auto; width:100%">
                         <tr>

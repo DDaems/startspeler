@@ -343,6 +343,7 @@ namespace StartspelerMVC.Controllers
         public async Task<IActionResult> Stockbeheer()
         {
             return View(await _context.Producten
+                .Include(x => x.Categorie)
                 .OrderBy(x => x.CategorieID)
                 .ToListAsync());
         }
