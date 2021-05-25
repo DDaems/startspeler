@@ -20,17 +20,17 @@
             </div>
             <div class="form-group">
                 <label asp-for="NieuwProduct.Prijs" class="control-label"></label>
-                <input asp-for="NieuwProduct.Prijs" class="form-control" />
+                <input asp-for="NieuwProduct.Prijs" class="form-control" min="0" />
                 <span asp-validation-for="NieuwProduct.Prijs" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label class="control-label">Voorraad ijskast</label>
-                <input asp-for="NieuwProduct.Ijskast" class="form-control" />
+                <input asp-for="NieuwProduct.Ijskast" class="form-control" min="0" />
                 <span asp-validation-for="NieuwProduct.Ijskast" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label class="control-label">Voorraad stockage</label>
-                <input asp-for="NieuwProduct.OverigeStock" class="form-control" />
+                <input asp-for="NieuwProduct.OverigeStock" class="form-control" min="0" />
                 <span asp-validation-for="NieuwProduct.OverigeStock" class="text-danger"></span>
             </div>
             <div class="form-group">
