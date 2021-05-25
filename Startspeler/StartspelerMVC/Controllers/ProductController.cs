@@ -47,7 +47,10 @@ namespace StartspelerMVC.Controllers
             foreach (var item in viewmodel.Bestelling.Items)
             {
                 viewmodel.Bestelling.Items[i].Prod = _context.Producten.Include(x => x.Categorie).Where(x => x.ProductID == item.ProductId).FirstOrDefault();
-                prijs = prijs + item.Aantal * viewmodel.Bestelling.Items[i].Prod.Prijs;
+                if (viewmodel.Bestelling.Items[i].Prod != null)
+                {
+                    prijs = prijs + item.Aantal * viewmodel.Bestelling.Items[i].Prod.Prijs;
+                }
 
                 Bestellijn lijn = new Bestellijn()
                 {

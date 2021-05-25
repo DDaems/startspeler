@@ -1,16 +1,12 @@
-﻿
-@model IEnumerable<StartspelerMVC.Viewmodels.OverzichtDrankkaartenViewModel>
+﻿@model IEnumerable<StartspelerMVC.Viewmodels.OverzichtDrankkaartenViewModel>
 
 @{
     ViewData["Title"] = "View";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var zoekterm = "";
     //zoekterm moet gekoppeld worden aan OverzichtDrankkaartenViewModel.Zoekterm
 }
 
 <h1>Overzicht</h1>
-
-
 
 <table class="table table-bordered table-condensed table-striped sortable">
     <thead>
@@ -30,34 +26,32 @@
             <th>
                 @Html.DisplayNameFor(model => model.Status)
             </th>
-
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
-            
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Aankoopdatum)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Voornaam)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Achternaam)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SamengesteldeKolom)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Status)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.DrankkaartID">Edit</a>
-            </td>
 
-        </tr>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Aankoopdatum)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Voornaam)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Achternaam)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SamengesteldeKolom)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Status)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.DrankkaartID">Edit</a>
+                </td>
+            </tr>
         }
     </tbody>
 </table>

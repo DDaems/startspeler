@@ -8,14 +8,14 @@
 
 <div class="container-fluid">
     <div class="row">
-        <div class="col-9">
+        <div class="col-10">
 
             <form asp-controller="Product" asp-action="BevestigBestelling" enctype="multipart/form-data" method="post">
                 <input type="hidden" asp-for="Bestelling.BestellingID" />
                 <input type="hidden" asp-for="userId" />
-                 
+
                 <div class="row">
-                    <table class="table-bordered">
+                    <table class="table-bordered mb-4" style="width:100%">
                         <thead>
                             <tr>
                                 <th>
@@ -60,7 +60,7 @@
                                                     <button type="button" class="btn btn-primary" onclick="amountDown(@count)"> - </button>
                                                 </td>
                                                 <td>
-                                                    <input type="text" id="@count" asp-for="Bestelling.Items[count].Aantal" style="min-width:50px" class="text-center form-control" />
+                                                    <input type="text" id="@count" asp-for="Bestelling.Items[count].Aantal" style="min-width:50px" class="text-center form-control" readonly />
                                                 </td>
 
                                                 <td>
@@ -82,7 +82,7 @@
                 </div>
             </form>
         </div>
-        <div class="col-3">
+        <div class="col-2">
             <h5>Categorie</h5>
             <form asp-controller="Product" asp-action="Search" method="get">
                 <!--Geprobeerd om met drukknoppen te werken, maar dan werkt het niet.-->
@@ -98,10 +98,10 @@
                     <br />
                 }
 
-                <p>
+                <div>
                     <input asp-for="CategorieSearch" id="toon" type="text" hidden />
-                    <input type="submit" value="Zoeken" class"btn btn-default" />
-                </p>
+                    <input type="submit" value="Zoeken" class="btn btn-primary" />
+                </div>
             </form>
         </div>
     </div>

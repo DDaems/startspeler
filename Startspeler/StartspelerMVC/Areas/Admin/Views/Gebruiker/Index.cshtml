@@ -1,6 +1,5 @@
-﻿
-<h1 class="bg-info text-white">Alle Gebruikers</h1>
-<a asp-action="Create" class="btn btn-secondary">Voeg een gebruiker toe</a>
+﻿<h3 class="text-white" style="background-color:#0088cc;padding:5px;">Alle Gebruikers</h3>
+<a asp-action="Create" class="btn btn-secondary mb-4">Voeg een gebruiker toe</a>
 
 <table class="table table-sm table-bordered table-bordered">
     <tr><th>Alias</th><th>Naam</th><th>Email</th><th>Drankkaarten</th><th>Geboortedatum</th></tr>
@@ -14,29 +13,28 @@
                 <ul>
                     @foreach (var kaart in user.Drankkaarten)
                     {
-                        
-                       
+
                         if (kaart.Status == "Openstaand")
                         {
 
-
                             if (kaart.Aantal_beschikbaar == 0)
                             {
-                            <li class="list-group-item-danger">
-                                <a asp-area="" asp-controller="Drankkaart" asp-action="Edit" asp-route-id="@kaart.DrankkaartID">
-                                    @kaart.Aantal_beschikbaar / @kaart.DrankkaartType.Grootte
-                                </a>
-                            </li>
+                                <li class="list-group-item-danger">
+                                    <a asp-area="" asp-controller="Drankkaart" asp-action="Edit" asp-route-id="@kaart.DrankkaartID">
+                                        @kaart.Aantal_beschikbaar / @kaart.DrankkaartType.Grootte
+                                    </a>
+                                </li>
                             }
                             else
                             {
                                 <li>
                                     <a asp-area="" asp-controller="Drankkaart" asp-action="Edit" asp-route-id="@kaart.DrankkaartID">
-                                    @kaart.Aantal_beschikbaar / @kaart.DrankkaartType.Grootte</a>
+                                        @kaart.Aantal_beschikbaar / @kaart.DrankkaartType.Grootte
+                                    </a>
                                 </li>
                             }
+                        }
                     }
-                }
                 </ul>
             </td>
             <td>@user.Geboortedatum.</td>
