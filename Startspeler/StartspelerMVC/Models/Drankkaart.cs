@@ -28,7 +28,7 @@ namespace StartspelerMVC.Models
         public DateTime Aankoopdatum { get; set; }
 
         [ForeignKey("DrankkaartTypeID")]
-        public int DrankkaartTypeID { get; set; }
+        public int? DrankkaartTypeID { get; set; }
        
         public DrankkaartType DrankkaartType { get; set; }
 

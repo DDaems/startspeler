@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StartspelerMVC.Data;
 
 namespace StartspelerMVC.Migrations
 {
     [DbContext(typeof(StartspelerContext))]
-    partial class StartspelerContextModelSnapshot : ModelSnapshot
+    [Migration("20210525174234_configure-date-geboortedatum")]
+    partial class configuredategeboortedatum
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -220,7 +222,7 @@ namespace StartspelerMVC.Migrations
                     b.Property<int>("Aantal_beschikbaar")
                         .HasColumnType("int");
 
-                    b.Property<int?>("DrankkaartTypeID")
+                    b.Property<int>("DrankkaartTypeID")
                         .HasColumnType("int");
 
                     b.Property<string>("Status")
@@ -501,7 +503,9 @@ namespace StartspelerMVC.Migrations
                 {
                     b.HasOne("StartspelerMVC.Models.DrankkaartType", "DrankkaartType")
                         .WithMany("Drankkaarten")
-                        .HasForeignKey("DrankkaartTypeID");
+                        .HasForeignKey("DrankkaartTypeID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("StartspelerMVC.Models.User", "User")
                         .WithMany("Drankkaarten")

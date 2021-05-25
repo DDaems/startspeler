@@ -24,7 +24,7 @@ namespace StartspelerMVC.Models
 
         [Required]
         [PersonalData]
-        [DataType(DataType.Date)]
+        [Column(TypeName = "date")]
         public DateTime Geboortedatum { get; set; }
 
         //We gebruiken password veld van Identity

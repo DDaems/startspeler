@@ -69,7 +69,7 @@ namespace StartspelerMVC.Admin.Controllers
             {
                 try
                 {
-                    var user = await ctx.Users.AsNoTracking().FirstAsync(x => x.Id == model.Id);
+                    var user = await ctx.Users.FirstAsync(x => x.Id == model.Id);
 
                     if (user != null)
                     {
@@ -98,10 +98,10 @@ namespace StartspelerMVC.Admin.Controllers
             public async Task<IActionResult> Delete(string id)
         {
             if (id == null) { return RedirectToAction(nameof(Index)); }
-
-            var user = await ctx.Users.FindAsync(id);
+            var user = await ctx.Users.Include(x => x.Drankkaarten).Where(x => x.Id == id).FirstOrDefaultAsync();
+            //var user = await ctx.Users.FindAsync(id);
                 if (user == null) { return NotFound(); }
-
+            if (user.Drankkaarten != null) { user.Drankkaarten.Clear(); }
             ctx.Users.Remove(user);
             await ctx.SaveChangesAsync();
             

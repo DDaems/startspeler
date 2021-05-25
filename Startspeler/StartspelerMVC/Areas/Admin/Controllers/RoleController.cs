@@ -23,8 +23,11 @@ namespace StartspelerMVC.Admin.Controllers
             userManager = userMrg;
         }
 
-
-        public ViewResult Index() => View(roleManager.Roles);
+        public RedirectToActionResult Index()
+        {
+            var role = roleManager.Roles.FirstOrDefault();
+            return RedirectToAction("Update", new { id = role.Id });
+        }
 
         private void Errors(IdentityResult result)
         {
