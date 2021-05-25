@@ -521,7 +521,7 @@ namespace StartspelerMVC.Controllers
             var product = await _context.Producten.FindAsync(id);
             _context.Producten.Remove(product);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Stockbeheer));
         }
 
         private bool ProductExists(int id)
