@@ -211,7 +211,7 @@ namespace StartspelerMVC.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("DrankkaartID,UserId, Aantal_beschikbaar,Status,DrankkaartTypeID")] Drankkaart drankkaart)
+        public async Task<IActionResult> Edit(int id, [Bind("Aankoopdatum, DrankkaartID,UserId, Aantal_beschikbaar,Status,DrankkaartTypeID")] Drankkaart drankkaart)
         {
             if (id != drankkaart.DrankkaartID)
             {
