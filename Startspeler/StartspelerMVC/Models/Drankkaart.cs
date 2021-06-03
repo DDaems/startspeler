@@ -20,7 +20,7 @@ namespace StartspelerMVC.Models
         public string UserId { get; set; }
         public User User { get; set; }
 
-        [Display(Name = "#/")]
+        [Display(Name = "Aantal beschikbaar")]
         public int Aantal_beschikbaar { get; set; }
 
         public string Status { get;  set; }

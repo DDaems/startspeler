@@ -249,8 +249,8 @@ namespace StartspelerMVC.Controllers
                 return NotFound();
             }
 
-            var drankkaart = await _context.Drankkaarten
-                .FirstOrDefaultAsync(m => m.DrankkaartID == id);
+            var drankkaart = await _context.Drankkaarten.Include(x => x.User).Include(x => x.DrankkaartType)
+                .Where(x => x.DrankkaartID == id).FirstOrDefaultAsync();
             if (drankkaart == null)
             {
                 return NotFound();
@@ -267,7 +267,7 @@ namespace StartspelerMVC.Controllers
             var drankkaart = await _context.Drankkaarten.FindAsync(id);
             _context.Drankkaarten.Remove(drankkaart);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Overzicht));
         }
 
         private bool DrankkaartExists(int id)

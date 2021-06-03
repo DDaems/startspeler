@@ -32,26 +32,32 @@
         @foreach (var item in Model)
         {
 
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Aankoopdatum)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Voornaam)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Achternaam)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.SamengesteldeKolom)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Status)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.DrankkaartID">Edit</a>
-                </td>
-            </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Aankoopdatum)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Voornaam)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Achternaam)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SamengesteldeKolom)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.DrankkaartID">Edit</a>
+            </td>
+            @if (this.User.IsInRole("Admin"))
+            {
+            <td>
+                <a asp-action="Delete" asp-route-id="@item.DrankkaartID">Del</a>
+            </td>
+            }
+        </tr>
         }
     </tbody>
 </table>
