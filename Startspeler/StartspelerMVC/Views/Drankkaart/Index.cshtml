@@ -15,9 +15,20 @@
     </h1>
 }
 
-<p>
-    <a asp-action="Create">Nieuwe drankkaart aankopen?</a>
-</p>
+
+    <p>
+        <a asp-action="Create">Nieuwe drankkaart aankopen?</a>
+        <br />
+    </p>
+    
+    @if (User.IsInRole("Admin"))
+    {
+        <p>
+            <a asp-action="Overzicht">Drankkaarten overzicht klanten</a>
+        </p>
+    }
+
+
 <table class="table">
     <thead>
         <tr>
@@ -36,27 +47,27 @@
     <tbody>
         @foreach (var item in Model)
         {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Aankoopdatum)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SamengesteldeKolom)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Status)
-            </td>
-
-            @if (this.User.IsInRole("Niet van toepassing"))
-            {
+            <tr>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.DrankkaartID">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.DrankkaartID">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.DrankkaartID">Delete</a>
+                    @Html.DisplayFor(modelItem => item.Aankoopdatum)
                 </td>
-            }
+                <td>
+                    @Html.DisplayFor(modelItem => item.SamengesteldeKolom)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Status)
+                </td>
 
-        </tr>
+                @if (this.User.IsInRole("Niet van toepassing"))
+                {
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.DrankkaartID">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.DrankkaartID">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.DrankkaartID">Delete</a>
+                    </td>
+                }
+
+            </tr>
         }
     </tbody>
 </table>
