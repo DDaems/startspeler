@@ -16,23 +16,34 @@
 
                 if (kaart.Status == "Openstaand")
                 {
-
-                    if (kaart.Aantal_beschikbaar == 0)
+                    if (kaart.DrankkaartType != null)
                     {
-                        <li class="list-group-item-danger">
-                            <a asp-area="" asp-controller="Drankkaart" asp-action="Edit" asp-route-id="@kaart.DrankkaartID">
-                                @kaart.Aantal_beschikbaar / @kaart.DrankkaartType.Grootte
-                            </a>
-                        </li>
+                        if (kaart.Aantal_beschikbaar == 0)
+                        {
+                            <li class="list-group-item-danger">
+                                <a asp-area="" asp-controller="Drankkaart" asp-action="Edit" asp-route-id="@kaart.DrankkaartID">
+                                    @kaart.Aantal_beschikbaar / @kaart.DrankkaartType.Grootte
+                                </a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li>
+                                <a asp-area="" asp-controller="Drankkaart" asp-action="Edit" asp-route-id="@kaart.DrankkaartID">
+                                    @kaart.Aantal_beschikbaar / @kaart.DrankkaartType.Grootte
+                                </a>
+                            </li>
+                        }
                     }
                     else
                     {
-                        <li>
+                        <li class="list-group-item-danger">
                             <a asp-area="" asp-controller="Drankkaart" asp-action="Edit" asp-route-id="@kaart.DrankkaartID">
-                                @kaart.Aantal_beschikbaar / @kaart.DrankkaartType.Grootte
+                                @kaart.Aantal_beschikbaar / Unknown
                             </a>
                         </li>
                     }
+
                 }
             }
         </ul>
