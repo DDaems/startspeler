@@ -9,7 +9,11 @@
     ViewData["Title"] = "Welkom";
     var user = await UserManager.GetUserAsync(User);
 }
-
+<script type="text/javascript">
+    function autoCompleteOn() {
+        document.getElementById('Input_Email').autocomplete = "on";
+    }
+</script>
 @if (User.Identity.IsAuthenticated)
 {
     <div class="text-center mb-4">
@@ -51,7 +55,7 @@ else
                     <div asp-validation-summary="All" class="text-danger"></div>
                     <div class="form-group">
                         <label asp-for="Input.Email"></label>
-                        <input asp-for="Input.Email" class="form-control" />
+                        <input asp-for="Input.Email"  onfocus="autoCompleteOn()" class="form-control"autocomplete="on" />
                         <span asp-validation-for="Input.Email" class="text-danger"></span>
                     </div>
                     <div class="form-group">
