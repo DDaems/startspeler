@@ -1,6 +1,5 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
-
 a.navbar-brand {
     white-space: normal;
     text-align: center;
@@ -113,3 +112,58 @@ body {
 .navbar-text-white {
     color: white !important;
 }
+
+.startspeler-header-logo {
+    content: url("../images/logo_header2.png");
+    object-fit: scale-down;
+    height: 50px;
+}
+.startspeler-header-logo-auth {
+    content: url("../images/logo_header2.png");
+    object-fit: scale-down;
+    height: 50px;
+}
+
+@media (max-width: 480px) {
+    .text {
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .text {
+        font-size: 16px;
+    }
+
+}
+@media (max-width: 406px) {
+    .text {
+        font-size: 16px;
+    }
+
+    .startspeler-header-logo {
+        content: url("../images/logo_small_notext.png");
+        object-fit: scale-down;
+    }
+}
+@media (min-width: 576px) {
+    .text {
+        font-size: 16px;
+    }
+
+    .startspeler-header-logo {
+        content: url("../images/logo_header2.png");
+        object-fit: scale-down;
+    }
+}
+@media (max-width: 994px) {
+    .text {
+        font-size: 16px;
+    }
+
+    .startspeler-header-logo-auth {
+        content: url("../images/logo_small_notext.png");
+        object-fit: scale-down;
+    }
+}
+
