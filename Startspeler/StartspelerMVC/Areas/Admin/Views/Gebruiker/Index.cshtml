@@ -11,41 +11,59 @@
     <td>@user.Email</td>
     <td>
         <ul>
-            @foreach (var kaart in user.Drankkaarten)
-            {
 
-                if (kaart.Status == "Openstaand")
+            @{ bool betaald = false;
+
+                @foreach (var kaart in user.Drankkaarten)
                 {
-                    if (kaart.DrankkaartType != null)
+                    betaald = kaart.Status == "Betaald" ? true : false;
+                    if (@kaart.DrankkaartType != null)
                     {
-                        if (kaart.Aantal_beschikbaar == 0)
+                        if (kaart.Aantal_beschikbaar != 0)
                         {
+                            if (betaald == true)
+                            {
+                                <li>
+                                    <a asp-area="" asp-controller="Drankkaart" asp-action="Edit" asp-route-id="@kaart.DrankkaartID">
+                                        @kaart.Aantal_beschikbaar / @kaart.DrankkaartType.Grootte
+                                    </a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="list-group-item-danger">
+                                    <a asp-area="" asp-controller="Drankkaart" asp-action="Edit" asp-route-id="@kaart.DrankkaartID">
+                                        @kaart.Aantal_beschikbaar / @kaart.DrankkaartType.Grootte
+                                    </a>
+                                </li>
+                            }
+                        }
+                        else
+                        {
+                            if (betaald == false)
+                            {
                             <li class="list-group-item-danger">
                                 <a asp-area="" asp-controller="Drankkaart" asp-action="Edit" asp-route-id="@kaart.DrankkaartID">
                                     @kaart.Aantal_beschikbaar / @kaart.DrankkaartType.Grootte
                                 </a>
                             </li>
-                        }
-                        else
-                        {
-                            <li>
-                                <a asp-area="" asp-controller="Drankkaart" asp-action="Edit" asp-route-id="@kaart.DrankkaartID">
-                                    @kaart.Aantal_beschikbaar / @kaart.DrankkaartType.Grootte
-                                </a>
-                            </li>
+                            }
                         }
                     }
                     else
                     {
-                        <li>
+                        if (betaald == false)
+                        {
+                        <li class="list-group-item-danger">
                             <a asp-area="" asp-controller="Drankkaart" asp-action="Edit" asp-route-id="@kaart.DrankkaartID">
-                                @kaart.Aantal_beschikbaar / ...
+                                @kaart.Aantal_beschikbaar ...
                             </a>
                         </li>
+                            }
+                        }
                     }
-
+                
                 }
-            }
         </ul>
     </td>
     <td>@user.Geboortedatum.ToShortDateString()</td>

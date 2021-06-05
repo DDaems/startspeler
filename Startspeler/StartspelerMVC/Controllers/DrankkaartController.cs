@@ -164,6 +164,7 @@ namespace StartspelerMVC.Controllers
                 .Where(x => x.DrankkaartTypeID == drankkaartVM.Drankkaart.DrankkaartTypeID)
                  .SingleOrDefault();
 
+            drankkaartVM.Drankkaart.DrankkaartTypeID = drankkaarttype.DrankkaartTypeID;
             drankkaartVM.Drankkaart.Aantal_beschikbaar = drankkaarttype.Grootte;
             drankkaartVM.Drankkaart.Aankoopdatum = DateTime.Now;
             drankkaartVM.Drankkaart.Status = "Openstaand";
@@ -197,7 +198,7 @@ namespace StartspelerMVC.Controllers
                 return NotFound();
             }
 
-            drankkaartViewModel.Drankkaart = await _context.Drankkaarten.FindAsync(id);
+            drankkaartViewModel.Drankkaart = _context.Drankkaarten.Include(x => x.DrankkaartType).Where(x => x.DrankkaartID == id).SingleOrDefault();
             drankkaartViewModel.Drankkaart.UserId = drankkaartViewModel.Drankkaart.UserId;
             if (drankkaartViewModel.Drankkaart == null)
             {
@@ -212,7 +213,7 @@ namespace StartspelerMVC.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Aankoopdatum, DrankkaartID,UserId, Aantal_beschikbaar,Status,DrankkaartTypeID")] Drankkaart drankkaart)
-        {
+        {         
             if (id != drankkaart.DrankkaartID)
             {
                 return NotFound();
