@@ -3,6 +3,7 @@
     ViewData["Title"] = "Export";
 }
 
+<h1>@ViewData["Title"]</h1>
 <div class="display-1">
     @Html.DisplayFor(m => m.Errors)
 </div>
@@ -21,7 +22,7 @@
     }
 
     
-    <input type="submit" value="Download" asp-action="Download" class"btn btn-default" />
+    <input type="submit" value="Download" asp-action="Download" class="btn btn-primary" />
 
 </form>
 
