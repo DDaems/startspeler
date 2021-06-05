@@ -5,48 +5,49 @@
     ViewData["Title"] = "Aanmelden";
 }
 
-<h1>@ViewData["Title"]</h1>
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-sm-12 col-md-4 offset-md-2">
+        <h1>@ViewData["Title"]</h1>
+
         <section>
             <form id="account" method="post">
                 <h4>Meld je aan.</h4>
                 <hr />
                 <div asp-validation-summary="All" class="text-danger"></div>
-                    <div class="form-group">
-                        <label asp-for="Input.Email"></label>
-                        <input asp-for="Input.Email" class="form-control" />
-                        <span asp-validation-for="Input.Email" class="text-danger"></span>
+                <div class="form-group">
+                    <label asp-for="Input.Email"></label>
+                    <input asp-for="Input.Email" class="form-control" />
+                    <span asp-validation-for="Input.Email" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Input.Password"></label>
+                    <input asp-for="Input.Password" class="form-control" />
+                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label asp-for="Input.RememberMe">
+                            <input asp-for="Input.RememberMe" />
+                            @Html.DisplayNameFor(m => m.Input.RememberMe)
+                        </label>
                     </div>
-                    <div class="form-group">
-                        <label asp-for="Input.Password"></label>
-                        <input asp-for="Input.Password" class="form-control" />
-                        <span asp-validation-for="Input.Password" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <div class="checkbox">
-                            <label asp-for="Input.RememberMe">
-                                <input asp-for="Input.RememberMe" />
-                                @Html.DisplayNameFor(m => m.Input.RememberMe)
-                            </label>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-primary">Aanmelden</button>
-                    </div>
-                    <div class="form-group">
-                        <p>
-                            <a id="forgot-password" asp-page="./ForgotPassword">Passwoord vergeten?</a>
-                        </p>
-                        <p>
-                            <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Registreer als een nieuwe gebruiker</a>
-                        </p>
-                    </div>
-                </form>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Aanmelden</button>
+                </div>
+                <div class="form-group">
+                    <p>
+                        <a id="forgot-password" asp-page="./ForgotPassword">Pincode vergeten?</a>
+                    </p>
+                    <p>
+                        <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Registreer als een nieuwe gebruiker</a>
+                    </p>
+                </div>
+            </form>
         </section>
     </div>
-    <div class="col-md-6 col-md-offset-2">
-        <section>
+    <!--<div class="col-md-6 col-md-offset-2">
+        <section>-->
             @*<h4>Use another service to log in.</h4>
         <hr />
         @{
@@ -73,8 +74,8 @@
                 </form>
             }
         }*@
-        </section>
-    </div>
+        <!--</section>
+    </div>-->
 </div>
 
 @section Scripts {
