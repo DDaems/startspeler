@@ -31,13 +31,14 @@ function isNumberKey(evt) {
 
 function categorieselectie() {
     var categorie = document.getElementsByName('categorie');
-    var categorieChecked;
-
     for (var i = 0; i < categorie.length; i++) {
         if (categorie[i].checked) {
             document.getElementById("toon").value = categorie[i].value;
         }
     }
+    document.getElementById("bestelling").action = "/Product/Search";
+    document.getElementById("bestelling").submit();
+
 }
 
 function amountUp(id) {

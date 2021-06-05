@@ -8,13 +8,14 @@
 
 <div class="container-fluid">
     <div class="row">
-        <div class="col-10">
+        <div class="col-12">
 
-            <form asp-controller="Product" asp-action="BevestigBestelling" enctype="multipart/form-data" method="post">
-                <input type="hidden" asp-for="Bestelling.BestellingID" />
-                <input type="hidden" asp-for="userId" />
-
+            <form  id="bestelling" asp-controller="Product" asp-action="BevestigBestelling" enctype="multipart/form-data" method="post">
                 <div class="row">
+                <div class="col-sm-10">
+                    <input type="hidden" asp-for="Bestelling.BestellingID" />
+                    <input type="hidden" asp-for="userId" />
+
                     <table class="table-bordered mb-4" style="width:100%">
                         <thead>
                             <tr>
@@ -32,78 +33,130 @@
                                 </th>
                             </tr>
                         </thead>
-                        @{int count = 0;}
 
-                        @foreach (var item in Model.Bestelling.Items)
+                        @for (int i = 0; i < Model.Bestelling.Items.Count(); i++)
                         {
-                            <tbody>
+                            @Html.HiddenFor(m => m.Bestelling.Items[i].Prod.Naam);
+                            @Html.HiddenFor(m => m.Bestelling.Items[i].Prod.Categorie.Naam);
+                            @Html.HiddenFor(m => m.Bestelling.Items[i].Prod.Prijs);
+                            if (!string.IsNullOrWhiteSpace(Model.CategorieSearch) && Model.CategorieSearch != "Alles")
+                            {
+                                if (Model.CategorieSearch == Model.Bestelling.Items[i].Prod.Categorie.Naam)
+                                {
+                                    <tbody>
 
-                                <tr>
-                                    <td>
-                                        <input type="hidden" asp-for="Bestelling.Items[count].BestellijnID" />
-                                        <input type="hidden" asp-for="@Model.Bestelling.Items[count].Prod" value="@Model.Bestelling.Items[count].Prod" />
-                                        <input type="hidden" asp-for="@Model.Bestelling.Items[count].ProductId" value="@Model.Bestelling.Items[count].ProductId" />
+                                        <tr>
+                                            <td>
+                                                <input type="hidden" asp-for="@Model.Bestelling.Items[i].BestellijnID" />
+                                                <input type="hidden" asp-for="@Model.Bestelling.Items[i].Prod" value="@Model.Bestelling.Items[i].Prod" />
+                                                <input type="hidden" asp-for="@Model.Bestelling.Items[i].ProductId" value="@Model.Bestelling.Items[i].ProductId" />
 
-                                        <text class="px-2" asp-for="Bestelling.Items[count].Prod.Categorie.Naam">@Html.DisplayFor(modelitem => item.Prod.Categorie.Naam)</text>
-                                    </td>
+                                                <text class="px-2" asp-for="@Model.Bestelling.Items[i].Prod.Categorie.Naam">@Html.DisplayFor(modelitem => Model.Bestelling.Items[i].Prod.Categorie.Naam)</text>
+                                            </td>
 
-                                    <td>
-                                        <text class="px-2">@Html.DisplayFor(modelitem => item.Prod.Naam)</text>
-                                    </td>
-                                    <td class="text-center">
-                                        <text class="px-2">@Html.DisplayFor(modelitem => item.Prod.Prijs)</text>
-                                    </td>
-                                    <td>
-                                        <table border="0">
-                                            <tr>
-                                                <td>
-                                                    <button type="button" class="btn btn-primary" onclick="amountDown(@count)"> - </button>
-                                                </td>
-                                                <td>
-                                                    <input type="text" id="@count" asp-for="Bestelling.Items[count].Aantal" style="min-width:50px" class="text-center form-control" readonly />
-                                                </td>
+                                            <td>
+                                                <text class="px-2">@Html.DisplayFor(modelitem => Model.Bestelling.Items[i].Prod.Naam)</text>
+                                            </td>
+                                            <td class="text-center">
+                                                <text class="px-2">@Html.DisplayFor(modelitem => Model.Bestelling.Items[i].Prod.Prijs)</text>
+                                            </td>
+                                            <td>
+                                                <table border="0">
+                                                    <tr>
+                                                        <td>
+                                                            <button type="button" class="btn btn-primary" onclick="amountDown(@Model.Bestelling.Items[i].BestellijnID)"> - </button>
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" id="@Model.Bestelling.Items[i].BestellijnID" asp-for="@Model.Bestelling.Items[i].Aantal" style="min-width:50px" class="text-center form-control" readonly />
+                                                        </td>
 
-                                                <td>
+                                                        <td>
 
-                                                    <button type="button" class="btn btn-primary" onclick="amountUp(@count)"> + </button>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                </tr>
-                            </tbody>
-                            count++;
+                                                            <button type="button" class="btn btn-primary" onclick="amountUp(@Model.Bestelling.Items[i].BestellijnID)"> + </button>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                }
+                                else
+                                {
+                                    @Html.HiddenFor(m => m.Bestelling.Items[i].BestellijnID);
+                                    @Html.HiddenFor(m => m.Bestelling.Items[i].Prod);
+                                    @Html.HiddenFor(m => m.Bestelling.Items[i].ProductId);
+                                    @Html.HiddenFor(m => m.Bestelling.Items[i].Aantal);
+                                }
 
+                            }
+                            else
+                            {
+                                <tbody>
+
+                                    <tr>
+                                        <td>
+                                            <input type="hidden" asp-for="@Model.Bestelling.Items[i].BestellijnID" />
+                                            <input type="hidden" asp-for="@Model.Bestelling.Items[i].Prod" value="@Model.Bestelling.Items[i].Prod" />
+
+                                            <input type="hidden" asp-for="@Model.Bestelling.Items[i].ProductId" value="@Model.Bestelling.Items[i].ProductId" />
+
+                                            <text class="px-2" asp-for="@Model.Bestelling.Items[i].Prod.Categorie.Naam">@Html.DisplayFor(modelitem => Model.Bestelling.Items[i].Prod.Categorie.Naam)</text>
+                                        </td>
+
+                                        <td>
+                                            <text class="px-2">@Html.DisplayFor(modelitem => Model.Bestelling.Items[i].Prod.Naam)</text>
+                                        </td>
+                                        <td class="text-center">
+                                            <text class="px-2">@Html.DisplayFor(modelitem => Model.Bestelling.Items[i].Prod.Prijs)</text>
+                                        </td>
+                                        <td>
+                                            <table border="0">
+                                                <tr>
+                                                    <td>
+                                                        <button type="button" class="btn btn-primary" onclick="amountDown(@Model.Bestelling.Items[i].BestellijnID)"> - </button>
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" id="@Model.Bestelling.Items[i].BestellijnID" asp-for="@Model.Bestelling.Items[i].Aantal" style="min-width:50px" class="text-center form-control" readonly />
+                                                        <input type="hidden" asp-for="@Model.Bestelling.Items[i].ProductId" value="@Model.Bestelling.Items[i].ProductId" />
+                                                    </td>
+
+                                                    <td>
+
+                                                        <button type="button" class="btn btn-primary" onclick="amountUp(@Model.Bestelling.Items[i].BestellijnID)"> + </button>
+                                                    </td>
+
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            }
                         }
                     </table>
-                </div>
-                <div class="row">
                     <input type="submit" class="btn btn-primary" value="Plaats bestelling" />
                 </div>
-            </form>
-        </div>
-        <div class="col-2">
-            <h5>Categorie</h5>
-            <form asp-controller="Product" asp-action="Search" method="get">
-                <!--Geprobeerd om met drukknoppen te werken, maar dan werkt het niet.-->
 
-                <input type="radio" value="Alles" name="categorie" onclick="categorieselectie()" class="radio-selection" />
-                <label>Toon alles</label>
-                <input type="hidden" asp-for="Bestelling.BestellingID" />
-                <input type="hidden" asp-for="userId" />
-                <br />
+                <div class="col-sm-2">
 
-                @foreach (var item in Model.Categories)
-                {
-                    <input type="radio" value="@Html.DisplayFor(modelItem => item.Naam)" name="categorie" onclick="categorieselectie()" class="radio-selection" />
-                    <label>@Html.DisplayFor(modelItem => item.Naam)</label>
+                    <h5>Categorie</h5>
+
+                    @{ bool check = false;
+                        check = !string.IsNullOrWhiteSpace(Model.CategorieSearch) && Model.CategorieSearch == "Alles" ? true : false; }
+                    <input type="radio" checked="@check" value="Alles" name="categorie" onclick="categorieselectie()" class="radio-selection" />
+                    <label>Toon alles</label>
                     <br />
-                }
 
-                <div class="radio-visibility">
+                    @foreach (var item in Model.Categories)
+                    {
+                        
+                        check = !string.IsNullOrWhiteSpace(Model.CategorieSearch) && item.Naam == Model.CategorieSearch ? true : false;
+                        <input type="radio" checked="@check" value="@Html.DisplayFor(modelItem => item.Naam)" name="categorie" onclick="categorieselectie()" class="radio-selection" />
+                        <label>@Html.DisplayFor(modelItem => item.Naam)</label>
+                        <br />
+                    }
                     <input asp-for="CategorieSearch" id="toon" type="text" hidden />
-                    <input type="submit" value="Zoeken" class="btn btn-primary" />
                 </div>
+                    </div>
             </form>
         </div>
     </div>

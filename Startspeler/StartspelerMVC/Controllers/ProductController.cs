@@ -352,56 +352,14 @@ namespace StartspelerMVC.Controllers
 
         public async Task<IActionResult> Search(OverzichtProductViewModel viewmodel)
         {
-            viewmodel.Categories = await _context.Categories.ToListAsync();
-            viewmodel.Bestelling = new Bestelling();
+            OverzichtProductViewModel vm = new OverzichtProductViewModel();
+            vm.Categories = await _context.Categories.ToListAsync();
+            vm.Bestelling = viewmodel.Bestelling;
+            vm.userId = viewmodel.userId;
+            vm.CategorieSearch = viewmodel.CategorieSearch;
 
-            if (viewmodel.CategorieSearch != null)
-            {
-                if (!string.IsNullOrEmpty(viewmodel.CategorieSearch))
-                {
-                    if (viewmodel.CategorieSearch == "Alles")
-                    {
-                        var alleproducten = await _context.Producten.Include(b => b.Categorie).ToListAsync();
+            return View("DrankOverzicht", vm);
 
-                        viewmodel.Bestelling.Items = new List<Bestellijn>();
-                        foreach (var product in alleproducten)
-                        {
-                            Bestellijn nieuwelijn = new Bestellijn()
-                            {
-                                Prod = product,
-                                Aantal = 0,
-                                ProductId = product.ProductID
-                            };
-                            viewmodel.Bestelling.Items.Add(nieuwelijn);
-                        }
-                    }
-                    else
-                    {
-                        var filterproducten = await _context.Producten.Include(x => x.Categorie).Where(x => x.Categorie.Naam.Contains(viewmodel.CategorieSearch)).ToListAsync();
-
-                        viewmodel.Bestelling.Items = new List<Bestellijn>();
-                        foreach (var product in filterproducten)
-                        {
-                            Bestellijn nieuwelijn = new Bestellijn()
-                            {
-                                Prod = product,
-                                Aantal = 0,
-                                ProductId = product.ProductID
-                            };
-                            viewmodel.Bestelling.Items.Add(nieuwelijn);
-                        }
-                    }
-
-                    return View("DrankOverzicht", viewmodel);
-                }
-
-                return View("DrankOverzicht", viewmodel);
-            }
-            else
-            {
-                OverzichtProductViewModel initieel = new OverzichtProductViewModel();
-                return View("DrankOverzicht", initieel);
-            }
         }
 
         // GET: Product/Details/5
