@@ -4,3 +4,9 @@
 
 <p>Jouw bestelling is succesvol geplaatst.</p>
 <p>Vergeet je niet uit te loggen alvorens je jouw drinken uit de ijskast neemt.</p>
+<hr />
+<div class="d-flex justify-content-center">
+    <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+        <button id="logout" type="submit" class="btn btn-primary">Afmelden</button>
+    </form>
+</div>
