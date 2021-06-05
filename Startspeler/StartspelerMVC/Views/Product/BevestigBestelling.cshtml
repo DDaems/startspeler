@@ -1,7 +1,7 @@
 ﻿@model StartspelerMVC.Viewmodels.OverzichtProductViewModel
 
 <form asp-controller="Product" asp-action="VerificatieBestelling" enctype="multipart/form-data" method="post">
-
+    <p class="text-danger">@Model.Errors</p>
     <input type="hidden" asp-for="Bestelling.BestellingID" />
     <input type="hidden" asp-for="userId" />
     @if (Model.Bestelling.Items != null)
@@ -87,7 +87,7 @@
                     <button type="button" class="rounded-circle mr-3" style="width:100px" onclick="Toevoegen(0)">0</button>
                 </div>
             </div>
-            <p>@Model.Errors</p>
+
             <input type="submit" class="btn btn-primary" value="Plaats bestelling" />
 
         }
