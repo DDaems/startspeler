@@ -135,7 +135,6 @@ namespace StartspelerMVC.Controllers
             {
                 return NotFound();
             }
-
             var drankkaartType = await _context.DrankkaartTypes
                 .FirstOrDefaultAsync(m => m.DrankkaartTypeID == id);
             if (drankkaartType == null)
@@ -152,6 +151,7 @@ namespace StartspelerMVC.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var drankkaartType = await _context.DrankkaartTypes.FindAsync(id);
+            _context.Drankkaarten.Where(v => v.DrankkaartTypeID == id).Load();
             _context.DrankkaartTypes.Remove(drankkaartType);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
