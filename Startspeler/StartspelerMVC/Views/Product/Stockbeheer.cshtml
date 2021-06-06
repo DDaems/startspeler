@@ -1,0 +1,68 @@
+﻿@model IEnumerable<Product>
+@{
+    ViewData["Title"] = "Stockbeheer";
+}
+
+<h1>Stockbeheer</h1>
+
+<div class="container">
+    <table class="table table-bordered">
+        <tr>
+            <th class="text-left">
+                Categorie
+            </th>
+            <th class="text-left">
+                @Html.DisplayNameFor(model => model.Naam)
+            </th>
+            <th class="text-center">
+                Voorraad toog
+            </th>
+            <th class="text-center">
+                Voorraad stockage
+            </th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td class="text-left align-middle">
+                    @Html.DisplayFor(modelitem => item.Categorie.Naam)
+                </td>
+                <td class="text-left align-middle">
+                    <table class="table-borderless table-responsive float-left" style="margin:auto; width:100%">
+                        <tr>
+                            <td class="text-left col-md-8">
+                                <div class="align-content-md-center">
+                                    @Html.DisplayFor(modelItem => item.Naam)
+                                </div>
+                            </td>
+                            <td class="col-md-2">
+                                <a asp-controller="Product" asp-action="Edit" asp-route-id="@item.ProductID"><img src="~/images/edit_icon.png" width="20" height="20" /></a>
+                            </td>
+                            <td class="col-md-2">
+                                <a asp-controller="Product" asp-action="Delete" asp-route-id="@item.ProductID"><img src="~/images/Delete_icon.png" width="20" height="20" /></a>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td class="text-center justify-content-md-center align-middle">
+
+                    <div class="@((item.Ijskast <= 10) ? "text-danger" :"") align-middle text-center">
+                        @Html.DisplayFor(modelItem => item.Ijskast)
+                    </div>
+                </td>
+                <td class="text-center justify-content-md-center align-middle">
+
+                    <div class="@((item.OverigeStock <= 10) ? "text-danger" :"")">
+                        @Html.DisplayFor(modelItem => item.OverigeStock)
+                    </div>
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+
+<div class="container">
+    <a asp-controller="Product" asp-action="Create"><label type="button" class="btn btn-primary">Product toevoegen</label></a>
+    <a asp-controller="Categorie" asp-action="Index"><label type="button" class="btn btn-primary">Beheer categoriëen</label></a>
+</div>

@@ -1,0 +1,81 @@
+﻿@model StartspelerMVC.Viewmodels.DetailsEvenementViewModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Evenement</h4>
+    <hr />
+    <div class="row">
+        <div class="col-6">
+
+            <div class="row">
+
+                <div class="col-sm-10 form-text border-info">
+                    <h5>
+                        @Html.DisplayFor(model => model.GeselecteerdEvenement.Titel)
+                    </h5>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-10">
+                    <h6>
+                        @Convert.ToString(string.Format("{0:dd/MM/yyyy hh:mm}", Model.GeselecteerdEvenement.Startdatum)) tot @Convert.ToString(string.Format("{0:hh:mm}", Model.GeselecteerdEvenement.Einddatum))
+                    </h6>
+                </div>
+            </div>
+
+            <div class="row" style="height: 200px">
+                <div class="col-sm-10 form-text h-100">
+                    @Html.DisplayFor(model => Model.GeselecteerdEvenement.Beschrijving)
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-10 form-text h-100">
+                    Deelnameprijs: € @Html.DisplayFor(model => Model.GeselecteerdEvenement.Kostprijs)
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-10 form-text h-100">
+                    Maximum aantal deelnemers: @Html.DisplayFor(model => Model.GeselecteerdEvenement.Max_Deelnemers)
+                </div>
+            </div>
+
+            <div class="row" style="height: 100px; vertical-align:middle">
+                <div class="col-sm-auto">
+                    <button type="button" class="btn btn-primary">Registreer mij!</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6">
+            <div class="row">
+                <p>De volgende personen zijn alreeds geregistreerd:</p>
+            </div>
+            <div class="row">
+                @Model.GereserveerdeUsers.Count() / @Model.GeselecteerdEvenement.Max_Deelnemers
+                <br />
+            </div>
+            <div class="row">
+                @{ foreach (var persoon in Model.GereserveerdeUsers)
+                    {
+                        <p>
+                            @persoon.Achternaam  @persoon.Voornaam
+                            <br />
+                        </p>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+    <div>
+        <a asp-action="Edit" asp-route-id="@Model.GeselecteerdEvenement.EvenementID">Edit</a> |
+        <a asp-action="Index">Back to List</a>
+    </div>
+</div>

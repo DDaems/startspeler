@@ -1,0 +1,30 @@
+﻿@model StartspelerMVC.Areas.Admin.Models.Export.ExportModel
+@{
+    ViewData["Title"] = "Export";
+}
+
+<h1>@ViewData["Title"]</h1>
+<div class="display-1">
+    @Html.DisplayFor(m => m.Errors)
+</div>
+<form asp-area="Admin" asp-controller="Export" asp-action="Download" method="get">
+    @if (Model.ExportItems != null)
+    {
+        for (int index = 0; index < Model.ExportItems.Count; index++)
+        {
+            <div class="form-check">
+                @Html.CheckBoxFor(m => m.ExportItems[index].isSelected)
+                @Html.DisplayFor(m => m.ExportItems[index].Naam)
+                @Html.HiddenFor(m => m.ExportItems[index].Naam)
+            </div>
+        }
+        <div class="mt-3"></div>
+    }
+
+    
+    <input type="submit" value="Download" asp-action="Download" class="btn btn-primary" />
+
+</form>
+
+
+

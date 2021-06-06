@@ -1,0 +1,46 @@
+﻿@model StartspelerMVC.Models.Product
+
+@{
+    ViewData["Title"] = "Verwijderen";
+}
+
+<h1>Verwijderen</h1>
+
+<h3>Ben je zeker dat je dit product volledig wil verwijderen?</h3>
+<p>Deze verwijdering kan niet ongedaan gemaakt worden. </p>
+<div>
+    <h4>Product</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Naam)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Naam)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Prijs)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Prijs)
+        </dd>
+        <dt class="col-sm-2">
+            Voorraad ijskast
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Ijskast)
+        </dd>
+        <dt class="col-sm-2">
+            Voorraad stockage
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.OverigeStock)
+        </dd>
+    </dl>
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="ProductID" />
+        <input type="submit" value="Verwijderen" class="btn btn-danger" /> |
+        <a asp-action="Stockbeheer">Terug naar overzicht</a>
+    </form>
+</div>

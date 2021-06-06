@@ -1,0 +1,73 @@
+﻿@model IEnumerable<StartspelerMVC.Viewmodels.UserOverzichtViewModel>
+@using Microsoft.AspNetCore.Identity
+
+@inject UserManager<User> UserManager
+
+@{
+    ViewData["Title"] = "Index";
+    var user = await UserManager.GetUserAsync(User);
+}
+
+@if (User.Identity.IsAuthenticated)
+{
+    <h1>
+        <a id="manage" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hoi @user.Voornaam !</a>
+    </h1>
+}
+
+
+    <p>
+        <a asp-action="Create">Nieuwe drankkaart aankopen?</a>
+        <br />
+    </p>
+    
+    @if (User.IsInRole("Admin"))
+    {
+        <p>
+            <a asp-action="Overzicht">Drankkaarten overzicht klanten</a>
+        </p>
+    }
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Aankoopdatum)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SamengesteldeKolom)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Aankoopdatum)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SamengesteldeKolom)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Status)
+                </td>
+
+                @if (this.User.IsInRole("Niet van toepassing"))
+                {
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.DrankkaartID">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.DrankkaartID">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.DrankkaartID">Delete</a>
+                    </td>
+                }
+
+            </tr>
+        }
+    </tbody>
+</table>
